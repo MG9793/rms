@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เข้าสู่ระบบ | โปรแกรมจัดการใบเสร็จ - Version 1.00</title>
+    <title>เข้าสู่ระบบ | ระบบริหารจัดการใบเสร็จ - Version 1.00</title>
 
     <!-- Font Kanit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,17 +41,17 @@
                         <div class="card-body p-5">
                             <form class="mb-3 mt-md-4">
                             <h2 class="fw-bold mb-2 text-uppercase "><img src="image/logo/logo.jpg" class="rounded" style="width: 80px"> Sithichai Engineering</h2>
-                            <p class="mb-5">ระบบบริหารจัดการใบเสร็จ (Version 1.00) - กรุณาเข้าสู่ระบบ</p>
+                            <p class="mb-5"></p>
                             <div class="mb-3">
-                                <label for="text" class="form-label ">ชื่อผู้ใช้งาน :</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกชื่อผู้ใช้งาน..." name="loginUser">
+                                <label for="email" class="form-label ">ผู้ใช้งาน</label>
+                                <input type="email" class="form-control" placeholder="ผู้ใช้งาน" name="loginUser">
                             </div>
                             <div class="mb-3">
-                                <label for="password" class="form-label ">รหัสผ่าน :</label>
-                                <input type="password" class="form-control" placeholder="*******" name="loginPassword">
+                                <label for="password" class="form-label ">รหัสผ่าน</label>
+                                <input type="password" class="form-control" placeholder="รหัสผ่าน" name="loginPassword">
                             </div>
                             <div class="d-grid">
-                                <a class="btn btn-outline-dark" type="submit" href="index.php">Login</a>
+                                <a class="btn btn-outline-dark" type="submit" href="dashboard.php">Login</a>
                             </div>
                             </form>
                         </div>
@@ -62,7 +62,7 @@
     </div>
 
     <footer class="fixed-bottom text-center">
-        <p>ทดสอบ<br>Receipt Management System &copy; <script>document.write(new Date().getFullYear())</script> Sithichai Engineering, All Rights Reserved.</p>
+        <p>ระบบบริหารจัดการใบเสร็จ (Version 1.00) ยินดีต้อนรับ<br>Receipt Management System &copy; <script>document.write(new Date().getFullYear())</script> Sithichai Engineering, All Rights Reserved.</p>
     </footer>
 
 
@@ -71,5 +71,3 @@
 
 
 </body>
-
-</html>
