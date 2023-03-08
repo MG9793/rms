@@ -33,7 +33,7 @@
         }
 
         .navbar {
-            background-color: rgb(15, 49, 147);
+            /* background-color: rgb(15, 49, 147); */
         }
 
         .navbar .nav-item a {
@@ -60,7 +60,7 @@
             border-radius: .4em;
         }
 
-        .userManagement {
+        .headerUnderline {
             background-color: #fff;
             border-top: 2px dotted #000;
         }
@@ -68,44 +68,69 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg text-light px-4">
+<nav class="navbar navbar-expand-lg text-light px-4 bg-dark">
         <div class="container">
-            <a class="navbar-brand"><img src="../image/logo/logo.jpg" style="width:80px"></a>
-            <h5 class="fw-bold">สิทธิชัย เอ็นจิเนียริ่ง - ระบบจัดการใบเสร็จ v1.00</h5>
+            <a class="navbar-brand"><img src="../image/logo/logo.jpg" class="rounded" style="width:80px"></a>
+            <h5 class="text-light">สิทธิชัย เอนจิเนียริ่ง - ระบบบริหารจัดการใบเสร็จ</h5>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="../index.php"><i class="fa-solid fa-gauge-high"></i> แดชบอร์ด</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.php">แดชบอร์ด</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-dollar-sign"></i> บันทึกรายรับ</a>
+                        <a class="nav-link" href="../index.php">บันทึกค่าใช้จ่าย</a>
                     </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-sack-dollar"></i> บันทึกค่าใช้จ่าย</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.php">กระจายค่าใช้จ่าย</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.php">บันทึกรายรับ</a>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-dollar-sign"></i> บันทึกรายรับ</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-person-digging"></i> ค่าแรง (LA)</a></li>
-                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-building"></i> สำนักงานใหญ่ (HQ)</a></li>
-                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-trowel-bricks"></i> ไซต์งาน (OA)</a></li>
+                            <li><a class="dropdown-item text-black" href="#">บันทึกรายรับ (Head)</a></li>
+                            <li><a class="dropdown-item text-black" href="#">บันทึกรายรับ (Line)</a></li>
                         </ul>
                     </li>
 
                     <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-paint-roller"></i> ค่าวัสดุ</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-black" href="recordHeadMA.php">ยอดรวม</a></li>
+                            <li><a class="dropdown-item text-black" href="recordLineMA.php"><i class="fa-solid fa-list"></i> รายละเอียดสินค้า</a></li>
+                        </ul>
+                    </li> -->
+
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-person-digging"></i> ค่าแรง</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-black" href="recordHeadLA.php">ยอดรวม</a></li>
+                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-list"></i> รายละเอียดสินค้า</a></li>
+                        </ul>
+                    </li> -->
+
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-sheet-plastic"></i> รายงาน</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-file-invoice-dollar"></i> ภาษีซื้อ</a></li>
-                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-book"></i> สรุปค่าใช้จ่าย</a></li>
+                            <li><a class="dropdown-item text-black" href="siteSummary.php"><i class="fa-solid fa-book"></i> สรุปค่าใช้จ่าย</a></li>
                         </ul>
-                    </li>
+                    </li> -->
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gears"></i> ตั้งค่า</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-building-circle-check"></i> ไซต์งาน</a></li>
+                            <li><a class="dropdown-item text-black" href="listItemsManagement.php"><i class="fa-solid fa-clipboard"></i> รายการบันทึก</a></li>
+                            <li><a class="dropdown-item text-black" href="sellerManagement.php"><i class="fa-solid fa-cart-shopping"></i> ข้อมูลผู้ขาย</a></li>
+                            <li><a class="dropdown-item text-black" href="siteManagement.php"><i class="fa-solid fa-building-circle-check"></i> ไซต์งาน</a></li>
                             <li><a class="dropdown-item text-black disabled"><i class="fa-solid fa-user-gear"></i> ผู้ใช้งาน</a></li>
                         </ul>
                     </li>
@@ -126,26 +151,117 @@
         </div>
     </nav>
 
-    <section class="container mt-3">
-        <h2 class="fw-bold" style="color: rgb(15, 49, 147)"><i class="fa-solid fa-user-group"></i> ระบบจัดการผู้ใช้งาน (User Management)</h2>
-        <hr class="userManagement">
+
+    <section class="container mt-2">
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการผู้ใชังาน (User Management)</legend>
+        <!-- <hr class="headerUnderline"> -->
+    </section>
+    <!-- <section class="container mt-3">
+        <h2 class="fw-bold text-dark"><i class="fa-solid fa-user-group"></i> ระบบจัดการผู้ใช้งาน</h2>
+        <hr class="headerUnderline">
         <div class="d-flex">
             <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseTable" aria-expanded="false" aria-controls="collapseTable"><i class="fa-solid fa-table-list"></i> ซ่อน/แสดง ผู้ใช้งานทั้งหมด</a>
             <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><i class="fa-solid fa-list"></i> ซ่อน/แสดง ฟอร์มเพิ่มผู้ใช้งาน</a>
+        </div> -->
+
+
+    <section class="container">
+        <div class="collapse show" id="collapseForm">
+            <fieldset class="p-3 shadow-sm mt-2">
+                <h5 class="fw-bold"><i class="fa-solid fa-plus"></i> เพิ่มผู้ใช้งาน</h5>
+
+                <form action="#" method="POST">
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="name" class="form-label fw-bold">ชื่อ :</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Your name.." required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="lastName" class="form-label fw-bold">นามสกุล :</label>
+                            <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Your lastname.." required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="userStatus" class="form-label fw-bold">สิทธิการใช้งาน :</label>
+                            <select class="form-select" aria-label="userStatus" name="userStatus" required>
+                                <option>Admin</option>
+                                <option>User</option>
+                            </select>
+                        </div>
+                        <!-- <div class="col-md">
+                        <label for="position" class="form-label fw-bold">ตำแหน่ง :</label>
+                            <select class="form-select" aria-label="position" name="position" required>
+                                <option>ตำแหน่ง 1</option>
+                                <option>ตำแหน่ง 2</option>
+                                <option>ตำแหน่ง 3</option>
+                            </select>
+                        </div> -->
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="userName" class="form-label fw-bold">ชื่อผู้ใช้ (Username) :</label>
+                            <input type="text" name="userName" class="form-control" id="userName" placeholder="username.." required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="password" class="form-label fw-bold">Password (อย่างน้อย 8 ตัวอักษร) :</label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="xxxxxxxx" minlength="8" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="confirmPassword" class="form-label fw-bold">Confirm Password :</label>
+                            <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
+                        </div>
+                        <!-- <div class="col-md-4">
+                            <label for="userStatus" class="form-label fw-bold">สถานะการใช้งานระบบ :</label>
+                            <select class="form-select" aria-label="userStatus" name="userStatus" required>
+                                <option>Admin</option>
+                                <option>User</option>
+                            </select>
+                        </div> -->
+                    </div>
+
+                    <!-- <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="password" class="form-label fw-bold">Password (อย่างน้อย 8 ตัวอักษร) :</label>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="xxxxxxxx" minlength="8" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="confirmPassword" class="form-label fw-bold">Confirm Password :</label>
+                            <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-md-10">
+                            <button type="submit" name="registerUser" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>
+                        </div>
+                    </div>
+                    <!-- <div class="row">
+                        <div class="col-md-8">
+                            <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>
+                        </div>
+                    </div> -->
+                </form>
+            </fieldset>
         </div>
+    </section>  <!-- Closing Tag Container -->
+
     
+    <section class="container">
         <div class="collapse show" id="collapseTable">
             <fieldset class="p-3 shadow-sm mt-2">
-                <legend class="fw-bold"><i class="fa-solid fa-user-gear"></i> ผู้ใช้งานทั้งหมด (All Users)</legend>
+                <h5 class="fw-bold"><i class="fa-solid fa-table-list"></i> รายการผู้ใช้งานทั้งหมด</h5>
                 <table class="table table-striped table-hover table-sm table-bordered css-serial">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">ชื่อ</th>
                             <th scope="col">นามสกุล</th>
-                            <th scope="col">ตำแหน่ง</th>
-                            <th scope="col">อีเมลล์</th>
-                            <th scope="col">สถานะ</th>
+                            <!-- <th scope="col">ตำแหน่ง</th> -->
+                            <th scope="col">ชื่อผู้ใช้</th>
+                            <th scope="col">สิทธิการใช้งาน</th>
                             <th scope="col">แก้ไข</th>
                         </tr>
                     </thead>
@@ -154,15 +270,13 @@
                             <td></td>
                             <td>Danai</td>
                             <td>Jantapalaboon</td>
-                            <td>Front-End Developer</td>
-                            <td>danai.j@sodsaisoft.com</td>
+                            <!-- <td>Front-End Developer</td> -->
+                            <td>danai12345</td>
                             <td><span class="badge bg-success">Admin</span></td>
                             <td>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditUser<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=""><i class="fas fa-trash"></i></button>
-                                    </div>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -170,15 +284,13 @@
                             <td></td>
                             <td>Hermione</td>
                             <td>Granger</td>
-                            <td>FullStack Developer</td>
-                            <td>hermione.g@sodsaisoft.com</td>
+                            <!-- <td>FullStack Developer</td> -->
+                            <td>hermioneGriffindor</td>
                             <td><span class="badge bg-warning">User</span></td>
                             <td>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditUser<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=""><i class="fas fa-trash"></i></button>
-                                    </div>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -186,15 +298,13 @@
                             <td></td>
                             <td>นายทดสอบ</td>
                             <td>นามสกุลทดสอบ</td>
-                            <td>test01</td>
-                            <td>admin01@admin.com</td>
+                            <!-- <td>test01</td> -->
+                            <td>userTest01</td>
                             <td><span class="badge bg-warning">User</span></td>
                             <td>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditUser<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=""><i class="fas fa-trash"></i></button>
-                                    </div>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -202,75 +312,9 @@
                 </table>
             </fieldset>
         </div>
-
-        <div class="collapse show" id="collapseForm">
-            <fieldset class="p-3 shadow-sm mt-2">
-                <legend class="fw-bold"><i class="fa-solid fa-user-plus"></i> เพิ่มผู้ใช้งาน (Add Users)</legend>
-
-                <form action="#" method="POST">
-                    <div class="row mb-3">
-                        <div class="col-md">
-                            <label for="FormControlName" class="form-label fw-bold">ชื่อ :</label>
-                            <input type="text" name="name" class="form-control" id="FormControlName" placeholder="Your name.." required>
-                        </div>
-                        <div class="col-md">
-                            <label for="FormControlLastname" class="form-label fw-bold">นามสกุล :</label>
-                            <input type="text" name="lastName" class="form-control" id="FormControlLastname" placeholder="Your Lastname.." required>
-                        </div>
-                        <div class="col-md">
-                        <label for="position" class="form-label fw-bold">ตำแหน่ง :</label>
-                            <select class="form-select" aria-label="position" name="position" required>
-                                <option>ตำแหน่ง 1</option>
-                                <option>ตำแหน่ง 2</option>
-                                <option>ตำแหน่ง 3</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="FormControlEmail" class="form-label fw-bold">Email Address (ใช้เป็น Username) :</label>
-                            <input type="email" name="email" class="form-control" id="FormControlEmail" placeholder="name@example.com" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="userStatus" class="form-label fw-bold">สถานะการใช้งานระบบ :</label>
-                            <select class="form-select" aria-label="userStatus" name="userStatus" required>
-                                <option>Admin</option>
-                                <option>User</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="FormControlPassword" class="form-label fw-bold">Password (อย่างน้อย 8 ตัวอักษร) :</label>
-                            <input type="password" name="password" class="form-control" id="FormControlPassword" placeholder="xxxxxxxx" minlength="8" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="FormControlConfirmPassword" class="form-label fw-bold">Confirm Password :</label>
-                            <input type="password" name="confirmPassword" class="form-control" id="FormControlConfirmPassword" placeholder="xxxxxxxx" minlength="8" required>
-                        </div>
-                    </div>
-
-                    <div class="row mb-2">
-                        <div class="col-md-8">
-                            <button type="submit" name="registerUser" class="btn btn-danger w-100"><i class="fa-solid fa-user-plus"></i> Register</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <button type="reset" class="btn btn-dark w-100"><i class="fa-solid fa-rotate-right"></i> Reset</button>
-                        </div>
-                    </div>
-                </form>
+    </section>
 
 
-            </fieldset>
-        </div>
-
-
-
-    </section>  <!-- Closing Tag Container -->
 
 
     <?php include "modal/modal_editUser.php"; ?>
