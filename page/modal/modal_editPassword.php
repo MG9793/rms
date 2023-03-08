@@ -1,7 +1,7 @@
 <div class="modal fade" id="modalPassword<?php //echo $userAccount['id_users']; ?>" tabindex="-1" aria-labelledby="modalPassword" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
+            <div class="modal-header bg-dark">
                 <h5 class="modal-title text-light" id="modalPassword"><i class="fa-solid fa-pen-to-square"></i> แก้ไขรหัสผ่าน (Edit Password)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -24,7 +24,7 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" name="editUser"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        <button type="submit" class="btn btn-dark" name="editUser"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                     </div>
                 </form>
             </div>
