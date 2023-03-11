@@ -242,7 +242,7 @@
     </datalist> -->
 
 
-    <!-- Modal 1 -->
+    <!-- Modal1 -->
     <div class="modal fade" id="selectVAT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -259,128 +259,40 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT">VAT</button>
+                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#MA_Head">VAT</button>
                     <button type="submit" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#MA_Head_NoVAT">No VAT</button>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- Modal 2 -->
-    <div class="modal fade" id="expenseDetailsVAT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-3 border rounded p-2 bg-dark text-light"></i> บันทึกค่าใช้จ่ายรวมภาษี (VAT)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="POST">
-                        <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
-                        <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
-                        <div class="row">
-                            <div class="col-md d-flex">
-                                <div>เลขที่ใบเสร็จ :</div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <label class="col-form-label fw-bold"><i class="fa-solid fa-plus"></i> เพิ่มรายการค่าใช้จ่าย :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">จำนวน :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">ราคา/หน่วย :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">รวม :</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label class="col-form-label fw-bold">ลบ</label>
-                            </div>
-                        </div>
-                        <div class="row" id="items-row">
-                            <div class="col-md my-1">
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="itemPrice" id="itemPrice" oninput="calculateSum()">
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="unitPrice" id="unitPrice" oninput="calculateSum()">
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control text-danger" name="itemSum" id="itemSum" disabled>
-                            </div>
-                            <div class="col-md-1 my-1">
-                                <button type="button" class="btn btn-danger btn-sm remove-item-btn"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-5">
-                                <button type="button" class="btn btn-primary w-100 mt-2" id="add-item-btn">Add Item</button>
-                            </div>
-                        </div>
-                        <div>หมายเหตุ : หากไม่พบรายการค่าใช้จ่ายให้ไปที่เมนูตั้งค่า และเพิ่มรายการบันทึก</div>
-                        <hr class="headerUnderline mt-4">
-                        <div class="row">
-                            <div class="col-md-5">
-                                <label class="col-form-label fw-bold">ยอดรวม :</label>
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">+ VAT 7% :</label>
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label fw-bold">รวมสุทธิ :</label>
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-dark text-light w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-
     <script>
-        $(document).ready(function() {
-            $("#add-item-btn").click(function() {
-                var newRow = $("#items-row").clone();
-                newRow.find("input").val("");
-                $("#items-row").after(newRow);
-            });
+        // $(document).ready(function() {
+        //     // When the add item button is clicked
+        //     $("#add-item-btn").click(function() {
+        //         // Clone the existing row of input fields
+        //         var newRow = $("#items-row").clone();
+        //         // Reset the values of the new input fields
+        //         newRow.find("input").val("");
+        //         // Append the new row of input fields to the end of the existing row
+        //         $("#items-row").after(newRow);
+        //     });
 
-            $(document).on("click", ".remove-item-btn", function() {
-                $(this).parents(".row").remove();
-            });
-        });
+        //     // When the remove item button is clicked
+        //     $(document).on("click", ".remove-item-btn", function() {
+        //         // Remove the row of input fields that contains the clicked button
+        //         $(this).parents(".row").remove();
+        //     });
+        // });
     </script>
 
     <script>
-        function calculateSum() {
-            var price = document.getElementById("itemPrice").value;
-            var quantity = document.getElementById("unitPrice").value;
-            var sum = price * quantity;
-
-            document.getElementById("itemSum").value = parseFloat(sum).toFixed(2);;
+        function calculateVAT() {
+            var price = document.getElementById("itemsQty").value;
+            var vat = price * 0.07;
+            document.getElementById("itemsPrice").value = vat.toFixed(2);
+            document.getElementById("itemsVAT").value = (parseFloat(price) + vat).toFixed(2);
         }
-
-        // function calculateVAT() {
-        //     var price = document.getElementById("itemsQty").value;
-        //     var vat = price * 0.07;
-        //     document.getElementById("itemsPrice").value = vat.toFixed(2);
-        //     document.getElementById("itemsVAT").value = (parseFloat(price) + vat).toFixed(2);
-        // }
     </script>
 
 
