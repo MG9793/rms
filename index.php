@@ -73,10 +73,14 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.php">แดชบอร์ด</a>
+                        <a class="nav-link disabled" href="#">แดชบอร์ด</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">บันทึกค่าใช้จ่าย</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">บันทึกค่าใช้จ่าย</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item text-black" href="page/expenseSum.php">ยอดรวม</a></li>
+                            <li><a class="dropdown-item text-black" href="page/expenseDetails.php">รายละเอียดสินค้า</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../index.php">กระจายค่าใช้จ่าย</a>
