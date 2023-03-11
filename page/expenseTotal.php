@@ -67,7 +67,7 @@
         }
 
         .card:hover {
-          background-color: pink;
+          background-color: lightyellow;
           transform: scale(1.05);
         }
 
@@ -79,19 +79,7 @@
             counter-increment: serial-number; /* Increment the serial number counter */
             content: counter(serial-number); /* Display the counter */
         }
-
-        fieldset {
-            background-color: #fff;
-            border-radius: .4em;
-        }
     </style>
-
-    <!-- script Datables ห้ามลบจ้า -->
-    <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        } );
-    </script>
 </head>
 <body>
 
@@ -112,8 +100,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">บันทึกค่าใช้จ่าย</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black" href="expenseTotal.php">ยอดรวม</a></li>
-                            <li><a class="dropdown-item text-black disabled" href="page/#.php">รายละเอียดสินค้า</a></li>
+                            <li><a class="dropdown-item text-black disabled" href="#">ยอดรวม</a></li>
+                            <li><a class="dropdown-item text-black" href="expenseDetails.php">รายละเอียดสินค้า</a></li>
                         </ul>
                     </li>
 
@@ -153,93 +141,28 @@
 
 
     <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-1 border rounded p-2 bg-dark text-light"></i> บันทึกค่าใช้จ่าย (รายละเอียดสินค้า)</h2>
+        <h2 class="fw-bold text-dark"><i class="fa-solid fa-1 border rounded p-2 bg-dark text-light"></i> บันทึกค่าใช้จ่าย (ยอดรวม)</h2>
         <hr class="headerUnderline">
 
-        <div class="d-flex align-items-center">
-            <input class="form-control" type="text" placeholder="ค้นหาเลขที่ใบเสร็จ">
+        <div class="row">
+            <div class="col-md center-screen">
+                <div class="row row-cols-2 row-cols-md-6 g-2">
+                    <div class="col">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#selectVAT">
+                        <div class="card h-100 shadow dashboard">
+                            <div class="card-body text-center">
+                                <img src="../image/icon/construction.png" class="mx-auto d-block mb-3 w-50">
+                                <h5 class="card-title fw-bold mt-2">ไซต์งาน 1</h5>
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div><b>*หมายเหตุ :</b> หากไม่พบเลขที่ใบเสร็จให้บันทึกค่าใช้จ่าย (ยอดรวม) ก่อน</div>
+    </section>
 
 
-        <fieldset class="p-3 shadow-sm mt-3">
-            <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">วันที่ซื้อ</th>
-                        <th scope="col">เลขที่ใบเสร็จ</th>
-                        <th scope="col">ชื่อผู้ขาย</th>
-                        <th scope="col">เลขประจำตัวผู้เสียภาษี</th>
-                        <th scope="col">ประเภท</th>
-                        <th scope="col">บันทึก</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td></td>
-                        <td>a0001</td>
-                        <td>Site1</td>
-                        <td>2</td>
-                        <td>0022000231248</td>
-                        <td><span class="badge bg-primary">ค่าวัสดุ</span></td>
-                        <td>
-                            <button type="button" class="btn btn-dark btn-sm w-50" data-bs-toggle="modal" data-bs-target="#selectVAT<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </fieldset>
-    </section>  <!-- Closing Tag Container -->
-
-    <!-- <input type="text" class="form-control" name="addItems" id="addItems" list="addItems"> -->
-    <!-- datalist สำหรับ Autocomplete ห้ามลบจ้า -->
-    <!-- <datalist id="addItems">
-        <option value="เงินเดือน Staff (รวมค่าแรงรายวัน)">
-        <option value="ระดับบริหาร, ระดับวิศวกร, ระดับหัวหน้าโฟร์แมน, ระดับธุรการ">
-        <option value="ระดับแรงงาน">
-        <option value="BONUS, เงินสะสม 3%, เงินชดเชย">
-        <option value="ค่าแรงรายวัน (ส่วนผู้รับเหมา)">
-        <option value="ค่าแรงรายวัน">
-        <option value="ค่าเงิน OT, ค่าเงินเพิ่ม 15%">
-        <option value="เงินเดือนและค่าจ้างแรงงาน">
-        <option value="ค่าแรงเหมา">
-        <option value="ค่าเชื้อเพลิง หรือพลังงาน">
-        <option value="ค่าไฟฟ้า">
-        <option value="ค่าประปา">
-        <option value="ค่าโทรศัพท์">
-        <option value="รายจ่ายในการเดินทาง, ค่าที่พัก">
-        <option value="ค่าระวาง, ค่าไปรษณีย์">
-        <option value="ค่าขนส่ง">
-        <option value="ค่าเช้า">
-        <option value="ค่าซ่อมแซม">
-        <option value="ค่าอะไหล่เครื่องมือ, เครื่องจักร">
-        <option value="ค่ารับรอง">
-        <option value="ค่านายหน้า ค่าโฆษณา">
-        <option value="ค่าภาษีอากรอื่น">
-        <option value="ดอกเบี้ยจ่าย">
-        <option value="ค่าสอบบัญชี">
-        <option value="รายจ่ายเพื่อการกุศลสาธารณะ">
-        <option value="ค่าธรรมเนียมอื่น">
-        <option value="ค่าวัสดุก่อสร้าง">
-        <option value="ค่าวัสดุสิ้นเปลือง">
-        <option value="ค่าเครื่องใช้สำนักงาน">
-        <option value="ค่าเครื่องมือเครื่องใช้">
-        <option value="ค่าเครื่องจักร, ยานพาหนะ">
-        <option value="ค่ารักษาความปลอดภัย">
-        <option value="ค่าแบบประกวดราคา">
-        <option value="ค่าทดสอบวัสดุก่อสร้าง">
-        <option value="ค่าทำความสะอาด">
-        <option value="ค่าถ่ายเอกสารแบบพิมพ์">
-        <option value="ค่าธรรมเนียมธนาคาร">
-        <option value="ค่ารักษาพยาบาล">
-        <option value="ค่าอบรม สัมมนา">
-        <option value="ค่าสวัสดิการพนักงาน">
-        <option value="ค่าประกันสังคม">
-        <option value="ค่าเงินสมทบกองทุนเงินทดแทน">
-        <option value="ค่าใช้จ่ายเบ็ดเตล็ด">
-        <option value="รายจ่ายอื่นๆ">
-    </datalist> -->
 
 
     <!-- Modal 1 -->
