@@ -303,16 +303,16 @@
                         </div>
                         <div class="row" id="items-row">
                             <div class="col-md my-1">
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
+                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems" required>
                             </div>
                             <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="itemPrice" id="itemPrice" oninput="calculateSum()">
+                                <input type="number" class="form-control" name="itemPrice" id="itemPrice" oninput="calculateSum()" required>
                             </div>
                             <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="unitPrice" id="unitPrice" oninput="calculateSum()">
+                                <input type="number" class="form-control" name="unitPrice" id="unitPrice" oninput="calculateSum()" required>
                             </div>
                             <div class="col-md-2 my-1">
-                                <input type="number" class="form-control text-danger" name="itemSum" id="itemSum" disabled>
+                                <input type="number" class="form-control" name="itemSum" id="itemSum" disabled required>
                             </div>
                             <div class="col-md-1 my-1">
                                 <button type="button" class="btn btn-danger btn-sm remove-item-btn"><i class="fas fa-trash"></i></button>
@@ -329,21 +329,24 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <label class="col-form-label fw-bold">ยอดรวม :</label>
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
+                                <input type="number" class="form-control" name="addItems" id="addItems" list="addItems" required>
                             </div>
                             <div class="col-md-2">
                                 <label class="col-form-label fw-bold">+ VAT 7% :</label>
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
+                                <input type="number" class="form-control" name="addItems" id="addItems" list="addItems" required>
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label fw-bold">รวมสุทธิ :</label>
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems">
+                                <input type="number" class="form-control" name="addItems" id="addItems" list="addItems" required>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md">
+                                <button type="submit" class="btn btn-dark text-light w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                             </div>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-dark text-light w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                 </div>
             </div>
         </div>
