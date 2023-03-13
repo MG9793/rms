@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บันทึกค่าใช้จ่าย (ยอดรวม) | ระบบบริหารจัดการใบเสร็จ</title>
+    <title>บันทึกรายรับ | ระบบบริหารจัดการใบเสร็จ</title>
 
     <!-- Font Kanit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,7 +67,7 @@
         }
 
         .card:hover {
-          background-color: lightyellow;
+          background-color: honeydew;
           transform: scale(1.05);
         }
 
@@ -100,7 +100,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">บันทึกค่าใช้จ่าย</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black disabled" href="#">ยอดรวม</a></li>
+                            <li><a class="dropdown-item text-black" href="expenseTotal.php">ยอดรวม</a></li>
                             <li><a class="dropdown-item text-black" href="expenseDetails.php">รายละเอียดสินค้า</a></li>
                         </ul>
                     </li>
@@ -110,7 +110,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="incomeRecord.php">บันทึกรายรับ</a>
+                        <a class="nav-link disabled" href="#">บันทึกรายรับ</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -135,23 +135,23 @@
                     </li>
                 </ul>
             </div>
-            <script type="text/javascript" src="../resources/js/displayDateTime.js"></script>
+            <script type="text/javascript" src="resources/js/displayDateTime.js"></script>
         </div>
     </nav>
 
 
     <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-1 border rounded p-2 bg-dark text-light"></i> บันทึกค่าใช้จ่าย (ยอดรวม)</h2>
+        <h2 class="fw-bold text-dark"><i class="fa-solid fa-1 border rounded p-2 bg-dark text-light"></i> บันทึกรายรับ</h2>
         <hr class="headerUnderline">
 
         <div class="row">
             <div class="col-md center-screen">
                 <div class="row row-cols-2 row-cols-md-6 g-2">
                     <div class="col">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#selectVAT">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#selectRecord">
                         <div class="card h-100 shadow dashboard">
                             <div class="card-body text-center">
-                                <img src="../image/icon/construction.png" class="mx-auto d-block mb-3 w-50">
+                                <img src="../image/icon/cost.png" class="mx-auto d-block mb-3 w-50">
                                 <h5 class="card-title fw-bold mt-2">ไซต์งาน 1</h5>
                             </div>
                         </div>
@@ -166,24 +166,24 @@
 
 
     <!-- Modal 1 -->
-    <div class="modal fade" id="selectVAT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="selectRecord" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> เลือกประเภทการคำนวณภาษี (VAT)</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> เลือกประเภทการบันทึกรายรับ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="#" method="POST">
                         <div class="mb-0 text-center">
-                            <img src="../image/icon/tax.png" class="w-25" alt=""><br>
+                            <img src="../image/icon/money.png" class="w-25" alt=""><br>
                             <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT">VAT</button>
-                    <button type="submit" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#MA_Head_NoVAT">No VAT</button>
+                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT">บันทึกยอดรวม</button>
+                    <button type="submit" class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#MA_Head_NoVAT">บันทึกรายละเอียด</button>
                 </div>
             </div>
         </div>

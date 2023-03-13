@@ -1,8 +1,8 @@
 <div class="modal fade" id="modalEditSite<?php //echo $userAccount['id_users']; ?>" tabindex="-1" aria-labelledby="modalEditSite" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-light" id="modalEditSite"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลไซต์งาน (Edit Site)</h5>
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditSite"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลไซต์งาน (Edit Site)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 

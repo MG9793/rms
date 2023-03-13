@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บันทึกค่าวัสดุ (MA) | โปรแกรมจัดการใบเสร็จ - Version 1.00</title>
+    <title>บันทึกค่าใช้จ่าย (รายละเอียดสินค้า) | ระบบบริหารจัดการใบเสร็จ</title>
 
     <!-- Font Kanit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,11 +118,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.php">กระจายค่าใช้จ่าย</a>
+                        <a class="nav-link" href="#">กระจายค่าใช้จ่าย</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="../index.php">บันทึกรายรับ</a>
+                        <a class="nav-link" href="incomeRecord.php">บันทึกรายรับ</a>
                     </li>
 
                     <li class="nav-item dropdown">
@@ -138,8 +138,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i> ผู้ใช้งาน</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-secondary disabled" style="font-size: 15px;"><i class="fa-solid fa-user"></i> Danai Jantapalaboon</a></li>
-                            <li><a class="dropdown-item text-secondary disabled" style="font-size: 15px;"><i class="fa-solid fa-clock"></i> <span id="date"></span> <span id="clock"></span> </a></li>
+                            <li><a class="dropdown-item text-black disabled lh-1" style="font-size: 15px;"><i class="fa-solid fa-user"></i> Danai Jantapalaboon</a></li>
+                            <li><a class="dropdown-item text-black disabled lh-1" style="font-size: 15px;"><i class="fa-solid fa-clock"></i> <span id="date"></span> <span id="clock"></span> </a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-black" href="#" data-bs-toggle="modal" data-bs-target="#modalPassword<?php //echo $userAccount['id_users']; ?>"><i class="fa-solid fa-key"></i> เปลี่ยนรหัสผ่าน</a></li>
                             <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a></li>
@@ -147,7 +147,7 @@
                     </li>
                 </ul>
             </div>
-            <script type="text/javascript" src="resources/js/displayDateTime.js"></script>
+            <script type="text/javascript" src="../resources/js/displayDateTime.js"></script>
         </div>
     </nav>
 
@@ -247,7 +247,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> กรุณาเลือกประเภทการคำนวณภาษี (VAT)</h5>
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> เลือกประเภทการคำนวณภาษี (VAT)</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
