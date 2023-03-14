@@ -8,12 +8,12 @@
 
             <div class="modal-body">
                 <form action="#" method="POST">
-                    <div class="mb-0 mt-2">
+                    <div class="mb-0">
                         <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_users">
                         <label for="siteName" class="col-form-label">ชื่อไซต์งาน :</label>
                         <input type="text" value="<?php //echo $userAccount['name']; ?>" class="form-control" name="siteName" required>
                     </div>
-                    <div class="mb-0 mt-2">
+                    <div class="mb-0">
                         <label for="siteAbbre" class="col-form-label">อักษรย่อไซต์งาน :</label>
                         <input type="text" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" name="siteAbbre" required>
                     </div>

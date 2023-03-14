@@ -13,11 +13,11 @@
                         <input type="text" value="<?php //echo $userAccount['email']; ?>" required class="form-control" disabled>
                     </div>
                     <hr>
-                    <div class="mt-0">
+                    <div class="mb-0">
                         <label for="password" class="col-form-label font-weight-normal"><i class="fa-solid fa-key"></i> รหัสผ่าน (อย่างน้อย 8 ตัวอักษร) :</label>
                         <input type="password" minlength="8" required class="form-control" name="password">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-0">
                         <label for="confirmpassword" class="col-form-label font-weight-normal"><i class="fa-solid fa-key"></i> ยืนยันรหัสผ่าน :</label>
                         <input type="password" minlength="4" required class="form-control" name="confirmPassword">
                     </div>

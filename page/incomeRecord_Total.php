@@ -126,7 +126,7 @@
 
 
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการรายการสินค้า (Items Management)</legend>
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ (ยอดรวม)</legend>
         <!-- <hr class="headerUnderline"> -->
     </section>
 
@@ -134,27 +134,32 @@
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold"><i class="fa-solid fa-plus"></i> เพิ่มรายการสินค้า</h5>
+                <h5 class="fw-bold">ชื่อไซต์งาน : <?php //echo $fetchSite['siteName']; ?></h5>
+                <hr>
 
                 <form action="#" method="POST">
-                    <div class="row mb-3">
-                        <div class="col-md-8">
-                            <label for="listName" class="form-label fw-bold">ชื่อรายการ :</label>
-                            <input type="text" name="listName" class="form-control" id="listName" placeholder="ชื่อรายการสินค้า..." required>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="startDate">วันที่เริ่ม :</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate" required>
                         </div>
-                        <div class="col-md-4">
-                        <label for="listType" class="form-label fw-bold">ประเภทรายการ :</label>
-                        <select class="form-select" aria-label="listType" name="listType" required>
-                            <option selected>ค่าแรง</option>
-                            <option>ค่าวัสดุ</option>
-                        </select>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="endDate">วันที่สิ้นสุด :</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="byTime">จำนวนงวด :</label>
+                            <input type="number" class="form-control" name="byTime" id="byTime" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="amount">ยอดรวม :</label>
+                            <input type="number" class="form-control" name="amount" id="amount" required>
                         </div>
                     </div>
 
-
-                    <div class="row mb-2">
-                        <div class="col-md-8">
-                            <button type="submit" name="addSeller" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <button type="submit" name="addSeller" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </div>
                     <!-- <div class="row">
@@ -172,21 +177,25 @@
     <section class="container">
         <div class="collapse show" id="collapseTable">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold"><i class="fa-solid fa-table-list"></i> รายการสินค้าทั้งหมด</h5>
+                <h5 class="fw-bold"><i class="fa-solid fa-table-list"></i> ข้อมูลบันทึก/แก้ไข</h5>
                 <table class="table table-striped table-hover table-sm table-bordered css-serial">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">ชื่อรายการ</th>
-                            <th scope="col">ประเภท</th>
+                            <th scope="col">วันที่เริ่ม</th>
+                            <th scope="col">วันที่สิ้นสุด</th>
+                            <th scope="col">จำนวนงวด</th>
+                            <th scope="col">ยอดรวม</th>
                             <th scope="col">แก้ไข/อัพเดทข้อมูล</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
                         <tr>
                             <td></td>
-                            <td>เงินเดือน Staff (รวมค่าแรงรายวัน)</td>
-                            <td><span class="badge bg-warning">ค่าแรง</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>000000000</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditItems<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
@@ -249,7 +258,7 @@
                                 </div>
                             </td>
                         </tr> -->
-                        <tr>
+                        <!-- <tr>
                             <td></td>
                             <td>ค่าวัสดุก่อสร้าง</td>
                             <td><span class="badge bg-success">ค่าวัสดุ</span></td>
@@ -259,7 +268,7 @@
                                     <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> -->
                         <!-- <tr>
                             <td></td>
                             <td>ค่าวัสดุก่อสร้าง</td>

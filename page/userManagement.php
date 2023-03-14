@@ -250,35 +250,7 @@
                             <td><span class="badge bg-success">Admin</span></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Hermione</td>
-                            <td>Granger</td>
-                            <!-- <td>FullStack Developer</td> -->
-                            <td>hermioneGriffindor</td>
-                            <td><span class="badge bg-warning">User</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>นายทดสอบ</td>
-                            <td>นามสกุลทดสอบ</td>
-                            <!-- <td>test01</td> -->
-                            <td>userTest01</td>
-                            <td><span class="badge bg-warning">User</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
+                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditUser<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
                                     <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>

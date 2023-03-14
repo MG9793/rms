@@ -224,39 +224,9 @@
                             <td>0000000000000</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
+                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditSeller<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
                                     <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>ร้าน B</td>
-                            <td>สาขา BB</td>
-                            <td>0000000000000</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>ร้าน C</td>
-                            <td>สาขา CC</td>
-                            <td>0000000000000</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                                <!-- <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditSite<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=""><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </div> -->
                             </td>
                         </tr>
                     </tbody>
@@ -277,7 +247,7 @@
         }
     </script>
 
-    <?php include "modal/modal_editSite.php"; ?>
+    <?php include "modal/modal_editSeller.php"; ?>
     <?php include "modal/modal_editPassword.php"; ?>
 </body>
 </html>
