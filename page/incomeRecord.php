@@ -135,7 +135,7 @@
                     </li>
                 </ul>
             </div>
-            <script type="text/javascript" src="resources/js/displayDateTime.js"></script>
+            <script type="text/javascript" src="../resources/js/displayDateTime.js"></script>
         </div>
     </nav>
 
