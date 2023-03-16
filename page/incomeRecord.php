@@ -182,74 +182,13 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT">บันทึกยอดรวม</button>
-                    <button type="submit" class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#MA_Head_NoVAT">บันทึกรายละเอียด</button>
+                    <a href="incomeRecord_Total.php" class="btn btn-success w-100">บันทึกยอดรวม</a>
+                    <a href="" class="btn btn-dark w-100">บันทึกรายละเอียด</a>
                 </div>
             </div>
         </div>
     </div>
 
-
-    <!-- Modal 2 -->
-    <div class="modal fade" id="expenseDetailsVAT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-3 border rounded p-2 bg-dark text-light"></i> บันทึกค่าใช้จ่ายรวมภาษี (VAT)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="POST">
-                        <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
-                        <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกเลขที่ใบเสร็จ..." name="receiptNo" id="receiptNo" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
-                                <input type="date" class="form-control" name="buyDate" id="buyDate" required>
-                            </div>
-                        </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold" for="sellerName">ชื่อผู้ขาย :</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกชื่อผู้ขาย..." name="sellerName" id="sellerName" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold" for="taxID">เลขประจำตัวผู้เสียภาษี :</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี..." name="taxID" id="taxID" required>
-                            </div>
-                        </div>
-                        <div>หมายเหตุ : หากไม่พบชื่อผู้ขายให้ไปที่เมนูตั้งค่า และเพิ่มรายการผู้ขาย</div>
-
-                        <hr class="headerUnderline mt-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label class="col-form-label fw-bold">ยอดรวม :</label>
-                                <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" oninput="calculateVAT()" required>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">+ VAT 7% :</label>
-                                <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" required disabled>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="col-form-label fw-bold">รวมสุทธิ :</label>
-                                <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" required disabled>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-md">
-                                <button type="submit" class="btn btn-dark text-light w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         function calculateVAT() {

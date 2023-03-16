@@ -148,8 +148,8 @@
                             <input type="date" class="form-control" name="endDate" id="endDate" required>
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label fw-bold" for="byTime">จำนวนงวด :</label>
-                            <input type="number" class="form-control" name="byTime" id="byTime" required>
+                            <label class="form-label fw-bold" for="times">จำนวนงวด :</label>
+                            <input type="number" class="form-control" name="times" id="times" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label fw-bold" for="amount">ยอดรวม :</label>
@@ -198,90 +198,11 @@
                             <td>000000000</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditItems<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
                                     <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
-                        <!-- <tr>
-                            <td></td>
-                            <td>ระดับบริหาร, ระดับวิศวกร, ระดับหัวหน้าโฟร์แมน, ระดับธุรการ</td>
-                            <td><span class="badge bg-warning">ค่าแรง</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>ระดับแรงงาน</td>
-                            <td><span class="badge bg-warning">ค่าแรง</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>BONUS, เงินสะสม 3%, เงินชดเชย</td>
-                            <td><span class="badge bg-warning">ค่าแรง</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>ค่าแรงรายวัน (ส่วนผู้รับเหมา)</td>
-                            <td><span class="badge bg-warning">ค่าแรง</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>ค่าเครื่องจักร, ยานพาหนะ</td>
-                            <td><span class="badge bg-success">ค่าวัสดุ</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr> -->
-                        <!-- <tr>
-                            <td></td>
-                            <td>ค่าวัสดุก่อสร้าง</td>
-                            <td><span class="badge bg-success">ค่าวัสดุ</span></td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditItems<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr> -->
-                        <!-- <tr>
-                            <td></td>
-                            <td>ค่าวัสดุก่อสร้าง</td>
-                            <td><span class="badge bg-success">ค่าวัสดุ</span></td>
-                            <td>
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditSite<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=""><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr> -->
                     </tbody>
                 </table>
             </fieldset>
@@ -289,22 +210,43 @@
     </section>  <!-- Closing Tag Container -->
 
 
+    <div class="modal fade" id="modalEditRecord<?php //echo $userAccount['id_users']; ?>" tabindex="-1" aria-labelledby="modalEditRecord" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditRecord"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลรายรับ (Edit Income)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
+                <div class="modal-body">
+                    <form action="#" method="POST">
+                        <div class="mb-0">
+                            <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_users">
+                            <label for="editDateStart" class="col-form-label">วันที่เริ่ม :</label>
+                            <input type="date" value="<?php //echo $userAccount['name']; ?>" class="form-control" id="editDateStart" name="editDateStart" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="editDateEnd" class="col-form-label">วันที่สิ้นสุด :</label>
+                            <input type="date" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" id="editDateEnd" name="editDateEnd" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="editTimes" class="col-form-label">จำนวนงวด :</label>
+                            <input type="number" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" id="editTimes" name="editTimes" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="editAmounts" class="col-form-label">ยอดรวม :</label>
+                            <input type="number" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" id="editAmounts" name="editAmounts" required>
+                        </div>
 
-
-    <!-- <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-clipboard"></i> เพิ่มรายการบันทึก</h2>
-        <hr class="headerUnderline">
-        <div class="d-flex">
-            <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseTable" aria-expanded="false" aria-controls="collapseTable"><i class="fa-solid fa-table-list"></i> ซ่อน/แสดง รายการบันทึกทั้งหมด</a>
-            <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><i class="fa-solid fa-list"></i> ซ่อน/แสดง ฟอร์มเพิ่มรายการบันทึก</a>
-            <select class="form-select w-25" aria-label="filterProjectStatus">
-                <option selected>ตัวกรองสถานะโครงการ...</option>
-                <option>อยู่ระหว่างดำเนินโครงการ</option>
-                <option>ปิดโครงการ</option>
-            </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" name="editUser"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-    </section>  Closing Tag Container -->
+    </div>
 
 
     <script>
@@ -317,7 +259,6 @@
         }
     </script>
 
-    <?php include "modal/modal_editItems.php"; ?>
     <?php include "modal/modal_editPassword.php"; ?>
 </body>
 </html>
