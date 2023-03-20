@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บันทึกค่าใช้จ่าย (ยอดรวม) | ระบบบริหารจัดการใบเสร็จ</title>
 
-    <!-- Font Kanit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
-
     <!-- Bootstrap5.3.0 -->
     <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
     <script src="../resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
@@ -28,6 +23,20 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
 
     <style>
+        /* kanit-300 - latin_thai */
+        @font-face {
+            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-family: 'Kanit';
+            font-style: normal;
+            font-weight: 300;
+            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot'); /* IE9 Compat Modes */
+            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                url('../resources/fonts/kanit-v12-latin_thai-300.woff2') format('woff2'), /* Super Modern Browsers */
+                url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
+                url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
+                url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
+        }
+
         body {
             /* background-color: rgb(139, 166, 243); */
             background-color: rgb(245, 245, 245);
