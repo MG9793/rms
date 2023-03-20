@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จัดการผู้ขาย (Seller Management) | ระบบบริหารจัดการใบเสร็จ</title>
+    <title>จัดการรายการสินค้า (Items Management) | ระบบบริหารจัดการใบเสร็จ</title>
 
     <!-- Bootstrap5.3.0 -->
     <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
@@ -77,20 +77,18 @@
     <nav class="navbar navbar-expand-lg text-light px-4 bg-dark">
         <div class="container">
             <a class="navbar-brand"><img src="../image/logo/logo.jpg" class="rounded" style="width:80px"></a>
-            <h5 class="text-light">สิทธิชัย เอนจิเนียริ่ง - ระบบจัดการใบเสร็จ v1.00</h5>
+            <h5 class="text-light">สิทธิชัย เอนจิเนียริ่ง - ระบบบริหารจัดการใบเสร็จ</h5>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="../index.php"><i class="fa-solid fa-gauge-high"></i> แดชบอร์ด</a>
-                    </li> -->
+
                     <li class="nav-item">
                         <a class="nav-link" href="../index.php">แดชบอร์ด</a>
                     </li>
-                    
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">บันทึกค่าใช้จ่าย</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -109,8 +107,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gears"></i> ตั้งค่า</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black" href="listItemsManagement.php"><i class="fa-solid fa-clipboard"></i> รายการบันทึก</a></li>
-                            <li><a class="dropdown-item text-black disabled" href="#"><i class="fa-solid fa-cart-shopping"></i> ข้อมูลผู้ขาย</a></li>
+                            <li><a class="dropdown-item text-black disabled" href="#"><i class="fa-solid fa-clipboard"></i> รายการสินค้า</a></li>
+                            <li><a class="dropdown-item text-black" href="sellerManagement.php"><i class="fa-solid fa-cart-shopping"></i> ข้อมูลผู้ขาย</a></li>
                             <li><a class="dropdown-item text-black" href="siteManagement.php"><i class="fa-solid fa-building-circle-check"></i> ไซต์งาน</a></li>
                             <li><a class="dropdown-item text-black" href="userManagement.php"><i class="fa-solid fa-user-gear"></i> ผู้ใช้งาน</a></li>
                         </ul>
@@ -132,105 +130,81 @@
         </div>
     </nav>
 
-    <!-- <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-cart-shopping"></i> เพิ่มข้อมูลผู้ขาย</h2>
-        <hr class="headerUnderline">
-        <div class="d-flex">
-            <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseTable" aria-expanded="false" aria-controls="collapseTable"><i class="fa-solid fa-table-list"></i> ซ่อน/แสดง ข้อมูลผู้ขายทั้งหมด</a>
-            <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><i class="fa-solid fa-list"></i> ซ่อน/แสดง ฟอร์มเพิ่มผู้ขาย</a>
-            <select class="form-select w-25" aria-label="filterProjectStatus">
-                <option selected>ตัวกรองสถานะโครงการ...</option>
-                <option>อยู่ระหว่างดำเนินโครงการ</option>
-                <option>ปิดโครงการ</option>
-            </select>
-        </div> -->
 
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการผู้ขาย (Seller Management)</legend>
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ (ยอดรวม)</legend>
         <!-- <hr class="headerUnderline"> -->
     </section>
-    
+
 
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold"><i class="fa-solid fa-plus"></i> เพิ่มข้อมูลผู้ขาย</h5>
+                <h5 class="fw-bold">ชื่อไซต์งาน : <?php //echo $fetchSite['siteName']; ?></h5>
+                <hr>
 
                 <form action="#" method="POST">
-                    <div class="row mb-3">
-                        <div class="col-md-8">
-                            <label for="sellerName" class="form-label fw-bold">ชื่อผู้ขาย :</label>
-                            <input type="text" name="sellerName" class="form-control" id="sellerName" placeholder="ชื่อผู้ขาย..." required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="sellerID" class="form-label fw-bold">เลขประจำตัวผู้เสียภาษี :</label>
-                            <input type="text" name="sellerID" class="form-control" id="sellerID" placeholder="เลขประจำตัวผู้เสียภาษี..." required>
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="exampleCheck1" onchange="toggleInput()">
-                                <label class="form-check-label" for="exampleCheck1">สำนักงานใหญ่</label>
-                            </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="startDate">วันที่เริ่ม :</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate" required>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-md-8">
-                            <label for="exampleFormControlInput1" class="form-label fw-bold">ชื่อสถานประกอบการ (กรณีไม่ใช่สำนักงานใหญ่) :</label>
-                            <input type="text" name="sellerBranch" class="form-control" id="exampleFormControlInput1" placeholder="ชื่อสถานประกอบการ..." required>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="endDate">วันที่สิ้นสุด :</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="times">จำนวนงวด :</label>
+                            <input type="number" class="form-control" name="times" id="times" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="amount">ยอดรวม :</label>
+                            <input type="number" class="form-control" name="amount" id="amount" required>
                         </div>
                     </div>
 
-
-                    <div class="row mb-2">
-                        <div class="col-md-8">
-                            <button type="submit" name="addSeller" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <button type="submit" name="addSeller" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
-                        <!-- <div class="col-md-2">
-                            <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>
-                        </div> -->
                     </div>
+                    <!-- <div class="row">
+                        <div class="col-md-8">
+                            <button type="reset" class="btn btn-secondary w-100"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+                        </div>
+                    </div> -->
                 </form>
             </fieldset>
         </div>
     </section>  <!-- Closing Tag Container -->
 
-    <script>
-        function toggleInput() {
-            var input = document.getElementById("exampleFormControlInput1");
-            if (document.getElementById("exampleCheck1").checked) {
-                input.disabled = true;
-            } else {
-                input.disabled = false;
-            }
-        }
-    </script>
 
-
+    
     <section class="container">
         <div class="collapse show" id="collapseTable">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold"><i class="fa-solid fa-table-list"></i> รายการผู้ขายทั้งหมด</h5>
+                <h5 class="fw-bold"><i class="fa-solid fa-table-list"></i> ข้อมูลบันทึก/แก้ไข</h5>
                 <table class="table table-striped table-hover table-sm table-bordered css-serial">
                     <thead class="bg-dark text-light">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">ชื่อผู้ขาย</th>
-                            <th scope="col">สถานประกอบการ</th>
-                            <th scope="col">เลขประจำตัวผู้เสียภาษี</th>
+                            <th scope="col">วันที่เริ่ม</th>
+                            <th scope="col">วันที่สิ้นสุด</th>
+                            <th scope="col">จำนวนงวด</th>
+                            <th scope="col">ยอดรวม</th>
                             <th scope="col">แก้ไข/อัพเดทข้อมูล</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
                         <tr>
                             <td></td>
-                            <td>ร้าน A</td>
-                            <td>สาขา AA</td>
-                            <td>0000000000000</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>000000000</td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditSeller<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
                                     <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
@@ -239,9 +213,47 @@
                 </table>
             </fieldset>
         </div>
-    </section>
+    </section>  <!-- Closing Tag Container -->
 
-    
+
+    <div class="modal fade" id="modalEditRecord<?php //echo $userAccount['id_users']; ?>" tabindex="-1" aria-labelledby="modalEditRecord" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditRecord"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลรายรับ (Edit Income)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <form action="#" method="POST">
+                        <div class="mb-0">
+                            <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_users">
+                            <label for="editDateStart" class="col-form-label">วันที่เริ่ม :</label>
+                            <input type="date" value="<?php //echo $userAccount['name']; ?>" class="form-control" id="editDateStart" name="editDateStart" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="editDateEnd" class="col-form-label">วันที่สิ้นสุด :</label>
+                            <input type="date" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" id="editDateEnd" name="editDateEnd" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="editTimes" class="col-form-label">จำนวนงวด :</label>
+                            <input type="number" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" id="editTimes" name="editTimes" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="editAmounts" class="col-form-label">ยอดรวม :</label>
+                            <input type="number" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" id="editAmounts" name="editAmounts" required>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" name="editUser"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         function calculateDays() {
@@ -253,7 +265,6 @@
         }
     </script>
 
-    <?php include "modal/modal_editSeller.php"; ?>
     <?php include "modal/modal_editPassword.php"; ?>
 </body>
 </html>
