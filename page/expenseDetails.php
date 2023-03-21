@@ -161,15 +161,16 @@
     </nav>
 
 
-    <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-1 border rounded p-2 bg-dark text-light"></i> บันทึกค่าใช้จ่าย (รายละเอียดสินค้า)</h2>
-        <hr class="headerUnderline">
+    <!-- pagename ห้ามลบ -->
+    <section class="container mt-2">
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-1 border rounded p-1 bg-dark text-light"></i> บันทึกค่าใช้จ่าย (รายละเอียดสินค้า)</legend>
+    </section>
 
-        <div class="d-flex align-items-center">
-            <input class="form-control" type="text" placeholder="ค้นหาเลขที่ใบเสร็จ">
-        </div>
+
+    <!-- input ห้ามลบ -->
+    <section class="container">
+        <input class="form-control" type="text" placeholder="ค้นหาเลขที่ใบเสร็จ">
         <div><b>*หมายเหตุ :</b> หากไม่พบเลขที่ใบเสร็จให้บันทึกค่าใช้จ่าย (ยอดรวม) ก่อน</div>
-
 
         <fieldset class="p-3 shadow-sm mt-3">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">

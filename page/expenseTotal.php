@@ -149,10 +149,14 @@
     </nav>
 
 
-    <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-1 border rounded p-2 bg-dark text-light"></i> บันทึกค่าใช้จ่าย (ยอดรวม)</h2>
-        <hr class="headerUnderline">
+    <!-- pagename ห้ามลบ -->
+    <section class="container mt-2">
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-1 border rounded p-1 bg-dark text-light"></i> บันทึกค่าใช้จ่าย (ยอดรวม)</legend>
+    </section>
 
+
+    <!-- input ห้ามลบ -->
+    <section class="container">
         <div class="row">
             <div class="col-md center-screen">
                 <div class="row row-cols-2 row-cols-md-6 g-2">
