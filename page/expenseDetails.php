@@ -6,26 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บันทึกค่าใช้จ่าย (รายละเอียดสินค้า) | ระบบบริหารจัดการใบเสร็จ</title>
 
-    <!-- Bootstrap5.3.0 -->
-    <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
-    <script src="../resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Dependency ห้ามลบ -->
+    <?php include "include/dependency.php"; ?>
 
-    <!-- Font Awesome6.2.1 -->
-    <link rel="stylesheet" href="../resources/lib/fontawesome6.2.1/css/fontawesome.css">
-    <link rel="stylesheet" href="../resources/lib/fontawesome6.2.1/css/brands.css">
-    <link rel="stylesheet" href="../resources/lib/fontawesome6.2.1/css/solid.css">
-
-    <!-- jQuey 3.6.1 -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
-    <!-- DataTables CDN -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
-
+    <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
-        /* kanit-300 - latin_thai */
         @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-display: swap;
             font-family: 'Kanit';
             font-style: normal;
             font-weight: 300;
@@ -35,63 +22,6 @@
                 url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
                 url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
                 url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
-        }
-
-        body {
-            /* background-color: rgb(139, 166, 243); */
-            background-color: rgb(245, 245, 245);
-            font-family: 'Kanit', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            /* background-color: rgb(15, 49, 147); */
-        }
-
-        .navbar .nav-item a {
-            color: #fff;
-        }
-
-        .navbar .nav-item a:hover {
-            color: yellow;
-        }
-
-        .headerUnderline {
-            background-color: #fff;
-            border-top: 2px dotted #000;
-        }
-
-        .col a {
-            text-decoration: none;
-            color: #000;
-        }
-
-        .col a:hover {
-            color: #000;
-        }
-
-        .card {
-            transition: transform .3s;
-        }
-
-        .card:hover {
-          background-color: pink;
-          transform: scale(1.05);
-        }
-
-        .css-serial {
-            counter-reset: serial-number; /* Set the serial number counter to 0 */
-        }
-
-        .css-serial td:first-child:before {
-            counter-increment: serial-number; /* Increment the serial number counter */
-            content: counter(serial-number); /* Display the counter */
-        }
-
-        fieldset {
-            background-color: #fff;
-            border-radius: .4em;
         }
     </style>
 

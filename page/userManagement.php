@@ -6,19 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>จัดการผู้ใช้งาน (User Management) | ระบบบริหารจัดการใบเสร็จ</title>
 
-    <!-- Bootstrap5.3.0 -->
-    <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
-    <script src="../resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Dependency ห้ามลบ -->
+    <?php include "include/dependency.php"; ?>
 
-    <!-- Font Awesome6.2.1 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
-        /* kanit-300 - latin_thai */
         @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-display: swap;
             font-family: 'Kanit';
             font-style: normal;
             font-weight: 300;
@@ -28,42 +22,6 @@
                 url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
                 url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
                 url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
-        }
-
-        body {
-            /* background-color: rgb(139, 166, 243); */
-            background-color: rgb(245, 245, 245);
-            font-family: 'Kanit', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            /* background-color: rgb(15, 49, 147); */
-        }
-
-        .navbar .nav-item a {
-            color: #fff;
-        }
-
-        .navbar .nav-item a:hover {
-            color: yellow;
-        }
-
-        .css-serial {
-            counter-reset: serial-number;
-            border-radius: .4em;
-            overflow: hidden;
-        }
-
-        .css-serial td:first-child:before {
-            counter-increment: serial-number;
-            content: counter(serial-number);
-        }
-
-        fieldset {
-            background-color: #fff;
-            border-radius: .4em;
         }
     </style>
 </head>
@@ -79,9 +37,6 @@
             
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="../index.php"><i class="fa-solid fa-gauge-high"></i> แดชบอร์ด</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="../index.php">แดชบอร์ด</a>
                     </li>
@@ -144,11 +99,11 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="name" class="form-label fw-bold">ชื่อ :</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your name.." required>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Your name.." required>
                         </div>
                         <div class="col-md-4">
                             <label for="lastName" class="form-label fw-bold">นามสกุล :</label>
-                            <input type="text" name="lastName" class="form-control" id="lastName" placeholder="Your lastname.." required>
+                            <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Your lastname.." required>
                         </div>
                         <div class="col-md-4">
                             <label for="userStatus" class="form-label fw-bold">สิทธิการใช้งาน :</label>
@@ -157,14 +112,6 @@
                                 <option>User</option>
                             </select>
                         </div>
-                        <!-- <div class="col-md">
-                        <label for="position" class="form-label fw-bold">ตำแหน่ง :</label>
-                            <select class="form-select" aria-label="position" name="position" required>
-                                <option>ตำแหน่ง 1</option>
-                                <option>ตำแหน่ง 2</option>
-                                <option>ตำแหน่ง 3</option>
-                            </select>
-                        </div> -->
                     </div>
 
                     <div class="row mb-3">
@@ -180,25 +127,7 @@
                             <label for="confirmPassword" class="form-label fw-bold">Confirm Password :</label>
                             <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
                         </div>
-                        <!-- <div class="col-md-4">
-                            <label for="userStatus" class="form-label fw-bold">สถานะการใช้งานระบบ :</label>
-                            <select class="form-select" aria-label="userStatus" name="userStatus" required>
-                                <option>Admin</option>
-                                <option>User</option>
-                            </select>
-                        </div> -->
                     </div>
-
-                    <!-- <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="password" class="form-label fw-bold">Password (อย่างน้อย 8 ตัวอักษร) :</label>
-                            <input type="password" name="password" class="form-control" id="password" placeholder="xxxxxxxx" minlength="8" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="confirmPassword" class="form-label fw-bold">Confirm Password :</label>
-                            <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
-                        </div>
-                    </div> -->
 
                     <div class="row">
                         <div class="col-md-10">
@@ -208,11 +137,6 @@
                             <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-md-8">
-                            <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>
-                        </div>
-                    </div> -->
                 </form>
             </fieldset>
         </div>
@@ -229,7 +153,6 @@
                             <th scope="col">#</th>
                             <th scope="col">ชื่อ</th>
                             <th scope="col">นามสกุล</th>
-                            <!-- <th scope="col">ตำแหน่ง</th> -->
                             <th scope="col">ชื่อผู้ใช้</th>
                             <th scope="col">สิทธิการใช้งาน</th>
                             <th scope="col">แก้ไข</th>
@@ -240,13 +163,12 @@
                             <td></td>
                             <td>Danai</td>
                             <td>Jantapalaboon</td>
-                            <!-- <td>Front-End Developer</td> -->
                             <td>danai12345</td>
                             <td><span class="badge bg-success">Admin</span></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditUser<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditUser<?php //echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteUser<?php //echo $fetch_incomeHead['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>

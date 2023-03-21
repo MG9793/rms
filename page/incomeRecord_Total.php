@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once "../db/config/conn.php";
+    require_once "../db/config/deleteRow.php";
 
     // if (!isset($_SESSION['admin_login'])) {
     //     header("location: login.php");
@@ -22,17 +23,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บันทึกรายรับ (ยอดรวม) | ระบบบริหารจัดการใบเสร็จ</title>
 
-    <!-- Bootstrap5.3.0 -->
-    <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
-    <script src="../resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Font Awesome6.2.1 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- Custom UI -->
-    <link rel="stylesheet" href="../resources/css/customUI.css">
+    <!-- Dependency ห้ามลบ -->
+    <?php include "include/dependency.php"; ?>
 
     <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
@@ -68,7 +60,7 @@
         <div class="row">
             <div class="col-md">
             <?php
-                // Alert เพิ่มข้อมูลสำเร็จ
+                // Alert เพิ่มรายการสำเร็จ
                 if(isset($_SESSION['addIncomeHead_success'])) {
                     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
                     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
@@ -77,7 +69,7 @@
                     echo "</div>";
                 }
 
-                // Alert แก้ไขข้อมูลสำเร็จ
+                // Alert แก้ไขรายการสำเร็จ
                 else if(isset($_SESSION['editIncomeHead_success'])) {
                     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
                     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
@@ -86,14 +78,14 @@
                     echo "</div>";
                 }
 
-                // // Alert ลบข้อมูลผู้ใช้งานสำเร็จ
-                // else if(isset($_SESSION['deleteAccount_success'])) {
-                //     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                //     echo $_SESSION['deleteAccount_success'];
-                //     unset($_SESSION['deleteAccount_success']);
-                //     echo "</div>";
-                // }
+                // Alert ลบรายการสำเร็จ
+                else if(isset($_SESSION['deleteIncomeHead_success'])) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['deleteIncomeHead_success'];
+                    unset($_SESSION['deleteIncomeHead_success']);
+                    echo "</div>";
+                }
             ?>
             </div>
         </div>
@@ -166,7 +158,7 @@
                             $incomeHead = $stmt->fetchAll();
 
                             if (!$incomeHead) {
-                                echo "<p><td colspan='6' class='text-center'>ไม่พบข้อมูล</td></p>";
+                                echo "<p><td colspan='7' class='text-center'>ไม่พบข้อมูล</td></p>";
                             } else {
                                 foreach ($incomeHead as $fetch_incomeHead) {
                         ?>
@@ -180,8 +172,8 @@
                             <td><?php echo $fetch_incomeHead['sum']; ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -225,6 +217,26 @@
                                                 <button type="submit" class="btn btn-primary" name="editIncome_head"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                                             </div>
                                         </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal ลบข้อมูล ห้ามลบ -->
+                        <div class="modal fade" id="modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"><i class="fas fa-trash"></i> ยืนยันลบรายการ ?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6 class="text-center">ต้องการลบรายการหรือไม่ ? กรุณายืนยัน</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a data-id="<?php echo $fetch_incomeHead['id']; ?>" href="?deleteIncome_head=<?php echo $fetch_incomeHead['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
                                     </div>
                                 </div>
                             </div>

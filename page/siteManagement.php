@@ -6,19 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>จัดการไซต์งาน (Site Management) | ระบบบริหารจัดการใบเสร็จ</title>
 
-    <!-- Bootstrap5.3.0 -->
-    <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
-    <script src="../resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Dependency ห้ามลบ -->
+    <?php include "include/dependency.php"; ?>
 
-    <!-- Font Awesome6.2.1 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
-        /* kanit-300 - latin_thai */
         @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-display: swap;
             font-family: 'Kanit';
             font-style: normal;
             font-weight: 300;
@@ -28,42 +22,6 @@
                 url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
                 url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
                 url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
-        }
-
-        body {
-            /* background-color: rgb(139, 166, 243); */
-            background-color: rgb(245, 245, 245);
-            font-family: 'Kanit', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            /* background-color: rgb(15, 49, 147); */
-        }
-
-        .navbar .nav-item a {
-            color: #fff;
-        }
-
-        .navbar .nav-item a:hover {
-            color: yellow;
-        }
-
-        .css-serial {
-            counter-reset: serial-number;
-            border-radius: .4em;
-            overflow: hidden;
-        }
-
-        .css-serial td:first-child:before {
-            counter-increment: serial-number;
-            content: counter(serial-number);
-        }
-
-        fieldset {
-            background-color: #fff;
-            border-radius: .4em;
         }
     </style>
 </head>
@@ -79,9 +37,6 @@
             
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="../index.php"><i class="fa-solid fa-gauge-high"></i> แดชบอร์ด</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="../index.php">แดชบอร์ด</a>
                     </li>
@@ -145,7 +100,6 @@
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
         <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการไซต์งาน (Site Management)</legend>
-        <!-- <hr class="headerUnderline"> -->
     </section>
 
 
@@ -159,11 +113,11 @@
                     <div class="row mb-3">
                         <div class="col-md-8">
                             <label for="projectName" class="form-label fw-bold">ชื่อไซต์งาน :</label>
-                            <input type="text" name="projectName" class="form-control" id="projectName" placeholder="ไซต์งาน.." required>
+                            <input type="text" class="form-control" name="projectName" id="projectName" placeholder="ไซต์งาน.." required>
                         </div>
                         <div class="col-md-4">
                             <label for="projectAbbreviation" class="form-label fw-bold">อักษรย่อไซต์งาน :</label>
-                            <input type="text" name="projectAbbreviation" class="form-control" id="projectAbbreviation" required>
+                            <input type="text" class="form-control" name="projectAbbreviation" id="projectAbbreviation" required>
                         </div>
                     </div>
 
@@ -198,7 +152,7 @@
 
                     <div class="row mb-2">
                         <div class="col-md-8">
-                            <button type="submit" name="addSite" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                            <button type="submit" class="btn btn-primary w-100" name="addSite"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
                         </div>
                         <!-- <div class="col-md-2">
                             <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>

@@ -6,29 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>บันทึกรายรับ | ระบบบริหารจัดการใบเสร็จ</title>
 
-    <!-- Bootstrap5.3.0 -->
-    <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
-    <script src="../resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Dependency ห้ามลบ -->
+    <?php include "include/dependency.php"; ?>
 
-    <!-- Font Awesome6.2.1 -->
-    <link rel="stylesheet" href="../resources/lib/fontawesome6.2.1/css/fontawesome.css">
-    <link rel="stylesheet" href="../resources/lib/fontawesome6.2.1/css/brands.css">
-    <link rel="stylesheet" href="../resources/lib/fontawesome6.2.1/css/solid.css">
-
-    <!-- Custom UI -->
-    <link rel="stylesheet" href="../resources/css/customUI.css">
-
-    <!-- jQuey 3.6.1 -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-
-    <!-- DataTables CDN -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
-
+    <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
-        /* kanit-300 - latin_thai */
         @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-display: swap;
             font-family: 'Kanit';
             font-style: normal;
             font-weight: 300;

@@ -28,8 +28,3 @@ fieldset {
     background-color: #fff;
     border-radius: .4em;
 }
-
-.headerUnderline {
-    background-color: #fff;
-    border-top: 2px dotted #000;
-}

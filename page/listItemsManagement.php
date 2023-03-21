@@ -6,19 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>จัดการรายการสินค้า (Items Management) | ระบบบริหารจัดการใบเสร็จ</title>
 
-    <!-- Bootstrap5.3.0 -->
-    <link rel="stylesheet" href="../resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
-    <script src="../resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Dependency ห้ามลบ -->
+    <?php include "include/dependency.php"; ?>
 
-    <!-- Font Awesome6.2.1 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
-        /* kanit-300 - latin_thai */
         @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-display: swap;
             font-family: 'Kanit';
             font-style: normal;
             font-weight: 300;
@@ -28,42 +22,6 @@
                 url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
                 url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
                 url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
-        }
-
-        body {
-            /* background-color: rgb(139, 166, 243); */
-            background-color: rgb(245, 245, 245);
-            font-family: 'Kanit', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar {
-            /* background-color: rgb(15, 49, 147); */
-        }
-
-        .navbar .nav-item a {
-            color: #fff;
-        }
-
-        .navbar .nav-item a:hover {
-            color: yellow;
-        }
-
-        .css-serial {
-            counter-reset: serial-number;
-            border-radius: .4em;
-            overflow: hidden;
-        }
-
-        .css-serial td:first-child:before {
-            counter-increment: serial-number;
-            content: counter(serial-number);
-        }
-
-        fieldset {
-            background-color: #fff;
-            border-radius: .4em;
         }
     </style>
 </head>
@@ -159,11 +117,6 @@
                             <button type="submit" name="addSeller" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
                         </div>
                     </div>
-                    <!-- <div class="row">
-                        <div class="col-md-8">
-                            <button type="reset" class="btn btn-secondary w-100"><i class="fa-solid fa-rotate-right"></i> Reset</button>
-                        </div>
-                    </div> -->
                 </form>
             </fieldset>
         </div>
@@ -191,8 +144,8 @@
                             <td><span class="badge bg-warning">ค่าแรง</span></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditItems<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php //echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php //echo $fetch_incomeHead['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
