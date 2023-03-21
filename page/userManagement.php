@@ -65,11 +65,6 @@
             background-color: #fff;
             border-radius: .4em;
         }
-
-        .headerUnderline {
-            background-color: #fff;
-            border-top: 2px dotted #000;
-        }
     </style>
 </head>
 <body>
@@ -133,19 +128,13 @@
     </nav>
 
 
+    <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
         <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการผู้ใชังาน (User Management)</legend>
-        <!-- <hr class="headerUnderline"> -->
     </section>
-    <!-- <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-user-group"></i> ระบบจัดการผู้ใช้งาน</h2>
-        <hr class="headerUnderline">
-        <div class="d-flex">
-            <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseTable" aria-expanded="false" aria-controls="collapseTable"><i class="fa-solid fa-table-list"></i> ซ่อน/แสดง ผู้ใช้งานทั้งหมด</a>
-            <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><i class="fa-solid fa-list"></i> ซ่อน/แสดง ฟอร์มเพิ่มผู้ใช้งาน</a>
-        </div> -->
 
 
+    <!-- input ห้ามลบ -->
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
@@ -181,15 +170,15 @@
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="userName" class="form-label fw-bold">ชื่อผู้ใช้ (Username) :</label>
-                            <input type="text" name="userName" class="form-control" id="userName" placeholder="username.." required>
+                            <input type="text" class="form-control" name="userName" id="userName" placeholder="username.." required>
                         </div>
                         <div class="col-md-4">
                             <label for="password" class="form-label fw-bold">Password (อย่างน้อย 8 ตัวอักษร) :</label>
-                            <input type="password" name="password" class="form-control" id="password" placeholder="xxxxxxxx" minlength="8" required>
+                            <input type="password" class="form-control" name="password" id="password" placeholder="xxxxxxxx" minlength="8" required>
                         </div>
                         <div class="col-md-4">
                             <label for="confirmPassword" class="form-label fw-bold">Confirm Password :</label>
-                            <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
+                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
                         </div>
                         <!-- <div class="col-md-4">
                             <label for="userStatus" class="form-label fw-bold">สถานะการใช้งานระบบ :</label>
@@ -213,7 +202,7 @@
 
                     <div class="row">
                         <div class="col-md-10">
-                            <button type="submit" name="registerUser" class="btn btn-primary w-100"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                            <button type="submit" class="btn btn-primary w-100" name="registerUser"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
                         </div>
                         <div class="col-md-2">
                             <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>

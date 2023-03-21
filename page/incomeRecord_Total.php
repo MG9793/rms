@@ -52,6 +52,7 @@
 </head>
 <body>
 
+
     <!-- navbar ห้ามลบ -->
     <?php include 'include/navbar.php'; ?>
 
@@ -66,34 +67,34 @@
     <section class="container">
         <div class="row">
             <div class="col-md">
-        <?php
-            // Alert เพิ่มข้อมูลสำเร็จ
-            if(isset($_SESSION['addIncomeHead_success'])) {
-                echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                echo $_SESSION['addIncomeHead_success'];
-                unset($_SESSION['addIncomeHead_success']);
-                echo "</div>";
-            }
+            <?php
+                // Alert เพิ่มข้อมูลสำเร็จ
+                if(isset($_SESSION['addIncomeHead_success'])) {
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['addIncomeHead_success'];
+                    unset($_SESSION['addIncomeHead_success']);
+                    echo "</div>";
+                }
 
-            // // Alert แก้ไขข้อมูลผู้ใช้งานสำเร็จ
-            // else if(isset($_SESSION['editAccount_success'])) {
-            //     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-            //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-            //     echo $_SESSION['editAccount_success'];
-            //     unset($_SESSION['editAccount_success']);
-            //     echo "</div>";
-            // }
+                // Alert แก้ไขข้อมูลสำเร็จ
+                else if(isset($_SESSION['editIncomeHead_success'])) {
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['editIncomeHead_success'];
+                    unset($_SESSION['editIncomeHead_success']);
+                    echo "</div>";
+                }
 
-            // // Alert ลบข้อมูลผู้ใช้งานสำเร็จ
-            // else if(isset($_SESSION['deleteAccount_success'])) {
-            //     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-            //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-            //     echo $_SESSION['deleteAccount_success'];
-            //     unset($_SESSION['deleteAccount_success']);
-            //     echo "</div>";
-            // }
-        ?>
+                // // Alert ลบข้อมูลผู้ใช้งานสำเร็จ
+                // else if(isset($_SESSION['deleteAccount_success'])) {
+                //     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                //     echo $_SESSION['deleteAccount_success'];
+                //     unset($_SESSION['deleteAccount_success']);
+                //     echo "</div>";
+                // }
+            ?>
             </div>
         </div>
     </section>
@@ -198,21 +199,25 @@
                                     <div class="modal-body">
                                         <form action="../db/db_incomeHead.php" method="POST">
                                             <div class="mb-0">
-                                                <input type="hidden" class="form-control" name="editSiteName" value="<?php $fetch_incomeHead['site_name']; ?>" readonly>
+                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_incomeHead['id']; ?>" readonly required>
+                                                <label for="editSiteName" class="col-form-label">ไซต์งาน :</label>
+                                                <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_incomeHead['site_name']; ?>" required>
+                                            </div>
+                                            <div class="mb-0">
                                                 <label for="editStartDate" class="col-form-label">วันที่เริ่ม :</label>
-                                                <input type="date" value="<?php //echo $userAccount['name']; ?>" class="form-control" name="editStartDate" id="editStartDate" required>
+                                                <input type="date" class="form-control" name="editStartDate" id="editStartDate" value="<?php echo $fetch_incomeHead['start_date']; ?>" required>
                                             </div>
                                             <div class="mb-0">
                                                 <label for="editFinishDate" class="col-form-label">วันที่สิ้นสุด :</label>
-                                                <input type="date" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" name="editFinishDate" id="editFinishDate" required>
+                                                <input type="date" class="form-control" name="editFinishDate" id="editFinishDate" value="<?php echo $fetch_incomeHead['finish_date']; ?>" required>
                                             </div>
                                             <div class="mb-0">
                                                 <label for="editInstallment" class="col-form-label">จำนวนงวด :</label>
-                                                <input type="number" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" name="editInstallment" id="editInstallment" required>
+                                                <input type="number" class="form-control" name="editInstallment" id="editInstallment" value="<?php echo $fetch_incomeHead['installment']; ?>" required>
                                             </div>
                                             <div class="mb-0">
                                                 <label for="editSum" class="col-form-label">ยอดรวม :</label>
-                                                <input type="number" value="<?php //echo $userAccount['lastName']; ?>" class="form-control" name="editSum" id="editSum" step="any" required>
+                                                <input type="number" class="form-control" name="editSum" id="editSum" step="any" value="<?php echo $fetch_incomeHead['sum']; ?>" required>
                                             </div>
 
                                             <div class="modal-footer">
@@ -224,9 +229,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                         <?php } } ?>        <!-- endforeach -->
                     </tbody>
                 </table>
@@ -237,7 +239,7 @@
 
 
 
-
+<!-- 
     <script>
         function calculateDays() {
             var startDate = new Date(document.getElementById("projectStart").value);
@@ -246,7 +248,7 @@
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
             document.getElementById("totalDays").value = diffDays;
         }
-    </script>
+    </script> -->
 
     <?php include "modal/modal_editPassword.php"; ?>
 </body>

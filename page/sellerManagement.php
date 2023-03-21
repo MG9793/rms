@@ -65,11 +65,6 @@
             background-color: #fff;
             border-radius: .4em;
         }
-
-        .headerUnderline {
-            background-color: #fff;
-            border-top: 2px dotted #000;
-        }
     </style>
 </head>
 <body>
@@ -145,12 +140,15 @@
             </select>
         </div> -->
 
+        
+    <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
         <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการผู้ขาย (Seller Management)</legend>
         <!-- <hr class="headerUnderline"> -->
     </section>
     
 
+    <!-- input ห้ามลบ -->
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
