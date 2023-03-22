@@ -4,7 +4,7 @@
     require_once "../db/config/deleteRow.php";
 
     // if (!isset($_SESSION['admin_login'])) {
-    //     header("location: login.php");
+    //     header("location: ../login.php");
     // } else {
 
     //     // query ชื่อผู้ใช้งาน
@@ -150,7 +150,6 @@
                     </thead>
                     <tbody class="align-middle">
 
-
                         <!-- query ตาราง ห้ามลบ -->
                         <?php
                             $stmt = $conn->query("SELECT * FROM income_head");
@@ -207,7 +206,7 @@
                                                 <label for="editInstallment" class="col-form-label">จำนวนงวด :</label>
                                                 <input type="number" class="form-control" name="editInstallment" id="editInstallment" value="<?php echo $fetch_incomeHead['installment']; ?>" required>
                                             </div>
-                                            <div class="mb-0">
+                                            <div class="mb-2">
                                                 <label for="editSum" class="col-form-label">ยอดรวม :</label>
                                                 <input type="number" class="form-control" name="editSum" id="editSum" step="any" value="<?php echo $fetch_incomeHead['sum']; ?>" required>
                                             </div>
@@ -223,7 +222,7 @@
                         </div>
 
 
-                        <!-- Modal ลบข้อมูล ห้ามลบ -->
+                        <!-- Modal ยืนยันลบข้อมูล ห้ามลบ -->
                         <div class="modal fade" id="modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">

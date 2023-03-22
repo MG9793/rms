@@ -22,7 +22,7 @@
         $stmt->bindParam(":sum", $sum);
         $stmt->execute();
 
-        $_SESSION['addIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> บันทึกรายรับสำเร็จ';
+        $_SESSION['addIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกรายรับสำเร็จ';
         header("location: ../page/incomeRecord_Total.php");
     }
 
@@ -48,7 +48,7 @@
         $stmt->bindParam(":sum", $sum);
         $stmt->execute();
 
-        $_SESSION['editIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> แก้ไขรายรับสำเร็จ';
+        $_SESSION['editIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขรายรับสำเร็จ';
         header("location: ../page/incomeRecord_Total.php");
     }
 

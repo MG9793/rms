@@ -1,7 +1,7 @@
 <?php
 
     session_start();
-    require_once 'connection.php';
+    require_once 'config/conn.php';
 
 
     // Add Users
@@ -15,108 +15,73 @@
 
         // check รหัสผ่านกรอกไม่ตรงกัน
         if ($password != $confirmPassword) {
-            $_SESSION['confirmPassword_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> ยืนยันรหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่';
+            $_SESSION['confirmPassword_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยืนยันรหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่';
             echo "<script>setTimeout(function(){history.back();});</script>";
 
-        // ถ้ารหัสผ่านกรอกตรงกันจะ check email ซ้ำ
+        // ถ้ารหัสผ่านถูกต้องจะ check username ซ้ำ
         } else {
-            $checkUser = $conn->prepare("SELECT username FROM rms WHERE username = :username");
+            $checkUser = $conn->prepare("SELECT username FROM user_info WHERE username = :username");
             $checkUser->bindParam(":username", $userName);
             $checkUser->execute();
 
-            if($checkEmail->rowCount()!=0) {
-                $_SESSION['userName_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> ชื่อผู้ใช้งานนี้ได้ถูกใช้แล้ว กรุณากรอกใหม่';
+            if($checkUser->rowCount()!=0) {
+                $_SESSION['userName_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ชื่อผู้ใช้งานนี้ได้ถูกใช้แล้ว กรุณากรอกใหม่';
                 echo "<script>setTimeout(function(){history.back();});</script>";
 
+            // ถ้า username ไม่ซ้ำจะ insert ข้อมูลได้
             } else {
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $conn->prepare("INSERT INTO user_info(name, lastname, username, password, permission)
+                                        VALUES(:name, :lastname, :username, :password, :permission)");
 
+                $stmt->bindParam(":name", $name);
+                $stmt->bindParam(":lastname", $lastname);
+                $stmt->bindParam(":username", $userName);
+                $stmt->bindParam(":password", $passwordHash);
+                $stmt->bindParam(":permission", $userPermission);
+                $stmt->execute();
 
-
-
+                $_SESSION['registerSuccess'] = '<i class="fa-solid fa-circle-check"></i> Success! ลงทะเบียนผู้ใช้งานสำเร็จ';
+                header("location: ../page/userManagement.php");
             }
         }
     }
 
 
-
-
-    // if (isset($_POST['registerUser'])) {
-    //     $name = $_POST['name'];
-    //     $lastname = $_POST['lastName'];
-    //     $phone = $_POST['phone'];
-    //     $workgroup = $_POST['addWorkgroup'];
-    //     $email = $_POST['email'];
-    //     $password = $_POST['password'];
-    //     $confirmPassword = $_POST['confirmPassword'];
-
-    //     if ($password != $confirmPassword) {
-    //         $_SESSION['confirmPassword_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> ยืนยันรหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง';
-    //         echo "<script>setTimeout(function(){history.back();});</script>";
-
-    //     } else {
-    //         $checkEmail = $conn->prepare("SELECT email FROM tbl_users WHERE email = :email");
-    //         $checkEmail->bindParam(":email", $email);
-    //         $checkEmail->execute();
-
-    //         if($checkEmail->rowCount()!=0) {
-    //             $_SESSION['emailError'] = '<i class="fa-solid fa-triangle-exclamation"></i> อีเมลล์นี้ได้ถูกใช้งานแล้ว กรุณากรอกใหม่อีกครั้ง';
-    //             echo "<script>setTimeout(function(){history.back();});</script>";
-
-    //         } else {
-    //             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-    //             $stmt = $conn->prepare("INSERT INTO tbl_users(name, lastname, phone, email, workgroup, password)
-    //                                     VALUES(:name, :lastname, :phone, :email, :workgroup, :password)");
-
-    //             $stmt->bindParam(":name", $name);
-    //             $stmt->bindParam(":lastname", $lastname);
-    //             $stmt->bindParam(":phone", $phone);
-    //             $stmt->bindParam(":workgroup", $workgroup);
-    //             $stmt->bindParam(":email", $email);
-    //             $stmt->bindParam(":password", $passwordHash);
-    //             $stmt->execute();
-
-    //             $_SESSION['registerSuccess'] = '<i class="fa-solid fa-circle-check"></i> ลงทะเบียนผู้ใช้งานสำเร็จ';
-    //             header("location: ../admin_userManagement.php");
-    //         }
-    //     }
-    // }
-
-
     // Edit Users Modal
-    // else if (isset($_POST['editUser'])) {
-    //     $id = $_POST['id_users'];
-    //     $name = $_POST['name'];
-    //     $lastname = $_POST['lastname'];
-    //     $phone = $_POST['phone'];
-    //     $workgroup = $_POST['editWorkgroup'];
-    //     $password = $_POST['password'];
-    //     $confirmPassword = $_POST['confirmPassword'];
+    else if (isset($_POST['editUser'])) {
+        $id = $_POST['id'];
+        $name = $_POST['editName'];
+        $lastname = $_POST['editLastname'];
+        $userPermission = $_POST['editPermission'];
+        $userName = $_POST['editUsername'];
+        $password = $_POST['editPassword'];
+        $confirmPassword = $_POST['editConfirmPassword'];
 
-    //     // ถ้ายืนยัน Password ไม่ถูกต้อง
-    //     if ($password != $confirmPassword) {
-    //         $_SESSION['editPassword_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> ยืนยันรหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง';
-    //         header("location: ../admin_userManagement.php");
+        // check รหัสผ่านกรอกไม่ตรงกัน
+        if ($password != $confirmPassword) {
+            $_SESSION['editPassword_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยืนยันรหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่';
+            header("location: ../page/userManagement.php");
 
-    //     } else {
+        // ถ้ารหัสผ่านถูกต้องจะ insert ข้อมูลได้
+        } else {
 
-    //         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-    //         $stmt = $conn->prepare("UPDATE tbl_users
-    //                                 SET name = :name, lastname = :lastname, phone = :phone, workgroup = :workgroup, password = :password
-    //                                 WHERE id_users = :id_users");
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE user_info
+                                    SET name = :name, lastname = :lastname, username = :username, password = :password, permission = :permission
+                                    WHERE id = :id");
 
-    //         $stmt->bindParam(":id_users", $id);
-    //         $stmt->bindParam(":name", $name);
-    //         $stmt->bindParam(":lastname", $lastname);
-    //         $stmt->bindParam(":phone", $phone);
-    //         $stmt->bindParam(":workgroup", $workgroup);
-    //         $stmt->bindParam(":password", $passwordHash);
-    //         $stmt->execute();
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":name", $name);
+            $stmt->bindParam(":lastname", $lastname);
+            $stmt->bindParam(":username", $userName);
+            $stmt->bindParam(":password", $passwordHash);
+            $stmt->bindParam(":permission", $userPermission);
+            $stmt->execute();
 
-    //         // Alert Edit Success
-    //         $_SESSION['editAccount_success'] = '<i class="fa-solid fa-circle-check"></i> ดำเนินการสำเร็จ ข้อมูลผู้ใช้แก้ไขเรียบร้อยแล้ว';
-    //         header("location: ../admin_userManagement.php");
-
-    //     }
-    // }
+            $_SESSION['editUser_success'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขข้อมูลผู้ใช้งานสำเร็จ';
+            header("location: ../page/userManagement.php");
+        }
+    }
 
 ?>

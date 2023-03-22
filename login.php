@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +15,7 @@
     <style>
         /* kanit-300 - latin_thai */
         @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-display: swap;
             font-family: 'Kanit';
             font-style: normal;
             font-weight: 300;
@@ -41,28 +43,31 @@
 
 <body>
 
-
     <div class="vh-100 d-flex justify-content-center align-items-center">
         <div class="container">
             <div class="row d-flex justify-content-center">
                 <div class="col-12 col-md-8 col-lg-6">
                     <div class="card bg-white shadow-lg">
                         <div class="card-body p-5">
-                            <form class="mb-3 mt-md-4">
-                            <h2 class="fw-bold mb-2 text-uppercase "><img src="image/logo/logo.jpg" class="rounded" style="width: 80px"> Sithichai Engineering</h2>
-                            <p class="mb-5">ระบบบริหารจัดการใบเสร็จ (Version 1.00) - กรุณาเข้าสู่ระบบ</p>
-                            <div class="mb-3">
-                                <label for="text" class="form-label ">ชื่อผู้ใช้งาน :</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกชื่อผู้ใช้งาน..." name="loginUser">
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label ">รหัสผ่าน :</label>
-                                <input type="password" class="form-control" placeholder="*******" name="loginPassword">
-                            </div>
-                            <div class="d-grid">
-                                <a class="btn btn-outline-dark" type="submit" href="index.php">Login</a>
-                            </div>
+
+                            <!-- ส่วนฟอร์ม login ห้ามลบ -->
+                            <form class="mb-3 mt-md-4" action="db/config/login.php" method="POST">
+                                <h2 class="fw-bold mb-2 text-uppercase "><img src="image/logo/logo.jpg" class="rounded" style="width: 80px"> Sithichai Engineering</h2>
+                                <p class="mb-5">ระบบบริหารจัดการใบเสร็จ (Version 1.00) - กรุณาเข้าสู่ระบบ</p>
+                                <div class="mb-3">
+                                    <label for="text" class="form-label ">ชื่อผู้ใช้งาน :</label>
+                                    <input type="text" class="form-control" name="loginUser" placeholder="username...">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label ">รหัสผ่าน :</label>
+                                    <input type="password" class="form-control" name="loginPassword" placeholder="*******">
+                                </div>
+                                <div class="d-grid">
+                                    <a type="submit" class="btn btn-outline-dark" href="index.php">Login</a>
+                                </div>
                             </form>
+
+
                         </div>
                     </div>
                 </div>
@@ -70,8 +75,10 @@
         </div>
     </div>
 
+
+    <!-- footer ห้ามลบ -->
     <footer class="fixed-bottom text-center">
-        <p>ทดสอบ<br>Receipt Management System &copy; <script>document.write(new Date().getFullYear())</script> Sithichai Engineering, All Rights Reserved.</p>
+        <p>Receipt Management System &copy; <script>document.write(new Date().getFullYear())</script> Sithichai Engineering, All Rights Reserved.</p>
     </footer>
 
 
