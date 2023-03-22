@@ -7,7 +7,6 @@
     // ลบบัญชีผู้ใช้
     if (isset($_GET['deleteUser'])) {
         $delete_id = $_GET['deleteUser'];
-    
         $checkRow = $conn->query("SELECT * FROM user_info");
         if($checkRow->rowCount() == 1) {
     
@@ -29,8 +28,6 @@
     // ลบ income_head
     if (isset($_GET['deleteIncome_head'])) {
         $delete_id = $_GET['deleteIncome_head'];
-
-
         $deleteStmt = $conn->query("DELETE FROM income_head WHERE id = $delete_id");
         $deleteStmt->execute();
 
