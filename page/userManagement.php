@@ -1,3 +1,21 @@
+<?php
+    session_start();
+    require_once "../db/config/conn.php";
+    require_once "../db/config/deleteRow.php";
+
+    // if (!isset($_SESSION['admin_login'])) {
+    //     header("location: login.php");
+    // } else {
+
+    //     // query ชื่อผู้ใช้งาน
+    //     $user_id = $_SESSION['admin_login'];
+    //     $stmt = $conn->query("SELECT name, lastName FROM tbl_users WHERE id_users = $user_id");
+    //     $stmt->execute();
+    //     $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,13 +107,69 @@
     </section>
 
 
+    <!-- Alert ห้ามลบ -->
+    <section class="container">
+        <div class="row">
+            <div class="col-md">
+            <?php
+                // Alert เพิ่มผู้ใช้สำเร็จ
+                if(isset($_SESSION['addUser_success'])) {
+                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['addUser_success'];
+                    unset($_SESSION['addUser_success']);
+                    echo "</div>";
+                }
+
+                // Alert ยืนยันรหัสผ่านไม่ถูกต้อง
+                if(isset($_SESSION['confirmPassword_error'])) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['confirmPassword_error'];
+                    unset($_SESSION['confirmPassword_error']);
+                    echo "</div>";
+                }
+
+                // Alert username ซ้ำ
+                if(isset($_SESSION['userName_error'])) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['userName_error'];
+                    unset($_SESSION['userName_error']);
+                    echo "</div>";
+                }     
+
+
+                // Alert แก้ไขรายการสำเร็จ
+                // else if(isset($_SESSION['editUser_success'])) {
+                //     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                //     echo $_SESSION['editUser_success'];
+                //     unset($_SESSION['editUser_success']);
+                //     echo "</div>";
+                // }
+
+                // // Alert ลบรายการสำเร็จ
+                // else if(isset($_SESSION['deleteUser_success'])) {
+                //     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                //     echo $_SESSION['deleteUser_success'];
+                //     unset($_SESSION['deleteUser_success']);
+                //     echo "</div>";
+                // }
+            ?>
+            </div>
+        </div>
+    </section>
+
+
     <!-- input ห้ามลบ -->
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
                 <h5 class="fw-bold"><i class="fa-solid fa-plus"></i> เพิ่มผู้ใช้งาน</h5>
 
-                <form action="#" method="POST">
+                <form action="../db/db_userManagement.php" method="POST">
                     <div class="row mb-3">
                         <div class="col-md-4">
                             <label for="name" class="form-label fw-bold">ชื่อ :</label>
@@ -106,8 +180,8 @@
                             <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Your lastname.." required>
                         </div>
                         <div class="col-md-4">
-                            <label for="userStatus" class="form-label fw-bold">สิทธิการใช้งาน :</label>
-                            <select class="form-select" aria-label="userStatus" name="userStatus" required>
+                            <label for="userPermission" class="form-label fw-bold">สิทธิการใช้งาน :</label>
+                            <select class="form-select" aria-label="userPermission" name="userPermission" required>
                                 <option>Admin</option>
                                 <option>User</option>
                             </select>
@@ -130,10 +204,10 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-8">
                             <button type="submit" class="btn btn-primary w-100" name="registerUser"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>
                         </div>
                     </div>
