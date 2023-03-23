@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    require_once "../db/config/conn.php";
+    require_once "../db/config/deleteRow.php";
+
+    if (!isset($_SESSION['admin_login'])) {
+        header("location: ../login.php");
+    } else {
+
+        // query ชื่อผู้ใช้งาน
+        $id = $_SESSION['admin_login'];
+        $stmt = $conn->query("SELECT name, lastname FROM user_info WHERE id = $id");
+        $stmt->execute();
+        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,16 +61,13 @@
 </head>
 <body>
 
-
     <!-- navbar ห้ามลบ -->
     <?php include 'include/navbar.php'; ?>
-
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
         <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-1 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ</legend>
     </section>
-
 
     <!-- เลือกไซต์งาน ห้ามลบ -->
     <section class="container">
@@ -118,3 +131,5 @@
     <?php include "modal/modal_editPassword.php"; ?>
 </body>
 </html>
+
+<?php } ?>
