@@ -63,13 +63,37 @@
                                     <input type="password" class="form-control" name="loginPassword" placeholder="*******">
                                 </div>
                                 <div class="d-grid">
-                                    <a type="submit" class="btn btn-outline-dark" href="index.php">Login</a>
+                                    <button type="submit" class="btn btn-outline-dark" name="login">Login</button>
                                 </div>
                             </form>
-
-
                         </div>
                     </div>
+
+
+                    <div class="row mt-2">
+            <div class="col-md">
+                <?php
+                    // Alert รหัสผ่านผิดพลาด
+                    if(isset($_SESSION['passwordError'])) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                        echo $_SESSION['passwordError'];
+                        unset($_SESSION['passwordError']);
+                        echo "</div>";
+                    }
+
+                    // // Alert อีเมลล์หรือรหัสผ่านผิดพลาด
+                    // else if(isset($_SESSION['emailPassword_Error'])) {
+                    //     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                    //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    //     echo $_SESSION['emailPassword_Error'];
+                    //     unset($_SESSION['emailPassword_Error']);
+                    //     echo "</div>";
+                    // }                    
+                ?> 
+            </div>
+        </div>
+
                 </div>
             </div>
         </div>
