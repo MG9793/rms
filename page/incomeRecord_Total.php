@@ -3,16 +3,15 @@
     require_once "../db/config/conn.php";
     require_once "../db/config/deleteRow.php";
 
-    // if (!isset($_SESSION['admin_login'])) {
-    //     header("location: ../login.php");
-    // } else {
+    if (!isset($_SESSION['admin_login'])) {
+        header("location: ../login.php");
+    } else {
 
-    //     // query ชื่อผู้ใช้งาน
-    //     $user_id = $_SESSION['admin_login'];
-    //     $stmt = $conn->query("SELECT name, lastName FROM tbl_users WHERE id_users = $user_id");
-    //     $stmt->execute();
-    //     $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        // query ชื่อผู้ใช้งาน
+        $id = $_SESSION['admin_login'];
+        $stmt = $conn->query("SELECT name, lastname FROM user_info WHERE id = $id");
+        $stmt->execute();
+        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -29,31 +28,28 @@
     <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
         @font-face {
-        font-display: swap;
-        font-family: 'Kanit';
-        font-style: normal;
-        font-weight: 300;
-        src: url('../resources/fonts/kanit-v12-latin_thai-300.eot'); /* IE9 Compat Modes */
-        src: url('../resources/fonts/kanit-v12-latin_thai-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-            url('../resources/fonts/kanit-v12-latin_thai-300.woff2') format('woff2'), /* Super Modern Browsers */
-            url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
-            url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
-            url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
-    }
+            font-display: swap;
+            font-family: 'Kanit';
+            font-style: normal;
+            font-weight: 300;
+            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot'); /* IE9 Compat Modes */
+            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                url('../resources/fonts/kanit-v12-latin_thai-300.woff2') format('woff2'), /* Super Modern Browsers */
+                url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
+                url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
+                url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
+        }
     </style>
 </head>
 <body>
 
-
     <!-- navbar ห้ามลบ -->
     <?php include 'include/navbar.php'; ?>
-
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
         <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ (ยอดรวม)</legend>
     </section>
-
 
     <!-- Alert ห้ามลบ -->
     <section class="container">
@@ -264,3 +260,5 @@
     <?php include "modal/modal_editPassword.php"; ?>
 </body>
 </html>
+
+<?php } ?>

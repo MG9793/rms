@@ -1,7 +1,17 @@
 <?php
-    // if (!isset($_SESSION['admin_login'])) {
-    //     header("location: login.php");
-    // } else {
+    session_start();
+    require_once "db/config/conn.php";
+    require_once "db/config/deleteRow.php";
+
+    if (!isset($_SESSION['admin_login'])) {
+        header("location: login.php");
+    } else {
+
+        // query ชื่อผู้ใช้งาน
+        $id = $_SESSION['admin_login'];
+        $stmt = $conn->query("SELECT name, lastname FROM user_info WHERE id = $id");
+        $stmt->execute();
+        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -17,17 +27,14 @@
     <script src="resources/lib/bootstrap5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <!-- Font Awesome6.2.1 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/brands.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/solid.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- <link rel="stylesheet" href="resources/lib/fontawesome6.2.1/css/fontawesome.css">
+    <link rel="stylesheet" href="resources/lib/fontawesome6.2.1/css/fontawesome.css">
     <link rel="stylesheet" href="resources/lib/fontawesome6.2.1/css/brands.css">
-    <link rel="stylesheet" href="resources/lib/fontawesome6.2.1/css/solid.css"> -->
+    <link rel="stylesheet" href="resources/lib/fontawesome6.2.1/css/solid.css">
 
+    <!-- Font kanit-300 ห้ามเอาออก -->
     <style>
-        /* kanit-300 - latin_thai */
         @font-face {
-            font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+            font-display: swap;
             font-family: 'Kanit';
             font-style: normal;
             font-weight: 300;
@@ -40,15 +47,10 @@
         }
 
         body {
-            /* background-color: rgb(139, 166, 243); */
             background-color: rgb(245, 245, 245);
             font-family: 'Kanit', sans-serif;
             margin: 0;
             padding: 0;
-        }
-
-        .navbar {
-            /* background-color: rgb(15, 49, 147); */
         }
 
         .navbar .nav-item a {
@@ -82,7 +84,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">แดชบอร์ด</a>
+                        <a class="nav-link disabled" href="index.php">แดชบอร์ด</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">บันทึกค่าใช้จ่าย</a>
@@ -111,11 +113,11 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i> ผู้ใช้งาน</a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black disabled lh-1" style="font-size: 15px;"><i class="fa-solid fa-user"></i> Danai Jantapalaboon</a></li>
+                            <li><a class="dropdown-item text-black disabled lh-1" style="font-size: 15px;"><i class="fa-solid fa-user"></i> <?php echo $userName_query['name'] . ' ' . $userName_query['lastname']; ?></a></li>
                             <li><a class="dropdown-item text-black disabled lh-1" style="font-size: 15px;"><i class="fa-solid fa-clock"></i> <span id="date"></span> <span id="clock"></span> </a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item text-black" href="#" data-bs-toggle="modal" data-bs-target="#modalPassword<?php //echo $userAccount['id_users']; ?>"><i class="fa-solid fa-key"></i> เปลี่ยนรหัสผ่าน</a></li>
-                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a></li>
+                            <li><a class="dropdown-item text-black" href="db/config/logout.php"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -795,26 +797,12 @@
                 </div>
             </div>
 
-
-
-
         </fieldset>
-
-
-
-
-
-
-
     </section>
 
     <?php include "page/modal/modal_editPassword.php"; ?>
-
-
-
-
     
 </body>
 </html>
 
-<?php // } ?>
+<?php  } ?>

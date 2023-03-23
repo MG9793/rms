@@ -26,26 +26,9 @@
             }
         }
     } else {
-
-    }
-
-        // if ($check_user->rowCount() > 0) {
-        //     if ($email == $row['email']) {
-        //         if (password_verify($password, $row['password'])) {
-        //             $_SESSION['admin_login'] = $row['id_users'];
-        //             header("location: ../index.php");
-
-        //         } else {
-        //             $_SESSION['passwordError'] = '<i class="fa-solid fa-triangle-exclamation"></i> รหัสผ่านไม่ถูกต้อง<br>กรุณากรอกใหม่อีกครั้ง';
-        //             echo "<script>setTimeout(function(){history.back();});</script>";
-        //         }
-        //     }
-
-        // } else {
-        //     $_SESSION['emailPassword_Error'] = '<i class="fa-solid fa-triangle-exclamation"></i> รหัสผ่านหรืออีเมลล์ไม่ถูกต้อง<br>กรุณากรอกใหม่อีกครั้ง';
-        //     echo "<script>setTimeout(function(){history.back();});</script>";
-            
-        // }
+            $_SESSION['userPassword_Error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! รหัสผ่านหรืออีเมลล์ไม่ถูกต้อง กรุณากรอกใหม่';
+            echo "<script>setTimeout(function(){history.back();});</script>";
+        }
     }
 
 ?>
