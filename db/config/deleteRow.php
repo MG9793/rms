@@ -37,6 +37,18 @@
     }
 
 
+    // ลบ site_info
+    if (isset($_GET['deleteSite'])) {
+        $delete_id = $_GET['deleteSite'];
+        $deleteStmt = $conn->query("DELETE FROM site_info WHERE id = $delete_id");
+        $deleteStmt->execute();
+
+        // Alert Success
+        $_SESSION['deleteSite_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบไซต์งานเรียบร้อยแล้ว';
+        header("../page/siteManagement.php");
+    }
+
+
     // ลบ income_head
     if (isset($_GET['deleteIncome_head'])) {
         $delete_id = $_GET['deleteIncome_head'];
