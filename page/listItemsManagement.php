@@ -51,8 +51,8 @@
         <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการรายการสินค้า (Items Management)</legend>
     </section>
 
-        <!-- Alert ห้ามลบ -->
-        <section class="container">
+    <!-- Alert ห้ามลบ -->
+    <section class="container">
         <div class="row">
             <div class="col-md">
                 <?php
@@ -65,7 +65,7 @@
                         echo "</div>";
                     }
 
-                    // // Alert แก้ไขรายการสำเร็จ
+                    // Alert แก้ไขรายการสำเร็จ
                     else if(isset($_SESSION['editItem_success'])) {
                         echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
                         echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
@@ -173,7 +173,7 @@
 
 
                         <!-- Modal แก้ไขข้อมูล ห้ามลบ -->
-                        <div class="modal fade" id="modalEditItems<?php echo $fetch_itemInfo['id']; ?>" tabindex="-1" aria-labelledby="modalEditUser" aria-hidden="true">
+                        <div class="modal fade" id="modalEditItems<?php echo $fetch_itemInfo['id']; ?>" tabindex="-1" aria-labelledby="modalEditItems" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
