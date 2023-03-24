@@ -1,3 +1,19 @@
+<?php
+    session_start();
+    require_once "../db/config/conn.php";
+    require_once "../db/config/deleteRow.php";
+
+    if (!isset($_SESSION['admin_login'])) {
+        header("location: ../login.php");
+    } else {
+
+        // query ชื่อผู้ใช้งาน
+        $id = $_SESSION['admin_login'];
+        $stmt = $conn->query("SELECT name, lastname FROM user_info WHERE id = $id");
+        $stmt->execute();
+        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,81 +43,58 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg text-light px-4 bg-dark">
-        <div class="container">
-            <a class="navbar-brand"><img src="../image/logo/logo.jpg" class="rounded" style="width:80px"></a>
-            <h5 class="text-light">สิทธิชัย เอนจิเนียริ่ง - ระบบจัดการใบเสร็จ v1.00</h5>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">แดชบอร์ด</a>
-                    </li>
-                    
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">บันทึกค่าใช้จ่าย</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black" href="expenseTotal.php">ยอดรวม</a></li>
-                            <li><a class="dropdown-item text-black" href="expenseDetails.php">รายละเอียดสินค้า</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">กระจายค่าใช้จ่าย</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="incomeRecord.php">บันทึกรายรับ</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-gears"></i> ตั้งค่า</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black" href="listItemsManagement.php"><i class="fa-solid fa-clipboard"></i> รายการบันทึก</a></li>
-                            <li><a class="dropdown-item text-black" href="sellerManagement.php"><i class="fa-solid fa-cart-shopping"></i> ข้อมูลผู้ขาย</a></li>
-                            <li><a class="dropdown-item text-black disabled" href="#"><i class="fa-solid fa-building-circle-check"></i> ไซต์งาน</a></li>
-                            <li><a class="dropdown-item text-black" href="userManagement.php"><i class="fa-solid fa-user-gear"></i> ผู้ใช้งาน</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user"></i> ผู้ใช้งาน</a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black disabled lh-1" style="font-size: 15px;"><i class="fa-solid fa-user"></i> Danai Jantapalaboon</a></li>
-                            <li><a class="dropdown-item text-black disabled lh-1" style="font-size: 15px;"><i class="fa-solid fa-clock"></i> <span id="date"></span> <span id="clock"></span> </a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-black" href="#" data-bs-toggle="modal" data-bs-target="#modalPassword<?php //echo $userAccount['id_users']; ?>"><i class="fa-solid fa-key"></i> เปลี่ยนรหัสผ่าน</a></li>
-                            <li><a class="dropdown-item text-black" href="#"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <script type="text/javascript" src="../resources/js/displayDateTime.js"></script>
-        </div>
-    </nav>
-
-    <!-- <section class="container mt-3">
-        <h2 class="fw-bold text-dark"><i class="fa-solid fa-building-circle-check"></i> ระบบจัดการไซต์งาน</h2>
-        <hr class="headerUnderline">
-        <div class="d-flex">
-            <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseTable" aria-expanded="false" aria-controls="collapseTable"><i class="fa-solid fa-table-list"></i> ซ่อน/แสดง ไซต์งานทั้งหมด</a>
-            <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm"><i class="fa-solid fa-list"></i> ซ่อน/แสดง ฟอร์มเพิ่มไซต์งาน</a>
-            <select class="form-select w-25" aria-label="filterProjectStatus">
-                <option selected>ตัวกรองสถานะโครงการ...</option>
-                <option>อยู่ระหว่างดำเนินโครงการ</option>
-                <option>ปิดโครงการ</option>
-            </select>
-        </div>
-    </section> -->
+    <!-- navbar ห้ามลบ -->
+    <?php include 'include/navbar.php'; ?>
     
-
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
         <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการไซต์งาน (Site Management)</legend>
     </section>
 
+    <!-- Alert ห้ามลบ -->
+    <section class="container">
+        <div class="row">
+            <div class="col-md">
+                <?php
+                    // Alert เพิ่มรายการสำเร็จ
+                    if(isset($_SESSION['addSite_success'])) {
+                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                        echo $_SESSION['addSite_success'];
+                        unset($_SESSION['addSite_success']);
+                        echo "</div>";
+                    }
+
+                    // // Alert แก้ไขรายการสำเร็จ
+                    else if(isset($_SESSION['editSite_success'])) {
+                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                        echo $_SESSION['editSite_success'];
+                        unset($_SESSION['editSite_success']);
+                        echo "</div>";
+                    }
+
+                    // // Alert ลบรายการสำเร็จ
+                    else if(isset($_SESSION['deleteSite_success'])) {
+                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                        echo $_SESSION['deleteSite_success'];
+                        unset($_SESSION['deleteSite_success']);
+                        echo "</div>";
+                    }
+
+                    // Alert รายการซ้ำ
+                    else if(isset($_SESSION['addSite_error'])) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                        echo $_SESSION['addSite_error'];
+                        unset($_SESSION['addSite_error']);
+                        echo "</div>";
+                    }
+                ?>
+            </div>
+        </div>
+    </section>
 
     <!-- input ห้ามลบ -->
     <section class="container">
@@ -109,54 +102,21 @@
             <fieldset class="p-3 shadow-sm mt-2">
                 <h5 class="fw-bold"><i class="fa-solid fa-plus"></i> เพิ่มไซต์งาน</h5>
 
-                <form action="#" method="POST">
+                <form action="../db/db_siteManagement.php" method="POST">
                     <div class="row mb-3">
                         <div class="col-md-8">
-                            <label for="projectName" class="form-label fw-bold">ชื่อไซต์งาน :</label>
-                            <input type="text" class="form-control" name="projectName" id="projectName" placeholder="ไซต์งาน.." required>
+                            <label for="siteName" class="form-label fw-bold">ชื่อไซต์งาน :</label>
+                            <input type="text" class="form-control" name="siteName" id="siteName" placeholder="ไซต์งาน.." required>
                         </div>
                         <div class="col-md-4">
-                            <label for="projectAbbreviation" class="form-label fw-bold">อักษรย่อไซต์งาน :</label>
-                            <input type="text" class="form-control" name="projectAbbreviation" id="projectAbbreviation" required>
+                            <label for="siteAbbre" class="form-label fw-bold">อักษรย่อไซต์งาน :</label>
+                            <input type="text" class="form-control" name="siteAbbre" id="siteAbbre" required>
                         </div>
                     </div>
-
-                    <!-- <div class="row mb-3">
-                        <div class="col-md-8">
-                            <label for="projectAddress" class="form-label fw-bold">ที่ตั้งโครงการ :</label>
-                            <input type="text" name="projectAddress" class="form-control" id="projectAddress" placeholder="ที่อยู่.." required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="projectStatus" class="form-label fw-bold">สถานะโครงการ :</label>
-                            <select class="form-select" aria-label="projectStatus" name="projectStatus" required>
-                                <option>อยู่ระหว่างดำเนินโครงการ</option>
-                                <option>ปิดโครงการ</option>
-                            </select>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="projectStart" class="form-label fw-bold">วันเริ่มต้นโครงการ :</label>
-                            <input type="date" name="projectStart" class="form-control" id="projectStart" onchange="calculateDays()" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="projectEnd" class="form-label fw-bold">วันสิ้นสุดโครงการ :</label>
-                            <input type="date" name="projectEnd" class="form-control" id="projectEnd" onchange="calculateDays()" required>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="totalDays" class="form-label fw-bold">จำนวนวัน :</label>
-                            <input type="number" name="totalDays" class="form-control" id="totalDays" readonly>
-                        </div>
-                    </div> -->
-
                     <div class="row mb-2">
                         <div class="col-md-8">
                             <button type="submit" class="btn btn-primary w-100" name="addSite"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
                         </div>
-                        <!-- <div class="col-md-2">
-                            <button type="reset" class="btn btn-warning w-100"><i class="fa-solid fa-rotate-right"></i> เคลียร์</button>
-                        </div> -->
                     </div>
                 </form>
             </fieldset>
@@ -174,31 +134,87 @@
                             <th scope="col">#</th>
                             <th scope="col">ชื่อไซต์งาน</th>
                             <th scope="col">อักษรย่อ</th>
-                            <!-- <th scope="col">ที่ตั้ง</th>
-                            <th scope="col">สถานะโครงการ</th> -->
                             <th scope="col">แก้ไข/อัพเดทข้อมูล</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
+
+                        <!-- query ตาราง ห้ามลบ -->
+                        <?php
+                            $stmt = $conn->query("SELECT * FROM site_info");
+                            $stmt->execute();
+                            $site = $stmt->fetchAll();
+
+                            if (!$site) {
+                                echo "<p><td colspan='4' class='text-center'>ไม่พบข้อมูล</td></p>";
+                            } else {
+                                foreach ($site as $fetch_siteInfo) {
+                        ?>
+
                         <tr>
                             <td></td>
-                            <td>โครงการ A</td>
-                            <td>AA</td>
-                            <!-- <td>000/00 เขต aaa แขวง bbb กรุงเทพฯ 10210</td>
-                            <td><span class="badge bg-success">อยู่ระหว่างดำเนินโครงการ</span></td> -->
+                            <td><?php echo $fetch_siteInfo['site_name']; ?></td>
+                            <td><?php echo $fetch_siteInfo['site_abbre']; ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <a class="btn btn-sm btn-outline-dark" href="#" data-bs-toggle="modal" data-bs-target="#modalEditSite<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditSite<?php echo $fetch_siteInfo['id']; ?>"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteSite<?php echo $fetch_siteInfo['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
-                                <!-- <div class="input-group">
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalEditSite<?php //echo $userAccount['id_users']; ?>"><i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target=""><i class="fas fa-trash"></i></button>
-                                    </div>
-                                </div> -->
                             </td>
                         </tr>
+
+
+                        <!-- Modal แก้ไขข้อมูล ห้ามลบ -->
+                        <div class="modal fade" id="modalEditSite<?php echo $fetch_siteInfo['id']; ?>" tabindex="-1" aria-labelledby="modalEditSite" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalEditSite"><i class="fa-solid fa-pen-to-square"></i> แก้ไขรายการไซต์งาน (Edit Sites)</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form action="../db/db_siteManagement.php" method="POST">
+                                            <div class="mb-0">
+                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_siteInfo['id']; ?>" readonly required>
+                                                <label for="editSiteName" class="col-form-label">ชื่อรายการ :</label>
+                                                <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_siteInfo['site_name']; ?>" required>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label for="editSiteAbbre" class="col-form-label">ชื่อรายการ :</label>
+                                                <input type="text" class="form-control" name="editSiteAbbre" id="editSiteAbbre" value="<?php echo $fetch_siteInfo['site_abbre']; ?>" required>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" name="editSite"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Modal ยืนยันลบข้อมูล ห้ามลบ -->
+                        <div class="modal fade" id="modalDeleteSite<?php echo $fetch_siteInfo['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"><i class="fas fa-trash"></i> ยืนยันลบรายการไซต์งาน ?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6 class="text-center">ต้องการไซต์งานหรือไม่ ? กรุณายืนยัน</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <a data-id="<?php echo $fetch_siteInfo['id']; ?>" href="?deleteSite=<?php echo $fetch_siteInfo['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } } ?>        <!-- endforeach -->
                     </tbody>
                 </table>
             </fieldset>
@@ -220,3 +236,5 @@
     <?php include "modal/modal_editPassword.php"; ?>
 </body>
 </html>
+
+<?php } ?>
