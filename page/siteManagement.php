@@ -65,7 +65,7 @@
                         echo "</div>";
                     }
 
-                    // // Alert แก้ไขรายการสำเร็จ
+                    // Alert แก้ไขรายการสำเร็จ
                     else if(isset($_SESSION['editSite_success'])) {
                         echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
                         echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
@@ -74,7 +74,7 @@
                         echo "</div>";
                     }
 
-                    // // Alert ลบรายการสำเร็จ
+                    // Alert ลบรายการสำเร็จ
                     else if(isset($_SESSION['deleteSite_success'])) {
                         echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
                         echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
@@ -205,7 +205,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <h6 class="text-center">ต้องการไซต์งานหรือไม่ ? กรุณายืนยัน</h6>
+                                        <h6 class="text-center">ต้องการลบไซต์งานหรือไม่ ? กรุณายืนยัน</h6>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
