@@ -25,8 +25,9 @@
     }
 
     
+
     // ลบ item_info
-    if (isset($_GET['deleteItems'])) {
+    else if (isset($_GET['deleteItems'])) {
         $delete_id = $_GET['deleteItems'];
         $deleteStmt = $conn->query("DELETE FROM item_info WHERE id = $delete_id");
         $deleteStmt->execute();
@@ -37,8 +38,9 @@
     }
 
 
+
     // ลบ site_info
-    if (isset($_GET['deleteSite'])) {
+    else if (isset($_GET['deleteSite'])) {
         $delete_id = $_GET['deleteSite'];
         $deleteStmt = $conn->query("DELETE FROM site_info WHERE id = $delete_id");
         $deleteStmt->execute();
@@ -49,8 +51,22 @@
     }
 
 
+
+    // ลบ sales_info
+    else if (isset($_GET['deleteSales'])) {
+        $delete_id = $_GET['deleteSales'];
+        $deleteStmt = $conn->query("DELETE FROM sales_info WHERE id = $delete_id");
+        $deleteStmt->execute();
+
+        // Alert Success
+        $_SESSION['deleteSales_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
+        header("../page/sellerManagement.php");
+    }
+
+
+
     // ลบ income_head
-    if (isset($_GET['deleteIncome_head'])) {
+    else if (isset($_GET['deleteIncome_head'])) {
         $delete_id = $_GET['deleteIncome_head'];
         $deleteStmt = $conn->query("DELETE FROM income_head WHERE id = $delete_id");
         $deleteStmt->execute();
