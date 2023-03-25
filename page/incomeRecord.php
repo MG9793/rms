@@ -74,16 +74,27 @@
         <div class="row">
             <div class="col-md center-screen">
                 <div class="row row-cols-2 row-cols-md-6 g-2">
+
+                    <?php
+
+                        $stmt = $conn->query("SELECT site_name FROM site_info");
+                        $stmt->execute();
+                        $allSite = $stmt->fetchAll();
+
+                        foreach($allSite as $fetch_allSite) {
+                    ?>
+
                     <div class="col">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#selectRecord">
-                        <div class="card h-100 shadow dashboard">
-                            <div class="card-body text-center">
-                                <img src="../image/icon/cost.png" class="mx-auto d-block mb-3 w-50">
-                                <h5 class="card-title fw-bold mt-2">ไซต์งาน 1</h5>
+                            <div class="card h-100 shadow dashboard">
+                                <div class="card-body text-center">
+                                    <img src="../image/icon/cost.png" class="mx-auto d-block mb-3 w-50">
+                                    <h5 class="card-title fw-bold mt-2"><?php echo $fetch_allSite['site_name']; ?></h5>
+                                </div>
                             </div>
-                        </div>
                         </a>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
