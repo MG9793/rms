@@ -84,4 +84,35 @@
         }
     }
 
+
+
+    // Navbar Edit Password
+    else if (isset($_POST['editPassword'])) {
+        $userName = $_POST['getUsername'];
+        $password = $_POST['password'];
+        $confirmPassword = $_POST['confirmPassword'];
+
+        // check รหัสผ่านกรอกไม่ตรงกัน
+        if ($password != $confirmPassword) {
+            echo '<script>alert("Error! ยืนยันรหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่"); window.location.href = "' . $_SERVER['HTTP_REFERER'] . '";</script>';
+            exit;
+
+        // ถ้ารหัสผ่านถูกต้องจะ insert ข้อมูลได้
+        } else {
+
+            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("UPDATE user_info SET password = :password WHERE username = :username");
+
+            $stmt->bindParam(":username", $userName);
+            $stmt->bindParam(":password", $passwordHash);
+            $stmt->execute();
+
+            echo '<script>alert("Success! แก้ไขรหัสผ่านสำเร็จ"); window.location.href = "' . $_SERVER['HTTP_REFERER'] . '";</script>';
+            exit;
+
+            // code สำหรับไม่แสดง alert
+            // header("Location: " . $_SERVER['HTTP_REFERER']);
+            // exit;
+        }
+    }
 ?>

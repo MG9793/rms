@@ -9,7 +9,7 @@
 
         // query ชื่อผู้ใช้งาน
         $id = $_SESSION['admin_login'];
-        $stmt = $conn->query("SELECT name, lastname FROM user_info WHERE id = $id");
+        $stmt = $conn->query("SELECT name, lastname, username FROM user_info WHERE id = $id");
         $stmt->execute();
         $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -245,9 +245,6 @@
         </div>
     </section>
 
-
-    <?php include "modal/modal_editSeller.php"; ?>
-    <?php include "modal/modal_editPassword.php"; ?>
 </body>
 </html>
 

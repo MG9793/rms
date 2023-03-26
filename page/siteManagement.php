@@ -9,7 +9,7 @@
 
         // query ชื่อผู้ใช้งาน
         $id = $_SESSION['admin_login'];
-        $stmt = $conn->query("SELECT name, lastname FROM user_info WHERE id = $id");
+        $stmt = $conn->query("SELECT name, lastname, username FROM user_info WHERE id = $id");
         $stmt->execute();
         $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -177,11 +177,11 @@
                                         <form action="../db/db_siteManagement.php" method="POST">
                                             <div class="mb-0">
                                                 <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_siteInfo['id']; ?>" readonly required>
-                                                <label for="editSiteName" class="col-form-label">ชื่อรายการ :</label>
+                                                <label for="editSiteName" class="col-form-label">ชื่อไซต์งาน :</label>
                                                 <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_siteInfo['site_name']; ?>" required>
                                             </div>
                                             <div class="mb-2">
-                                                <label for="editSiteAbbre" class="col-form-label">ชื่อรายการ :</label>
+                                                <label for="editSiteAbbre" class="col-form-label">อักษรย่อไซต์งาน :</label>
                                                 <input type="text" class="form-control" name="editSiteAbbre" id="editSiteAbbre" value="<?php echo $fetch_siteInfo['site_abbre']; ?>" required>
                                             </div>
 
@@ -223,17 +223,16 @@
 
 
     <script>
-        function calculateDays() {
-            var startDate = new Date(document.getElementById("projectStart").value);
-            var endDate = new Date(document.getElementById("projectEnd").value);
-            var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            document.getElementById("totalDays").value = diffDays;
-        }
+        // function calculateDays() {
+        //     var startDate = new Date(document.getElementById("projectStart").value);
+        //     var endDate = new Date(document.getElementById("projectEnd").value);
+        //     var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+        //     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        //     document.getElementById("totalDays").value = diffDays;
+        // }
     </script>
 
-    <?php include "modal/modal_editSite.php"; ?>
-    <?php include "modal/modal_editPassword.php"; ?>
+
 </body>
 </html>
 
