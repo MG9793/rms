@@ -13,12 +13,12 @@
         $stmt->execute();
         $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!isset($_SESSION['siteName_incomeHead'])) {
+        if (!isset($_SESSION['siteName_incomeLine'])) {
             header("location: incomeRecord.php");
         } else {
 
         // ดึง sitename จาก session
-        $siteName = $_SESSION['siteName_incomeHead'];
+        $siteName = $_SESSION['siteName_incomeLine'];
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บันทึกรายรับ (ยอดรวม) | ระบบบริหารจัดการใบเสร็จ</title>
+    <title>บันทึกรายรับ (รายละเอียด) | ระบบบริหารจัดการใบเสร็จ</title>
 
     <!-- Dependency ห้ามลบ -->
     <?php include "include/dependency.php"; ?>
@@ -55,7 +55,7 @@
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ (ยอดรวม)</legend>
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ (รายละเอียด)</legend>
     </section>
 
     <!-- Alert ห้ามลบ -->
@@ -64,29 +64,29 @@
             <div class="col-md">
             <?php
                 // Alert เพิ่มรายการสำเร็จ
-                if(isset($_SESSION['addIncomeHead_success'])) {
+                if(isset($_SESSION['addIncomeLine_success'])) {
                     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
                     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['addIncomeHead_success'];
-                    unset($_SESSION['addIncomeHead_success']);
+                    echo $_SESSION['addIncomeLine_success'];
+                    unset($_SESSION['addIncomeLine_success']);
                     echo "</div>";
                 }
 
                 // Alert แก้ไขรายการสำเร็จ
-                else if(isset($_SESSION['editIncomeHead_success'])) {
+                else if(isset($_SESSION['editIncomeLine_success'])) {
                     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
                     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['editIncomeHead_success'];
-                    unset($_SESSION['editIncomeHead_success']);
+                    echo $_SESSION['editIncomeLine_success'];
+                    unset($_SESSION['editIncomeLine_success']);
                     echo "</div>";
                 }
 
                 // Alert ลบรายการสำเร็จ
-                else if(isset($_SESSION['deleteIncomeHead_success'])) {
+                else if(isset($_SESSION['deleteIncomeLine_success'])) {
                     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
                     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['deleteIncomeHead_success'];
-                    unset($_SESSION['deleteIncomeHead_success']);
+                    echo $_SESSION['deleteIncomeLine_success'];
+                    unset($_SESSION['deleteIncomeLine_success']);
                     echo "</div>";
                 }
             ?>
@@ -104,27 +104,29 @@
 
                 <form action="../db/db_income.php" method="POST">
                     <div class="row">
-                        <div class="col-md-2">
+                        <div class="col-md-8">
                             <input type="hidden" class="form-control" name="addSiteName" value="<?php echo $siteName; ?>" readonly>
-                            <label class="form-label fw-bold" for="addStartDate">วันที่เริ่ม :</label>
-                            <input type="date" class="form-control" name="addStartDate" id="addStartDate" required>
+                            <label class="form-label fw-bold" for="payerName">ชื่อผู้จ่าย :</label>
+                            <input type="text" class="form-control" name="payerName" id="payerName" required>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="paidDate">ได้รับเงินวันที่ :</label>
+                            <input type="date" class="form-control" name="paidDate" id="paidDate" required>
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label fw-bold" for="addFinishDate">วันที่สิ้นสุด :</label>
-                            <input type="date" class="form-control" name="addFinishDate" id="addFinishDate" required>
+                            <label class="form-label fw-bold" for="installment">งวดที่ :</label>
+                            <input type="number" class="form-control" name="installment" id="installment" required>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label fw-bold" for="addInstallment">จำนวนงวด :</label>
-                            <input type="number" class="form-control" name="addInstallment" id="addInstallment" required>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label fw-bold" for="addSum">ยอดรวม :</label>
                             <input type="number" class="form-control" name="addSum" id="addSum" step="any" required>
                         </div>
                     </div>
 
                     <div class="row mt-3">
-                        <div class="col-md-6">
+                        <div class="col-md-8">
                             <button type="submit" name="addIncome_head" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </div>
@@ -155,7 +157,7 @@
 
                         <!-- query ตาราง ห้ามลบ -->
                         <?php
-                            $stmt = $conn->query("SELECT * FROM income_head WHERE site_name = '$siteName'");
+                            $stmt = $conn->query("SELECT * FROM income_line WHERE site_name = '$siteName'");
                             $stmt->execute();
                             $incomeHead = $stmt->fetchAll();
 
@@ -191,7 +193,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <form action="../db/db_incomeHead.php" method="POST">
+                                        <form action="../db/db_income.php" method="POST">
                                             <div class="mb-0">
                                                 <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_incomeHead['id']; ?>" readonly required>
                                                 <label for="editSiteName" class="col-form-label">ไซต์งาน :</label>

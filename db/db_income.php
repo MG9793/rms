@@ -52,4 +52,31 @@
         header("location: ../page/incomeRecord_Total.php");
     }
 
+
+    // check มีการส่ง selectSite_Head จาก incomeRecord.php หรือไม่
+    else if (isset($_POST['selectSite_Head'])) {
+        $siteName = $_POST['siteName'];
+
+        $_SESSION['siteName_incomeHead'] = $siteName;
+        header("location: ../page/incomeRecord_Total.php");
+    }
+
+
+
+
+
+
+
+
+
+
+
+    
+    // check มีการส่ง selectSite_Line จาก incomeRecord.php หรือไม่
+    else if (isset($_POST['selectSite_Line'])) {
+        $siteName = $_POST['siteName'];
+
+        $_SESSION['siteName_incomeLine'] = $siteName;
+        header("location: ../page/incomeRecord_Line.php");
+    }
 ?>
