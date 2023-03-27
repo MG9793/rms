@@ -104,7 +104,7 @@
 
                 <form action="../db/db_income.php" method="POST">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <input type="hidden" class="form-control" name="addSiteName" value="<?php echo $siteName; ?>" readonly>
                             <label class="form-label fw-bold" for="addPayerName">ชื่อผู้จ่าย :</label>
                             <input type="text" class="form-control" name="addPayerName" id="addPayerName" required>
@@ -115,18 +115,18 @@
                             <label class="form-label fw-bold" for="addPaidDate">ได้รับเงินวันที่ :</label>
                             <input type="date" class="form-control" name="addPaidDate" id="addPaidDate" required>
                         </div>
-                        <div class="col-md-2">
-                            <label class="form-label fw-bold" for="addinstallmentNo">งวดที่ :</label>
-                            <input type="number" class="form-control" name="addinstallmentNo" id="addinstallmentNo" required>
+                        <div class="col-md-1">
+                            <label class="form-label fw-bold" for="addInstallmentNo">งวดที่ :</label>
+                            <input type="number" class="form-control" name="addInstallmentNo" id="addInstallmentNo" required>
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold" for="addPrice">ยอดรวม :</label>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold" for="addPrice">จำนวน :</label>
                             <input type="number" class="form-control" name="addPrice" id="addPrice" step="any" required>
                         </div>
                     </div>
 
                     <div class="row mt-3">
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <button type="submit" name="addIncome_line" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </div>
@@ -195,25 +195,25 @@
                                     <div class="modal-body">
                                         <form action="../db/db_income.php" method="POST">
                                             <div class="mb-0">
-                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_incomeHead['id']; ?>" readonly required>
+                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_incomeLine['id']; ?>" readonly required>
                                                 <label for="editSiteName" class="col-form-label">ไซต์งาน :</label>
-                                                <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_incomeHead['site_name']; ?>" readonly>
+                                                <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_incomeLine['site_name']; ?>" readonly>
                                             </div>
                                             <div class="mb-0">
-                                                <label for="editStartDate" class="col-form-label">วันที่เริ่ม :</label>
-                                                <input type="date" class="form-control" name="editStartDate" id="editStartDate" value="<?php echo $fetch_incomeHead['start_date']; ?>" required>
+                                                <label for="editPayerName" class="col-form-label">ชื่อผู้จ่าย :</label>
+                                                <input type="text" class="form-control" name="editPayerName" id="editPayerName" value="<?php echo $fetch_incomeLine['payer_name']; ?>" required>
                                             </div>
                                             <div class="mb-0">
-                                                <label for="editFinishDate" class="col-form-label">วันที่สิ้นสุด :</label>
-                                                <input type="date" class="form-control" name="editFinishDate" id="editFinishDate" value="<?php echo $fetch_incomeHead['finish_date']; ?>" required>
+                                                <label for="editPaidDate" class="col-form-label">ได้รับเงินวันที่ :</label>
+                                                <input type="date" class="form-control" name="editPaidDate" id="editPaidDate" value="<?php echo $fetch_incomeLine['paid_date']; ?>" required>
                                             </div>
                                             <div class="mb-0">
-                                                <label for="editInstallment" class="col-form-label">จำนวนงวด :</label>
-                                                <input type="number" class="form-control" name="editInstallment" id="editInstallment" value="<?php echo $fetch_incomeHead['installment']; ?>" required>
+                                                <label for="editInstallmentNo" class="col-form-label">งวดที่ :</label>
+                                                <input type="number" class="form-control" name="editInstallmentNo" id="editInstallmentNo" value="<?php echo $fetch_incomeLine['installment_no']; ?>" required>
                                             </div>
                                             <div class="mb-2">
-                                                <label for="editSum" class="col-form-label">ยอดรวม :</label>
-                                                <input type="number" class="form-control" name="editSum" id="editSum" step="any" value="<?php echo $fetch_incomeHead['sum']; ?>" required>
+                                                <label for="editPrice" class="col-form-label">จำนวน :</label>
+                                                <input type="number" class="form-control" name="editPrice" id="editPrice" step="any" value="<?php echo $fetch_incomeLine['price']; ?>" required>
                                             </div>
 
                                             <div class="modal-footer">
@@ -240,7 +240,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a data-id="<?php echo $fetch_incomeLine['id']; ?>" href="?deleteIncome_head=<?php echo $fetch_incomeLine['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                        <a data-id="<?php echo $fetch_incomeLine['id']; ?>" href="?deleteIncome_line=<?php echo $fetch_incomeLine['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
                                     </div>
                                 </div>
                             </div>

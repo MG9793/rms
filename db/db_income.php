@@ -67,7 +67,7 @@
         $site = $_POST['addSiteName'];
         $payer = $_POST['addPayerName'];
         $paidDate = $_POST['addPaidDate'];
-        $installment = $_POST['addinstallmentNo'];
+        $installment = $_POST['addInstallmentNo'];
         $price = $_POST['addPrice'];
 
         $stmt = $conn->prepare("INSERT INTO income_line(site_name, payer_name, installment_no, paid_date, price)
