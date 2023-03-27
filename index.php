@@ -12,6 +12,11 @@
         $stmt = $conn->query("SELECT name, lastname, username FROM user_info WHERE id = $id");
         $stmt->execute();
         $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // query จำนวนไซต์งาน
+        $siteTotal = $conn->query("SELECT * FROM site_info");
+        $siteTotal->execute();
+        $site_rowCount = $siteTotal->rowCount();
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +52,7 @@
         }
 
         body {
-            background-color: rgb(245, 245, 245);
+            background-color: rgb(230, 230, 230);
             font-family: 'Kanit', sans-serif;
             margin: 0;
             padding: 0;
@@ -59,11 +64,6 @@
 
         .navbar .nav-item a:hover {
             color: yellow;
-        }
-
-        .dashboard {
-            background-color: #fff;
-            border-top: 2px dotted #000;
         }
 
         .monthColor {
@@ -163,98 +163,95 @@
     </div>
 
     <!-- pagename ห้ามลบ -->
+    <section class="container mt-2">
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">Dashboard</legend>
+    </section>
+
+    <!-- pagename ห้ามลบ -->
     <section class="container mt-3">
-        <h2 class="fw-bold text-dark">แดชบอร์ด</h2>
-        <hr class="dashboard">
-
-        <fieldset>
-            <legend class="fw-bold"><i class="fa-solid fa-file-invoice-dollar"></i> สรุปรวม</legend>
-            <div class="row">
-
-                <div class="col-xl-3 col-md-12">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <i class="fa-solid fa-building text-primary fa-3x me-4"></i>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fw-bold">ไซต์งานปัจจุบัน</h6>
-                                    </div>
-                                </div>
+        <div class="row">
+            <div class="col-xl-3 col-md-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between p-md-1">
+                            <div class="d-flex flex-row">
                                 <div class="align-self-center">
-                                    <h6 class="mb-0">6</h6>
+                                    <i class="fa-solid fa-building text-primary fa-3x me-4"></i>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <h6 class="fw-bold">ไซต์งานปัจจุบัน</h6>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-12">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <i class="fa-solid fa-gears text-success fa-3x me-4"></i>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fw-bold">ค่าวัสดุรวม</h6>
-                                    </div>
-                                </div>
-                                <div class="align-self-center">
-                                    <h6 class="mb-0">1,003,284,695</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-12">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <i class="fa-solid fa-person text-warning fa-3x me-4"></i>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fw-bold">ค่าแรงรวม</h6>
-                                    </div>
-                                </div>
-                                <div class="align-self-center">
-                                    <h6 class="mb-0">120,284,695</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-3 col-md-12">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <i class="fa-solid fa-wallet fa-3x text-danger me-4"></i>
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <h6 class="fw-bold">รวมทั้งหมด</h6>
-                                    </div>
-                                </div>
-                                <div class="align-self-center">
-                                    <h6 class="mb-0">221,284,695</h6>
-                                </div>
+                            <div class="align-self-center">
+                                <h6 class="mb-0"><?php echo $site_rowCount ?></h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </fieldset>
 
-        <hr>
-        <div class="d-flex">
+            <div class="col-xl-3 col-md-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between p-md-1">
+                            <div class="d-flex flex-row">
+                                <div class="align-self-center">
+                                    <i class="fa-solid fa-gears text-success fa-3x me-4"></i>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <h6 class="fw-bold">ค่าวัสดุรวม</h6>
+                                </div>
+                            </div>
+                            <div class="align-self-center">
+                                <h6 class="mb-0">1,003,284,695</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between p-md-1">
+                            <div class="d-flex flex-row">
+                                <div class="align-self-center">
+                                    <i class="fa-solid fa-person text-warning fa-3x me-4"></i>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <h6 class="fw-bold">ค่าแรงรวม</h6>
+                                </div>
+                            </div>
+                            <div class="align-self-center">
+                                <h6 class="mb-0">120,284,695</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between p-md-1">
+                            <div class="d-flex flex-row">
+                                <div class="align-self-center">
+                                    <i class="fa-solid fa-wallet fa-3x text-danger me-4"></i>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <h6 class="fw-bold">รวมทั้งหมด</h6>
+                                </div>
+                            </div>
+                            <div class="align-self-center">
+                                <h6 class="mb-0">221,284,695</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex mt-2">
             <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseSummary1" aria-expanded="false" aria-controls="collapseSummary1"><i class="fa-solid fa-table-list"></i> สรุปยอดซื้อ (VAT)</a>
             <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseSummary2" aria-expanded="false" aria-controls="collapseSummary2"><i class="fa-solid fa-list"></i> สรุปยอดซื้อ (no VAT)</a>
         </div>
