@@ -62,9 +62,27 @@
     }
 
 
+    // เพิ่มข้อมูล income_line
+    else if (isset($_POST['addIncome_line'])) {
+        $site = $_POST['addSiteName'];
+        $payer = $_POST['addPayerName'];
+        $paidDate = $_POST['addPaidDate'];
+        $installment = $_POST['addinstallmentNo'];
+        $price = $_POST['addPrice'];
 
+        $stmt = $conn->prepare("INSERT INTO income_line(site_name, payer_name, installment_no, paid_date, price)
+                                VALUES(:site_name, :payer_name, :installment_no, :paid_date, :price)");
 
+        $stmt->bindParam(":site_name", $site);
+        $stmt->bindParam(":payer_name", $payer);
+        $stmt->bindParam(":installment_no", $installment);
+        $stmt->bindParam(":paid_date", $paidDate);
+        $stmt->bindParam(":price", $price);
+        $stmt->execute();
 
+        $_SESSION['addIncomeLine_success'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกรายรับ (รายละเอียด) สำเร็จ';
+        header("location: ../page/incomeRecord_Line.php");
+    }
 
 
 

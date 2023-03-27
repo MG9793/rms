@@ -99,35 +99,35 @@
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold">ชื่อไซต์งาน : <?php echo $siteName; ?></h5>
+                <h5 class="fw-bold text-danger"><?php echo $siteName; ?></h5>
                 <hr>
 
                 <form action="../db/db_income.php" method="POST">
                     <div class="row">
                         <div class="col-md-8">
                             <input type="hidden" class="form-control" name="addSiteName" value="<?php echo $siteName; ?>" readonly>
-                            <label class="form-label fw-bold" for="payerName">ชื่อผู้จ่าย :</label>
-                            <input type="text" class="form-control" name="payerName" id="payerName" required>
+                            <label class="form-label fw-bold" for="addPayerName">ชื่อผู้จ่าย :</label>
+                            <input type="text" class="form-control" name="addPayerName" id="addPayerName" required>
                         </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col-md-2">
-                            <label class="form-label fw-bold" for="paidDate">ได้รับเงินวันที่ :</label>
-                            <input type="date" class="form-control" name="paidDate" id="paidDate" required>
+                            <label class="form-label fw-bold" for="addPaidDate">ได้รับเงินวันที่ :</label>
+                            <input type="date" class="form-control" name="addPaidDate" id="addPaidDate" required>
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label fw-bold" for="installment">งวดที่ :</label>
-                            <input type="number" class="form-control" name="installment" id="installment" required>
+                            <label class="form-label fw-bold" for="addinstallmentNo">งวดที่ :</label>
+                            <input type="number" class="form-control" name="addinstallmentNo" id="addinstallmentNo" required>
                         </div>
                         <div class="col-md-4">
-                            <label class="form-label fw-bold" for="addSum">ยอดรวม :</label>
-                            <input type="number" class="form-control" name="addSum" id="addSum" step="any" required>
+                            <label class="form-label fw-bold" for="addPrice">ยอดรวม :</label>
+                            <input type="number" class="form-control" name="addPrice" id="addPrice" step="any" required>
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-md-8">
-                            <button type="submit" name="addIncome_head" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            <button type="submit" name="addIncome_line" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </div>
                 </form>
@@ -146,10 +146,10 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">ไซต์งาน</th>
-                            <th scope="col">วันที่เริ่ม</th>
-                            <th scope="col">วันที่สิ้นสุด</th>
-                            <th scope="col">จำนวนงวด</th>
-                            <th scope="col">ยอดรวม</th>
+                            <th scope="col">ชื่อผู้จ่าย</th>
+                            <th scope="col">ได้รับเงินวันที่</th>
+                            <th scope="col">งวดที่</th>
+                            <th scope="col">จำนวน</th>
                             <th scope="col">แก้ไข/อัพเดทข้อมูล</th>
                         </tr>
                     </thead>
@@ -159,32 +159,32 @@
                         <?php
                             $stmt = $conn->query("SELECT * FROM income_line WHERE site_name = '$siteName'");
                             $stmt->execute();
-                            $incomeHead = $stmt->fetchAll();
+                            $incomeLine = $stmt->fetchAll();
 
-                            if (!$incomeHead) {
+                            if (!$incomeLine) {
                                 echo "<p><td colspan='7' class='text-center'>ไม่พบข้อมูล</td></p>";
                             } else {
-                                foreach ($incomeHead as $fetch_incomeHead) {
+                                foreach ($incomeLine as $fetch_incomeLine) {
                         ?>
 
                         <tr>
                             <td></td>
-                            <td><?php echo $fetch_incomeHead['site_name']; ?></td>
-                            <td><?php echo $fetch_incomeHead['installment']; ?></td>
-                            <td><?php echo $fetch_incomeHead['start_date']; ?></td>
-                            <td><?php echo $fetch_incomeHead['finish_date']; ?></td>
-                            <td><?php echo $fetch_incomeHead['sum']; ?></td>
+                            <td><?php echo $fetch_incomeLine['site_name']; ?></td>
+                            <td><?php echo $fetch_incomeLine['payer_name']; ?></td>
+                            <td><?php echo $fetch_incomeLine['paid_date']; ?></td>
+                            <td><?php echo $fetch_incomeLine['installment_no']; ?></td>
+                            <td><?php echo $fetch_incomeLine['price']; ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-trash"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeLine['id']; ?>"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php echo $fetch_incomeLine['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
 
 
                         <!-- Modal แก้ไขข้อมูล ห้ามลบ -->
-                        <div class="modal fade" id="modalEditRecord<?php echo $fetch_incomeHead['id']; ?>" tabindex="-1" aria-labelledby="modalEditRecord" aria-hidden="true">
+                        <div class="modal fade" id="modalEditRecord<?php echo $fetch_incomeLine['id']; ?>" tabindex="-1" aria-labelledby="modalEditRecord" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -218,7 +218,7 @@
 
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="editIncome_head"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                                <button type="submit" class="btn btn-primary" name="editIncome_line"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -228,7 +228,7 @@
 
 
                         <!-- Modal ยืนยันลบข้อมูล ห้ามลบ -->
-                        <div class="modal fade" id="modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="modalDeleteRecord<?php echo $fetch_incomeLine['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -240,7 +240,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a data-id="<?php echo $fetch_incomeHead['id']; ?>" href="?deleteIncome_head=<?php echo $fetch_incomeHead['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                        <a data-id="<?php echo $fetch_incomeLine['id']; ?>" href="?deleteIncome_head=<?php echo $fetch_incomeLine['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
                                     </div>
                                 </div>
                             </div>
@@ -251,20 +251,6 @@
             </fieldset>
         </div>
     </section>
-
-
-
-
-<!-- 
-    <script>
-        function calculateDays() {
-            var startDate = new Date(document.getElementById("projectStart").value);
-            var endDate = new Date(document.getElementById("projectEnd").value);
-            var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            document.getElementById("totalDays").value = diffDays;
-        }
-    </script> -->
 
 </body>
 </html>

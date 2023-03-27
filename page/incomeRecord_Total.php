@@ -99,7 +99,7 @@
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold">ชื่อไซต์งาน : <?php echo $siteName; ?></h5>
+                <h5 class="fw-bold text-danger"><?php echo $siteName; ?></h5>
                 <hr>
 
                 <form action="../db/db_income.php" method="POST">

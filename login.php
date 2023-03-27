@@ -29,7 +29,7 @@
                 
         body {
             font-family: 'Kanit', sans-serif;
-            background-color: rgb(245, 245, 245);
+            background-color: rgb(230, 230, 230);
             margin: 0;
             padding: 0;
         }

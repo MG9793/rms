@@ -52,7 +52,7 @@
         }
 
         body {
-            background-color: rgb(245, 245, 245);
+            background-color: rgb(230, 230, 230);
             font-family: 'Kanit', sans-serif;
             margin: 0;
             padding: 0;
