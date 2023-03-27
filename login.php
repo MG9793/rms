@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เข้าสู่ระบบ | ระบบบริหารจัดการใบเสร็จ</title>
+    <title>เข้าสู่ระบบ</title>
 
     <!-- Bootstrap5.3.0 -->
     <link rel="stylesheet" href="resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
@@ -51,19 +51,18 @@
                         <div class="card-body p-5">
 
                             <!-- ส่วนฟอร์ม login ห้ามลบ -->
-                            <form class="mb-3 mt-md-4" action="db/config/login.php" method="POST">
+                            <form class="mb-3 mt-md-4" action="db/config/login.php" method="POST" >
                                 <h2 class="fw-bold mb-2 text-uppercase "><img src="image/logo/logo.jpg" class="rounded" style="width: 80px"> Sithichai Engineering</h2>
-                                <p class="mb-5">ระบบบริหารจัดการใบเสร็จ (Version 1.00) - กรุณาเข้าสู่ระบบ</p>
+        
+                                <p class="mb-5"></p>
                                 <div class="mb-3">
-                                    <label for="text" class="form-label ">ชื่อผู้ใช้งาน :</label>
-                                    <input type="text" class="form-control" name="loginUser" placeholder="username...">
+                                    <input type="text" class="form-control" name="loginUser" placeholder="ชื่อผู้ใช้งาน" >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="password" class="form-label ">รหัสผ่าน :</label>
-                                    <input type="password" class="form-control" name="loginPassword" placeholder="*******">
+                                    <input type="password" class="form-control" name="loginPassword" placeholder="รหัสผ่าน">
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-outline-dark" name="login">Login</button>
+                                    <button type="submit" class="btn btn-outline-dark" name="login">เข้าสู่ระบบ</button>
                                 </div>
                             </form>
                         </div>
