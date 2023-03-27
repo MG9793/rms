@@ -76,4 +76,16 @@
         header("../page/incomeRecord_Total.php");
     }
 
+
+    // ลบ income_line
+    else if (isset($_GET['deleteIncome_line'])) {
+        $delete_id = $_GET['deleteIncome_line'];
+        $deleteStmt = $conn->query("DELETE FROM income_line WHERE id = $delete_id");
+        $deleteStmt->execute();
+
+        // Alert Success
+        $_SESSION['deleteIncomeLine_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
+        header("../page/incomeRecord_Line.php");
+    }
+
 ?>
