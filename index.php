@@ -25,7 +25,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | โปรแกรมจัดการใบเสร็จ - Version 1.00</title>
+    <link rel="icon" type="image/logo/logo.jpg" href="image/logo/logo.jpg" />
+    <title>Sithichai Engineering</title>
 
     <!-- Bootstrap5.3.0 -->
     <link rel="stylesheet" href="resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
@@ -162,11 +163,12 @@
         </div>
     </div>
 
-    <!-- pagename ห้ามลบ -->
+    <!-- pagename ห้ามลบ 
+ 
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">Dashboard</legend>
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">แดชบอร์ด</legend>
     </section>
-
+-->
     <!-- pagename ห้ามลบ -->
     <section class="container mt-3">
         <div class="row">
@@ -179,7 +181,7 @@
                                     <i class="fa-solid fa-building text-primary fa-3x me-4"></i>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <h6 class="fw-bold">ไซต์งานปัจจุบัน</h6>
+                                    <h6 class="fw-bold">ไซต์งาน</h6>
                                 </div>
                             </div>
                             <div class="align-self-center">
@@ -199,7 +201,7 @@
                                     <i class="fa-solid fa-gears text-success fa-3x me-4"></i>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <h6 class="fw-bold">ค่าวัสดุรวม</h6>
+                                    <h6 class="fw-bold">ค่าวัสดุ</h6>
                                 </div>
                             </div>
                             <div class="align-self-center">
@@ -219,7 +221,7 @@
                                     <i class="fa-solid fa-person text-warning fa-3x me-4"></i>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <h6 class="fw-bold">ค่าแรงรวม</h6>
+                                    <h6 class="fw-bold">ค่าแรง</h6>
                                 </div>
                             </div>
                             <div class="align-self-center">
@@ -239,7 +241,7 @@
                                     <i class="fa-solid fa-wallet fa-3x text-danger me-4"></i>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <h6 class="fw-bold">รวมทั้งหมด</h6>
+                                    <h6 class="fw-bold">รวม</h6>
                                 </div>
                             </div>
                             <div class="align-self-center">
@@ -252,8 +254,8 @@
         </div>
 
         <div class="d-flex mt-2">
-            <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseSummary1" aria-expanded="false" aria-controls="collapseSummary1"><i class="fa-solid fa-table-list"></i> สรุปยอดซื้อ (VAT)</a>
-            <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseSummary2" aria-expanded="false" aria-controls="collapseSummary2"><i class="fa-solid fa-list"></i> สรุปยอดซื้อ (no VAT)</a>
+            <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseSummary1" aria-expanded="false" aria-controls="collapseSummary1"><i class="fa-solid fa-table-list"></i> ค่าใช้จ่าย (VAT)</a>
+            <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseSummary2" aria-expanded="false" aria-controls="collapseSummary2"><i class="fa-solid fa-list"></i> ค่าใช้จ่าย (์No VAT)</a>
         </div>
 
         <fieldset class="collapse hide mt-2" id="collapseSummary1">
