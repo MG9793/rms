@@ -77,7 +77,7 @@
 
                     <?php
 
-                        $stmt = $conn->query("SELECT site_name FROM site_info");
+                        $stmt = $conn->query("SELECT * FROM site_info");
                         $stmt->execute();
                         $allSite = $stmt->fetchAll();
 
@@ -85,7 +85,7 @@
                     ?>
 
                     <div class="col">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#selectRecord">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#selectRecord<?php echo $fetch_allSite['id']; ?>">
                             <div class="card h-100 shadow dashboard">
                                 <div class="card-body text-center">
                                     <img src="../image/icon/cost.png" class="mx-auto d-block mb-3 w-50">
@@ -94,6 +94,31 @@
                             </div>
                         </a>
                     </div>
+
+                    <!-- Modal 1 -->
+                    <div class="modal fade" id="selectRecord<?php echo $fetch_allSite['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> เลือกประเภทการบันทึกรายรับ</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="../db/db_income.php" method="POST">
+                                        <div class="mb-0 text-center">
+                                            <img src="../image/icon/money.png" class="w-25" alt=""><br>
+                                            <!-- <input type="hidden" class="form-control" name="siteID" value="<?php //echo $fetch_allSite['id']; ?>" readonly> -->
+                                            <input type="hidden" class="form-control" name="siteName" value="<?php echo $fetch_allSite['site_name']; ?>" readonly>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-success w-100" name="selectSite_Head">บันทึกยอดรวม</button>
+                                            <button type="submit" class="btn btn-dark w-100" name="selectSite_Line">บันทึกรายละเอียด</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php } ?>
                 </div>
             </div>
@@ -101,31 +126,6 @@
     </section>
 
 
-
-
-    <!-- Modal 1 -->
-    <div class="modal fade" id="selectRecord" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> เลือกประเภทการบันทึกรายรับ</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="POST">
-                        <div class="mb-0 text-center">
-                            <img src="../image/icon/money.png" class="w-25" alt=""><br>
-                            <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a href="incomeRecord_Total.php" class="btn btn-success w-100">บันทึกยอดรวม</a>
-                    <a href="" class="btn btn-dark w-100">บันทึกรายละเอียด</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
     <script>
