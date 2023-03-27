@@ -1,12 +1,22 @@
 <?php session_start(); ?>
-
+<script type="text/javascript">
+function fncSubmit()
+{
+    if(document.getElementById('textarea').value == "")
+    {
+        alert('PLEASE INPUT DATA');
+        return false;
+    }
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เข้าสู่ระบบ</title>
+    <link rel="icon" type="image/logo/logo.jpg" href="image/logo/logo.jpg" />
+    <title>Sithichai Engineering</title>
 
     <!-- Bootstrap5.3.0 -->
     <link rel="stylesheet" href="resources/lib/bootstrap5.3.0/css/bootstrap.min.css">
@@ -62,7 +72,7 @@
                                     <input type="password" class="form-control" name="loginPassword" placeholder="รหัสผ่าน">
                                 </div>
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-outline-dark" name="login">เข้าสู่ระบบ</button>
+                                    <button type="submit" class="btn btn-outline-dark" name="login" >เข้าสู่ระบบ</button>
                                 </div>
                             </form>
                         </div>
@@ -74,21 +84,25 @@
                         <div class="col-md">
                             <?php
                                 // Alert รหัสผ่านผิดพลาด
-                                if(isset($_SESSION['passwordError'])) {
+                           /*     if(isset($_SESSION['passwordError'])) {
+                                    
                                     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
                                     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
                                     echo $_SESSION['passwordError'];
                                     unset($_SESSION['passwordError']);
                                     echo "</div>";
                                 }
-
-                                // Alert อีเมลล์หรือรหัสผ่านผิดพลาด
-                                else if(isset($_SESSION['userPassword_Error'])) {
-                                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                                    echo $_SESSION['userPassword_Error'];
+*/
+                                // Alert ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง
+                                if(isset($_SESSION['userPassword_Error'])) {
+                                    
+                                   // echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                                  //  echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                                  echo "<body onload=\"window.alert('ชื่อผู้ใช้งาน หรือ รหัสผ่าน ของคุณไม่ถูกต้อง');\">";
+                                
+                                //  echo $_SESSION['userPassword_Error'];
                                     unset($_SESSION['userPassword_Error']);
-                                    echo "</div>";
+                                 //   echo "</div>";
                                 }                    
                             ?> 
                         </div>
@@ -97,6 +111,8 @@
             </div>
         </div>
     </div>
+
+
 
 
     <!-- footer ห้ามลบ -->
