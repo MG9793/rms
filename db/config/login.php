@@ -21,12 +21,14 @@
                     header("location: ../../index.php");
 
                 } else {
-                $_SESSION['passwordError'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! รหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่';
+                    echo "<body onload=\"window.alert('ชื่อผู้ใช้งาน หรือ รหัสผ่าน ของคุณไม่ถูกต้อง');\">";
+               
                 echo "<script>setTimeout(function(){history.back();});</script>";
             }
         }
     } else {
-            $_SESSION['userPassword_Error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! รหัสผ่านหรืออีเมลล์ไม่ถูกต้อง กรุณากรอกใหม่';
+        echo "<body onload=\"window.alert('ชื่อผู้ใช้งาน หรือ รหัสผ่าน ของคุณไม่ถูกต้อง');\">";
+           
             echo "<script>setTimeout(function(){history.back();});</script>";
         }
     }

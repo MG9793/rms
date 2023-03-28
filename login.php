@@ -1,13 +1,6 @@
 <?php session_start(); ?>
 <script type="text/javascript">
-function fncSubmit()
-{
-    if(document.getElementById('textarea').value == "")
-    {
-        alert('PLEASE INPUT DATA');
-        return false;
-    }
-}
+
 </script>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,34 +72,7 @@ function fncSubmit()
                     </div>
 
 
-                    <!-- Alert ห้ามลบ -->
-                    <div class="row mt-2">
-                        <div class="col-md">
-                            <?php
-                                // Alert รหัสผ่านผิดพลาด
-                           /*     if(isset($_SESSION['passwordError'])) {
-                                    
-                                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                                    echo $_SESSION['passwordError'];
-                                    unset($_SESSION['passwordError']);
-                                    echo "</div>";
-                                }
-*/
-                                // Alert ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง
-                                if(isset($_SESSION['userPassword_Error'])) {
-                                    
-                                   // echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                                  //  echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                                  echo "<body onload=\"window.alert('ชื่อผู้ใช้งาน หรือ รหัสผ่าน ของคุณไม่ถูกต้อง');\">";
-                                
-                                //  echo $_SESSION['userPassword_Error'];
-                                    unset($_SESSION['userPassword_Error']);
-                                 //   echo "</div>";
-                                }                    
-                            ?> 
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

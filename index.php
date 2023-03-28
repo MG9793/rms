@@ -2,21 +2,16 @@
     session_start();
     require_once "db/config/conn.php";
     require_once "db/config/deleteRow.php";
+    
 
     if (!isset($_SESSION['admin_login'])) {
         header("location: login.php");
     } else {
+        require_once "db/db_dashboard.php";
+        
 
-        // query ชื่อผู้ใช้งาน
-        $id = $_SESSION['admin_login'];
-        $stmt = $conn->query("SELECT name, lastname, username FROM user_info WHERE id = $id");
-        $stmt->execute();
-        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
+        
 
-        // query จำนวนไซต์งาน
-        $siteTotal = $conn->query("SELECT * FROM site_info");
-        $siteTotal->execute();
-        $site_rowCount = $siteTotal->rowCount();
 ?>
 
 <!DOCTYPE html>
@@ -205,7 +200,7 @@
                                 </div>
                             </div>
                             <div class="align-self-center">
-                                <h6 class="mb-0">1,003,284,695</h6>
+                                <h6 class="mb-0"><?php echo number_format(($materialSum),2) ?></h6>
                             </div>
                         </div>
                     </div>
@@ -225,7 +220,7 @@
                                 </div>
                             </div>
                             <div class="align-self-center">
-                                <h6 class="mb-0">120,284,695</h6>
+                                <h6 class="mb-0"><?php echo number_format(($labourSum),2) ?></h6>
                             </div>
                         </div>
                     </div>
@@ -245,7 +240,7 @@
                                 </div>
                             </div>
                             <div class="align-self-center">
-                                <h6 class="mb-0">221,284,695</h6>
+                                <h6 class="mb-0"><?php echo number_format(($materialSum+$labourSum),2) ?></h6>
                             </div>
                         </div>
                     </div>
@@ -253,16 +248,13 @@
             </div>
         </div>
 
-        <div class="d-flex mt-2">
-            <a class="btn btn-dark" role="button" data-bs-toggle="collapse" href="#collapseSummary1" aria-expanded="false" aria-controls="collapseSummary1"><i class="fa-solid fa-table-list"></i> ค่าใช้จ่าย (VAT)</a>
-            <a class="btn btn-dark mx-2" role="button" data-bs-toggle="collapse" href="#collapseSummary2" aria-expanded="false" aria-controls="collapseSummary2"><i class="fa-solid fa-list"></i> ค่าใช้จ่าย (์No VAT)</a>
-        </div>
+    <br>
 
-        <fieldset class="collapse hide mt-2" id="collapseSummary1">
+ 
             <legend class="fw-bold"><i class="fa-solid fa-book"></i> สรุปยอดซื้อ (VAT)</legend>
             <div class="row">
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">01/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("01/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -271,7 +263,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM01),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +273,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM01),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -290,7 +282,7 @@
                 </div>
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">02/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("02/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -299,7 +291,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM02),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -309,7 +301,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM02),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -318,7 +310,7 @@
                 </div>
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">03/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("03/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -327,7 +319,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM03),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -337,7 +329,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM03),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -346,7 +338,7 @@
                 </div>
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">04/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("04/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -355,7 +347,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM04),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -365,7 +357,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM04),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -374,7 +366,7 @@
                 </div>
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">05/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("05/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -383,7 +375,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM05),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -393,7 +385,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM05),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -402,7 +394,7 @@
                 </div>
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">06/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("06/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -411,7 +403,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM06),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -421,36 +413,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">07/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
-                                    </div>
-                                    <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM06),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -460,7 +423,7 @@
 
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">08/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("07/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -469,7 +432,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM07),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -479,7 +442,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM07),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -489,7 +452,7 @@
 
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">09/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("08/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -498,7 +461,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM08),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -508,34 +471,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">10/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
-                                    </div>
-                                    <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM08),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -545,7 +481,7 @@
 
 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">11/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("09/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -554,7 +490,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM09),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -564,7 +500,63 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM09),2) ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-12 mb-2">
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("10/Y") ?></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
+                                    </div>
+                                    <div class="mt-2" style="margin-left: 120px">
+                                        <h4><?php echo number_format(($sumM10),2) ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
+                                    </div>
+                                    <div class="mt-3" style="margin-left: 180px">
+                                        <h4><?php echo number_format(($vatM10),2) ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-4 col-md-12 mb-2">
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("11/Y") ?></div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
+                                    </div>
+                                    <div class="mt-2" style="margin-left: 120px">
+                                        <h4><?php echo number_format(($sumM11),2) ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between p-md-1">
+                                <div class="d-flex flex-row">
+                                    <div class="align-self-center">
+                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
+                                    </div>
+                                    <div class="mt-3" style="margin-left: 180px">
+                                        <h4><?php echo number_format(($vatM11),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -574,7 +566,7 @@
 
                                 
                 <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded">12/2566</div>
+                    <div class="fw-bold text-center border p-2 bg-dark text-light rounded"><?php echo date("12/Y") ?></div>
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between p-md-1">
@@ -583,7 +575,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
                                     </div>
                                     <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
+                                        <h4><?php echo number_format(($sumM12),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -593,7 +585,7 @@
                                         <h2 class="mb-0 fw-bold"><i class="fa-solid fa-receipt text-info"></i> VAT</h2>
                                     </div>
                                     <div class="mt-3" style="margin-left: 180px">
-                                        <h4>7,504.00</h4>
+                                        <h4><?php echo number_format(($vatM12),2) ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -601,238 +593,9 @@
                     </div>
                 </div>
             </div>
-        </fieldset>
+
 
         <hr>
-
-        <fieldset class="collapse hide" id="collapseSummary2">
-            <legend class="fw-bold"><i class="fa-solid fa-book"></i> สรุปยอดซื้อ (NO VAT)</legend>
-
-
-
-            <div class="row">
-                <div class="col-xl-4 col-md-12 mb-2">
-                    <div class="fw-bold text-center border p-2 rounded text-light monthColor">01/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">02/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">03/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">04/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">05/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">06/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">07/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">08/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">09/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">10/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">11/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                                
-                <div class="col-xl-4 col-md-12 mb-2">
-                <div class="fw-bold text-center border p-2 rounded text-light monthColor">12/2566</div>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between p-md-1">
-                                <div class="d-flex flex-row">
-                                    <div class="align-self-center">
-                                        <h2 class="mb-0 fw-bold"><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h2>
-                                    </div>
-                                    <div class="mt-2" style="margin-left: 120px">
-                                        <h4>76,456.00</h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </fieldset>
     </section>
     
 </body>
