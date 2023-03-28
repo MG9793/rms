@@ -77,7 +77,7 @@
 
                     <?php
 
-                        $stmt = $conn->query("SELECT site_name FROM site_info");
+                        $stmt = $conn->query("SELECT * FROM site_info");
                         $stmt->execute();
                         $allSite = $stmt->fetchAll();
 
@@ -85,7 +85,7 @@
                     ?>
 
                     <div class="col">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#selectVAT">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#selectVAT<?php echo $fetch_allSite['id']; ?>">
                             <div class="card h-100 shadow dashboard">
                                 <div class="card-body text-center">
                                     <img src="../image/icon/construction.png" class="mx-auto d-block mb-3 w-50">
@@ -94,6 +94,32 @@
                             </div>
                         </a>
                     </div>
+
+
+                    <!-- Modal 1 -->
+                    <div class="modal fade" id="selectVAT<?php echo $fetch_allSite['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> เลือกประเภทการคำนวณภาษี (VAT)</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="../db/db_expense.php" method="POST">
+                                        <div class="mb-0 text-center">
+                                            <img src="../image/icon/tax.png" class="w-25" alt=""><br>
+                                            <!-- <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site"> -->
+                                            <input type="hidden" class="form-control" name="siteName" value="<?php echo $fetch_allSite['site_name']; ?>" readonly>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-success w-100" name="expenseHead_vat">VAT</button>
+                                            <button type="submit" class="btn btn-danger w-100" name="#">No VAT</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <?php } ?>
                 </div>
             </div>
@@ -101,35 +127,8 @@
     </section>
 
 
-
-
-    <!-- Modal 1 -->
-    <div class="modal fade" id="selectVAT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-2 border rounded p-2 bg-dark text-light"></i> เลือกประเภทการคำนวณภาษี (VAT)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="#" method="POST">
-                        <div class="mb-0 text-center">
-                            <img src="../image/icon/tax.png" class="w-25" alt=""><br>
-                            <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT">VAT</button>
-                    <button type="submit" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#MA_Head_NoVAT">No VAT</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!-- Modal 2 -->
-    <div class="modal fade" id="expenseDetailsVAT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <!-- <div class="modal fade" id="expenseDetailsVAT" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -138,7 +137,6 @@
                 </div>
                 <div class="modal-body">
                     <form action="#" method="POST">
-                        <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
                         <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
                         <div class="row">
                             <div class="col-md-6">
@@ -187,7 +185,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script>
         function calculateVAT() {

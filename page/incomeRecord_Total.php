@@ -125,7 +125,7 @@
 
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <button type="submit" name="addIncome_head" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            <button type="submit" class="btn btn-primary w-100" name="addIncome_head"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </div>
                 </form>

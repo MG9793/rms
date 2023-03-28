@@ -13,12 +13,12 @@
         $stmt->execute();
         $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!isset($_SESSION['siteName_incomeLine'])) {
-            header("location: incomeRecord.php");
+        if (!isset($_SESSION['siteName_expenseHeadVAT'])) {
+            header("location: expenseTotal.php");
         } else {
 
         // ดึง sitename จาก session
-        $siteName = $_SESSION['siteName_incomeLine'];
+        $siteName = $_SESSION['siteName_expenseHeadVAT'];
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บันทึกรายรับ (รายละเอียด) | ระบบบริหารจัดการใบเสร็จ</title>
+    <title>บันทึกค่าใช้จ่ายรวมภาษี (VAT)</title>
 
     <!-- Dependency ห้ามลบ -->
     <?php include "include/dependency.php"; ?>
@@ -55,7 +55,7 @@
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ (รายละเอียด)</legend>
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกค่าใช้จ่ายรวมภาษี (VAT)</legend>
     </section>
 
     <!-- Alert ห้ามลบ -->
@@ -64,31 +64,31 @@
             <div class="col-md">
             <?php
                 // Alert เพิ่มรายการสำเร็จ
-                if(isset($_SESSION['addIncomeLine_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['addIncomeLine_success'];
-                    unset($_SESSION['addIncomeLine_success']);
-                    echo "</div>";
-                }
+                // if(isset($_SESSION['addIncomeLine_success'])) {
+                //     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                //     echo $_SESSION['addIncomeLine_success'];
+                //     unset($_SESSION['addIncomeLine_success']);
+                //     echo "</div>";
+                // }
 
-                // Alert แก้ไขรายการสำเร็จ
-                else if(isset($_SESSION['editIncomeLine_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['editIncomeLine_success'];
-                    unset($_SESSION['editIncomeLine_success']);
-                    echo "</div>";
-                }
+                // // Alert แก้ไขรายการสำเร็จ
+                // else if(isset($_SESSION['editIncomeLine_success'])) {
+                //     echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
+                //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                //     echo $_SESSION['editIncomeLine_success'];
+                //     unset($_SESSION['editIncomeLine_success']);
+                //     echo "</div>";
+                // }
 
-                // Alert ลบรายการสำเร็จ
-                else if(isset($_SESSION['deleteIncomeLine_success'])) {
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['deleteIncomeLine_success'];
-                    unset($_SESSION['deleteIncomeLine_success']);
-                    echo "</div>";
-                }
+                // // Alert ลบรายการสำเร็จ
+                // else if(isset($_SESSION['deleteIncomeLine_success'])) {
+                //     echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
+                //     echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                //     echo $_SESSION['deleteIncomeLine_success'];
+                //     unset($_SESSION['deleteIncomeLine_success']);
+                //     echo "</div>";
+                // }
             ?>
             </div>
         </div>
@@ -102,32 +102,53 @@
                 <h5 class="fw-bold text-danger"><?php echo $siteName; ?></h5>
                 <hr>
 
-                <form action="../db/db_income.php" method="POST">
+                <form action="../db/db_expense.php" method="POST">
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <input type="hidden" class="form-control" name="addSiteName" value="<?php echo $siteName; ?>" readonly>
-                            <label class="form-label fw-bold" for="addPayerName">ชื่อผู้จ่าย :</label>
-                            <input type="text" class="form-control" name="addPayerName" id="addPayerName" required>
+                            <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
+                            <input type="text" class="form-control" name="receiptNo" id="receiptNo" placeholder="กรุณากรอกเลขที่ใบเสร็จ..." required>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
+                            <input type="date" class="form-control" name="buyDate" id="buyDate" required>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="expenseType" class="form-label fw-bold">ประเภทค่าใช้จ่าย :</label>
+                            <select class="form-select" aria-label="expenseType" name="expenseType" required>
+                                <option>ค่าวัสดุ</option>
+                                <option>ค่าแรง</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold" for="sellerName">ชื่อผู้ขาย :</label>
+                            <input type="text" class="form-control" name="sellerName" id="sellerName" placeholder="กรุณากรอกชื่อผู้ขาย..." required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold" for="taxID">เลขประจำตัวผู้เสียภาษี :</label>
+                            <input type="text" class="form-control" name="taxID" id="taxID" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี..." required>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <label class="col-form-label fw-bold">ยอดรวม :</label>
+                            <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" oninput="calculateVAT()" required>
+                        </div>
                         <div class="col-md-2">
-                            <label class="form-label fw-bold" for="addPaidDate">ได้รับเงินวันที่ :</label>
-                            <input type="date" class="form-control" name="addPaidDate" id="addPaidDate" required>
+                            <label class="col-form-label fw-bold">+ VAT 7% :</label>
+                            <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" required readonly>
                         </div>
-                        <div class="col-md-1">
-                            <label class="form-label fw-bold" for="addInstallmentNo">งวดที่ :</label>
-                            <input type="number" class="form-control" name="addInstallmentNo" id="addInstallmentNo" required>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-label fw-bold" for="addPrice">จำนวน :</label>
-                            <input type="number" class="form-control" name="addPrice" id="addPrice" step="any" required>
+                        <div class="col-md-4">
+                            <label class="col-form-label fw-bold">รวมสุทธิ :</label>
+                            <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" required readonly>
                         </div>
                     </div>
 
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary w-100" name="addIncome_line"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            <button type="submit" class="btn btn-primary w-100" name="addExpense_VAT"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </div>
                 </form>
