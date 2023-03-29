@@ -13,20 +13,33 @@
         $stmt->execute();
         $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        $site = $conn->prepare("SELECT* FROM site_info");
+        $site->execute();
+        $rs = $site->fetchAll();
+
         if (!isset($_SESSION['siteName_incomeHead'])) {
             header("location: incomeRecord.php");
         } else {
 
         // ดึง sitename จาก session
         $siteName = $_SESSION['siteName_incomeHead'];
+        
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" type="text/css" href="../resources/css/jquery.datetimepicker.css"/>
+
+
     <title>บันทึกรายรับ (ยอดรวม) | ระบบบริหารจัดการใบเสร็จ</title>
 
     <!-- Dependency ห้ามลบ -->
@@ -46,6 +59,8 @@
                 url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
                 url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
         }
+
+        
     </style>
 </head>
 <body>
@@ -99,19 +114,41 @@
     <section class="container">
         <div class="collapse show" id="collapseForm">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold text-danger"><?php echo $siteName; ?></h5>
-                <hr>
+            <form action="../db/db_income.php" method="POST">
+                
+            <select name="addSiteName" class="form-control" required>
+                <?php if($_SESSION['siteName_incomeHead']=="") { ?>
+                   <option value="" >--เลือกไซต์งาน--</option>
+                   <?php foreach($rs as $row) { ?>
+                      
+                      <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
+                    <?php } ?>
+                    <?php } else{
+?>
+                    <option value="<?php echo $_SESSION['siteName_incomeHead']; ?>" >--<?php echo $_SESSION['siteName_incomeHead']; ?>--</option>
+                    <?php foreach($rs as $row) { ?>
+                      
+                      <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
+                    <?php } ?>
+<?php
+                    }
+                     
+                    ?>
+                 </select>
+                
+            
+                        <hr>
 
-                <form action="../db/db_income.php" method="POST">
+                
                     <div class="row">
                         <div class="col-md-2">
-                            <input type="hidden" class="form-control" name="addSiteName" value="<?php echo $siteName; ?>" readonly>
                             <label class="form-label fw-bold" for="addStartDate">วันที่เริ่ม :</label>
-                            <input type="date" class="form-control" name="addStartDate" id="addStartDate" required>
+                            <input type="text" class="form-control" name="addStartDate" id="addStartDate" required>
+                        
                         </div>
                         <div class="col-md-2">
                             <label class="form-label fw-bold" for="addFinishDate">วันที่สิ้นสุด :</label>
-                            <input type="date" class="form-control" name="addFinishDate" id="addFinishDate" required>
+                            <input type="text" class="form-control" name="addFinishDate" id="addFinishDate" required>
                         </div>
                         <div class="col-md-2">
                             <label class="form-label fw-bold" for="addInstallment">จำนวนงวด :</label>
@@ -251,8 +288,6 @@
     </section>
 
 
-
-
 <!-- 
     <script>
         function calculateDays() {
@@ -265,6 +300,34 @@
     </script> -->
 
 </body>
+<script src="../resources/js/jquery.js"></script>
+<script src="../resources/js/jquery.datetimepicker.js"></script>
+<script>
+
+jQuery(function(){
+ jQuery('#addStartDate').datetimepicker({
+  format:'Y/m/d',
+  onShow:function( ct ){
+   this.setOptions({
+    maxDate:jQuery('#addFinishDate').val()?jQuery('#addFinishDate').val():false
+   })
+  },
+  timepicker:false
+ });
+ jQuery('#addFinishDate').datetimepicker({
+  format:'Y/m/d',
+  onShow:function( ct ){
+   this.setOptions({
+    minDate:jQuery('#addStartDate').val()?jQuery('#addStartDate').val():false
+   })
+  },
+  timepicker:false
+ });
+});
+
+</script>
+
 </html>
 
 <?php } } ?>
+
