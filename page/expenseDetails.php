@@ -40,13 +40,6 @@
                 url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
         }
     </style>
-
-    <!-- script Datables ห้ามลบจ้า -->
-    <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        } );
-    </script>
 </head>
 <body>
 
