@@ -6,7 +6,7 @@
 
     // เพิ่มข้อมูล income_head
     if (isset($_POST['addIncome_head'])) {
-       // $site = $_POST['addSiteName'];
+        $site = $_POST['addSiteName'];
         $installment = $_POST['addInstallment'];
         $startDate = $_POST['addStartDate'];
         $finishDate = $_POST['addFinishDate'];
@@ -21,7 +21,7 @@
         $stmt->bindParam(":finish_date", $finishDate);
         $stmt->bindParam(":sum", $sum);
         $stmt->execute();
-      //  $_SESSION['siteName_incomeHead'] = $site;
+        $_SESSION['siteName_incomeHead'] = $site;
         $_SESSION['addIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกรายรับสำเร็จ';
         header("location: ../page/incomeRecord_Total.php");
     }
