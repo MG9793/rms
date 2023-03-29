@@ -247,7 +247,7 @@
                 </div>
             </div>
         </div>
-
+       
     <br>
 
  
@@ -595,7 +595,7 @@
             </div>
 
 
-        <hr>
+        
     </section>
     
 </body>
