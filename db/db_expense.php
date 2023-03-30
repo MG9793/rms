@@ -61,6 +61,14 @@
         header("location: ../page/expenseVAT.php");
     }
 
+    // check มีการส่ง expenseHead_vat จาก expenseTotal.php หรือไม่
+    else if (isset($_POST['expenseHead_noVat'])) {
+        $siteName = $_POST['siteName'];
+
+        $_SESSION['siteName_expenseHead_noVAT'] = $siteName;
+        header("location: ../page/expenseNoVAT.php");
+    }
+
 
     // เพิ่มข้อมูล income_line
     // else if (isset($_POST['addIncome_line'])) {

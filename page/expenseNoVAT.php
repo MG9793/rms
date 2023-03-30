@@ -13,12 +13,12 @@
         $stmt->execute();
         $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!isset($_SESSION['siteName_expenseHeadVAT'])) {
+        if (!isset($_SESSION['siteName_expenseHead_noVAT'])) {
             header("location: expenseTotal.php");
         } else {
 
         // ดึง sitename จาก session
-        $siteName = $_SESSION['siteName_expenseHeadVAT'];
+        $siteName = $_SESSION['siteName_expenseHead_noVAT'];
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +27,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>บันทึกค่าใช้จ่ายรวมภาษี (VAT)</title>
+    <title>บันทึกค่าใช้จ่ายไม่รวมภาษี (VAT)</title>
 
     <!-- Dependency ห้ามลบ -->
     <?php include "include/dependency.php"; ?>
@@ -55,7 +55,7 @@
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกค่าใช้จ่ายรวมภาษี (VAT)</legend>
+        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกค่าใช้จ่ายไม่รวมภาษี (No VAT)</legend>
     </section>
 
     <!-- Alert ห้ามลบ -->
@@ -138,11 +138,11 @@
                         </div>
                         <div class="col-md-2">
                             <label class="col-form-label fw-bold">+ VAT 7% :</label>
-                            <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" required readonly>
+                            <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
                         </div>
                         <div class="col-md-4">
                             <label class="col-form-label fw-bold">รวมสุทธิ :</label>
-                            <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" required readonly>
+                            <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM">
                         </div>
                     </div>
 
@@ -168,12 +168,12 @@
 
 
     <!-- ตาราง ห้ามลบ -->
-    <section class="container my-2">
+    <section class="container">
         <div class="collapse show" id="collapseTable">
             <fieldset class="p-3 shadow-sm mt-2">
                 <h5 class="fw-bold"><i class="fa-solid fa-table-list"></i> ข้อมูลบันทึก/แก้ไข</h5>
-                <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
-                    <thead>
+                <table class="table table-striped table-hover table-sm table-bordered css-serial">
+                    <thead class="bg-dark text-light">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">ไซต์งาน</th>
@@ -184,7 +184,7 @@
                             <th scope="col">ประเภท</th>
                             <th scope="col">ยอดรวม</th>
                             <th scope="col">VAT</th>
-                            <th scope="col">ส่วนลด</th>
+                            <th scope="col">รวมสุทธิ</th>
                             <th scope="col">แก้ไข/อัพเดท</th>
                         </tr>
                     </thead>
@@ -192,27 +192,23 @@
 
                         <!-- query ตาราง ห้ามลบ -->
                         <?php
-                            $stmt = $conn->query("SELECT * FROM bill_head WHERE site_name = '$siteName'");
-                            $stmt->execute();
-                            $incomeLine = $stmt->fetchAll();
+                            // $stmt = $conn->query("SELECT * FROM xxx WHERE site_name = '$siteName'");
+                            // $stmt->execute();
+                            // $incomeLine = $stmt->fetchAll();
 
-                            if (!$incomeLine) {
-                                echo "<p><td colspan='11' class='text-center'>ไม่พบข้อมูล</td></p>";
-                            } else {
-                                foreach ($incomeLine as $fetch_expenseVAT) {
+                            // if (!$incomeLine) {
+                            //     echo "<p><td colspan='11' class='text-center'>ไม่พบข้อมูล</td></p>";
+                            // } else {
+                            //     foreach ($incomeLine as $fetch_expenseVAT) {
                         ?>
 
                         <tr>
                             <td></td>
                             <td><?php echo $fetch_expenseVAT['site_name']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['receipt_no']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['sales_name']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['tax_no']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['sales_date']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['material']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['sum']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['vat']; ?></td>
-                            <td><?php echo $fetch_expenseVAT['discount']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['payer_name']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['paid_date']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['installment_no']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['price']; ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeLine['id']; ?>"><i class="fas fa-edit"></i></button>
@@ -284,7 +280,7 @@
                                 </div>
                             </div>
                         </div>
-                        <?php } } ?>        <!-- endforeach -->
+                        <?php //} } ?>        <!-- endforeach -->
                     </tbody>
                 </table>
             </fieldset>

@@ -161,7 +161,7 @@
                         $sales = $stmt->fetchAll();
 
                         if (!$sales) {
-                            echo "<p><td colspan='4' class='text-center'>ไม่พบข้อมูล</td></p>";
+                            echo "<p><td colspan='5' class='text-center'>ไม่พบข้อมูล</td></p>";
                         } else {
                             foreach ($sales as $fetch_salesInfo) {
                     ?>
