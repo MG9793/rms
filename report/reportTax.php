@@ -12,7 +12,7 @@
 
     <style>
         body {
-            font-family: 'Cordia New';
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .container {
@@ -29,22 +29,30 @@
             counter-increment: serial-number;
             content: counter(serial-number);
         }
+
+        thead tr th {
+            font-weight: bold;
+        }
+
+        @page {
+            size: landscape;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="text-center">
-        <h1 class="fw-bold">สรุปรายงานภาษีซื้อ</h1>
-        <h3>เดือนภาษี..........กันยายน..........ปี..........2566..........</h3>
+        <h5 class="fw-bold p-2 shadow" style="background-color: rgb(230, 230, 230);">สรุปรายงานภาษีซื้อ</h5>
+        <h6>เดือนภาษี..........กันยายน..........ปี..........2566..........</h6>
     </div>
 
     <div class="text-end">
-        <h5>เลขประจำตัวผู้เสียภาษีอากร</h5>
+        <h6>เลขประจำตัวผู้เสียภาษีอากร</h6>
     </div>
 
     <div>
-        <h5 class="float-start">ชื่อผู้ประกอบการ................<b>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</b>.......................</h5>
+        <h6 class="float-start">ชื่อผู้ประกอบการ................<b>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</b>.......................</h6>
         <div class="d-flex float-end">
             <h5 class="border border-dark p-1">0</h5>
             <h5 class="border border-dark p-1">1</h5>
@@ -64,9 +72,9 @@
 
 
     <div style="clear: both;">
-        <h5 class="float-start">ชื่อสถานประกอบการ..........<b>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</b>.......................</h5>
+        <h6 class="float-start">ชื่อสถานประกอบการ..........<b>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</b>.......................</h6>
         <div class="d-flex float-end">
-            <h5 class="text-end">สาขาที่ &emsp;</h5>
+            <h6 class="text-end">สาขาที่ &emsp;</h6>
             <h5 class="border border-dark p-1">0</h5>
             <h5 class="border border-dark p-1">0</h5>
             <h5 class="border border-dark p-1">0</h5>
@@ -76,7 +84,7 @@
     
 
     <table class="table table-bordered border-dark table-sm css-serial">
-        <thead class="text-center">
+        <thead class="text-center" style="background-color: rgb(230, 230, 230);">
             <tr>
                 <th>ลำดับที่</th>
                 <th>หน่วยงาน</th>
