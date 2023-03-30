@@ -167,34 +167,38 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">ไซต์งาน</th>
-                            <th scope="col">ชื่อผู้จ่าย</th>
-                            <th scope="col">ได้รับเงินวันที่</th>
-                            <th scope="col">งวดที่</th>
-                            <th scope="col">จำนวน</th>
-                            <th scope="col">แก้ไข/อัพเดทข้อมูล</th>
+                            <th scope="col">เลขที่ใบเสร็จ</th>
+                            <th scope="col">ชื่อผู้ขาย</th>
+                            <th scope="col">เลขประจำตัวผู้เสียภาษี</th>
+                            <th scope="col">วันที่ซื้อ</th>
+                            <th scope="col">ประเภท</th>
+                            <th scope="col">ยอดรวม</th>
+                            <th scope="col">VAT</th>
+                            <th scope="col">รวมสุทธิ</th>
+                            <th scope="col">แก้ไข/อัพเดท</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
 
                         <!-- query ตาราง ห้ามลบ -->
                         <?php
-                            $stmt = $conn->query("SELECT * FROM income_line WHERE site_name = '$siteName'");
-                            $stmt->execute();
-                            $incomeLine = $stmt->fetchAll();
+                            // $stmt = $conn->query("SELECT * FROM xxx WHERE site_name = '$siteName'");
+                            // $stmt->execute();
+                            // $incomeLine = $stmt->fetchAll();
 
-                            if (!$incomeLine) {
-                                echo "<p><td colspan='7' class='text-center'>ไม่พบข้อมูล</td></p>";
-                            } else {
-                                foreach ($incomeLine as $fetch_incomeLine) {
+                            // if (!$incomeLine) {
+                            //     echo "<p><td colspan='11' class='text-center'>ไม่พบข้อมูล</td></p>";
+                            // } else {
+                            //     foreach ($incomeLine as $fetch_expenseVAT) {
                         ?>
 
                         <tr>
                             <td></td>
-                            <td><?php echo $fetch_incomeLine['site_name']; ?></td>
-                            <td><?php echo $fetch_incomeLine['payer_name']; ?></td>
-                            <td><?php echo $fetch_incomeLine['paid_date']; ?></td>
-                            <td><?php echo $fetch_incomeLine['installment_no']; ?></td>
-                            <td><?php echo $fetch_incomeLine['price']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['site_name']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['payer_name']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['paid_date']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['installment_no']; ?></td>
+                            <td><?php echo $fetch_expenseVAT['price']; ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeLine['id']; ?>"><i class="fas fa-edit"></i></button>
@@ -266,7 +270,7 @@
                                 </div>
                             </div>
                         </div>
-                        <?php } } ?>        <!-- endforeach -->
+                        <?php //} } ?>        <!-- endforeach -->
                     </tbody>
                 </table>
             </fieldset>
