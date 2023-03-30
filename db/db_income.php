@@ -23,7 +23,7 @@
         $stmt->execute();
         $_SESSION['siteName_incomeHead'] = $site;
         $_SESSION['addIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกรายรับสำเร็จ';
-        header("location: ../page/incomeRecord_Total.php");
+        header("location: ../page/incomeRecord.php");
     }
 
 
@@ -49,7 +49,7 @@
         $stmt->execute();
 
         $_SESSION['editIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขรายรับสำเร็จ';
-        header("location: ../page/incomeRecord_Total.php");
+        header("location: ../page/incomeRecord.php");
     }
 
 
@@ -58,7 +58,7 @@
         $siteName = $_POST['siteName'];
 
         $_SESSION['siteName_incomeHead'] = $siteName;
-        header("location: ../page/incomeRecord_Total.php");
+        header("location: ../page/incomeRecord.php");
     }
 
 

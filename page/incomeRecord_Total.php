@@ -1,17 +1,7 @@
 <?php
-    session_start();
-    require_once "../db/config/conn.php";
-    require_once "../db/config/deleteRow.php";
-
-    if (!isset($_SESSION['admin_login'])) {
-        header("location: ../login.php");
-    } else {
-
-        // query ชื่อผู้ใช้งาน
-        $id = $_SESSION['admin_login'];
-        $stmt = $conn->query("SELECT name, lastname, username FROM user_info WHERE id = $id");
-        $stmt->execute();
-        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    require_once "include/header.php";
+    require_once "include/dependency.php";
 
         $site = $conn->prepare("SELECT* FROM site_info");
         $site->execute();
@@ -31,46 +21,70 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-<link rel="stylesheet" type="text/css" href="../resources/css/jquery.datetimepicker.css"/>
-
-
-    <title>บันทึกรายรับ (ยอดรวม) | ระบบบริหารจัดการใบเสร็จ</title>
-
-    <!-- Dependency ห้ามลบ -->
-    <?php include "include/dependency.php"; ?>
-
-    <!-- Font kanit-300 ห้ามเอาออก -->
-    <style>
-        @font-face {
-            font-display: swap;
-            font-family: 'Kanit';
-            font-style: normal;
-            font-weight: 300;
-            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot'); /* IE9 Compat Modes */
-            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-                url('../resources/fonts/kanit-v12-latin_thai-300.woff2') format('woff2'), /* Super Modern Browsers */
-                url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
-                url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
-                url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
-        }
-
-        
-    </style>
 </head>
 <body>
 
-    <!-- navbar ห้ามลบ -->
-    <?php include 'include/navbar.php'; ?>
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2"><i class="fa-solid fa-3 border rounded p-1 bg-dark text-light"></i> บันทึกรายรับ (ยอดรวม)</legend>
+    <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
+        <legend class="fw-bold text-dark text-center  p-1"> บันทึกรายรับ </legend>
+        <form action="../db/db_income.php" method="POST">
+        <label class="form-label fw-bold" >ไซต์งาน :</label>
+                <select name="addSiteName" class="form-control" required>
+                    <?php if($_SESSION['siteName_incomeHead']=="") { ?>
+                       <option value="" >--เลือกไซต์งาน--</option>
+                       <?php foreach($rs as $row) { ?>
+                          
+                          <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
+                        <?php } ?>
+                        <?php } else{
+    ?>
+                        <option value="<?php echo $_SESSION['siteName_incomeHead']; ?>" >--<?php echo $_SESSION['siteName_incomeHead']; ?>--</option>
+                        <?php foreach($rs as $row) { ?>
+                          
+                          <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
+                        <?php } ?>
+    <?php
+                        }
+                         
+                        ?>
+                     </select>
+                    
+                
+                            <br>
+    
+                    
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold" for="addStartDate">วันที่เริ่ม :</label>
+                                <input type="date" class="form-control" name="addStartDate" id="addStartDate" required>
+                            
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold" for="addFinishDate">วันที่สิ้นสุด :</label>
+                                <input type="date" class="form-control" name="addFinishDate" id="addFinishDate" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold" for="addInstallment">จำนวนงวด :</label>
+                                <input type="number" class="form-control" name="addInstallment" id="addInstallment" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold" for="addSum">จำนวนเงินทั้งสิ้น :</label>
+                                <input type="number" class="form-control" name="addSum" id="addSum" step="any" required>
+                            </div>
+                        </div>
+    
+                        <div class="row mt-4">
+                            <div class="col-md">
+                                <button type="submit" name="addIncome_head" class="btn btn-success w-100">บันทึก</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+        </div>
     </section>
 
     <!-- Alert ห้ามลบ -->
@@ -110,67 +124,6 @@
     </section>
 
 
-    <!-- input ห้ามลบ -->
-    <section class="container">
-        <div class="collapse show" id="collapseForm">
-            <fieldset class="p-3 shadow-sm mt-2">
-            <form action="../db/db_income.php" method="POST">
-                
-            <select name="addSiteName" class="form-control" required>
-                <?php if($_SESSION['siteName_incomeHead']=="") { ?>
-                   <option value="" >--เลือกไซต์งาน--</option>
-                   <?php foreach($rs as $row) { ?>
-                      
-                      <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
-                    <?php } ?>
-                    <?php } else{
-?>
-                    <option value="<?php echo $_SESSION['siteName_incomeHead']; ?>" >--<?php echo $_SESSION['siteName_incomeHead']; ?>--</option>
-                    <?php foreach($rs as $row) { ?>
-                      
-                      <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
-                    <?php } ?>
-<?php
-                    }
-                     
-                    ?>
-                 </select>
-                
-            
-                        <hr>
-
-                
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label class="form-label fw-bold" for="addStartDate">วันที่เริ่ม :</label>
-                            <input type="text" class="form-control" name="addStartDate" id="addStartDate" required>
-                        
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label fw-bold" for="addFinishDate">วันที่สิ้นสุด :</label>
-                            <input type="text" class="form-control" name="addFinishDate" id="addFinishDate" required>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label fw-bold" for="addInstallment">จำนวนงวด :</label>
-                            <input type="number" class="form-control" name="addInstallment" id="addInstallment" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-bold" for="addSum">ยอดรวม :</label>
-                            <input type="number" class="form-control" name="addSum" id="addSum" step="any" required>
-                        </div>
-                    </div>
-
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <button type="submit" name="addIncome_head" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                        </div>
-                    </div>
-                </form>
-            </fieldset>
-        </div>
-    </section>
-
-
     <!-- ตาราง ห้ามลบ -->
     <section class="container">
         <div class="collapse show" id="collapseTable">
@@ -185,7 +138,8 @@
                             <th scope="col">วันที่สิ้นสุด</th>
                             <th scope="col">จำนวนงวด</th>
                             <th scope="col">ยอดรวม</th>
-                            <th scope="col">แก้ไข/อัพเดทข้อมูล</th>
+                            <th scope="col">แก้ไข</th>
+                            <th scope="col">ลบ</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
@@ -212,6 +166,12 @@
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
+                                    
+                                </div>
+                            </td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    
                                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
@@ -300,34 +260,9 @@
     </script> -->
 
 </body>
-<script src="../resources/js/jquery.js"></script>
-<script src="../resources/js/jquery.datetimepicker.js"></script>
-<script>
 
-jQuery(function(){
- jQuery('#addStartDate').datetimepicker({
-  format:'Y/m/d',
-  onShow:function( ct ){
-   this.setOptions({
-    maxDate:jQuery('#addFinishDate').val()?jQuery('#addFinishDate').val():false
-   })
-  },
-  timepicker:false
- });
- jQuery('#addFinishDate').datetimepicker({
-  format:'Y/m/d',
-  onShow:function( ct ){
-   this.setOptions({
-    minDate:jQuery('#addStartDate').val()?jQuery('#addStartDate').val():false
-   })
-  },
-  timepicker:false
- });
-});
-
-</script>
 
 </html>
 
-<?php } } ?>
+<?php  } ?>
 

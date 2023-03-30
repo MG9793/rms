@@ -18,7 +18,7 @@
             if ($username == $row['username']) {
                 if (password_verify($password, $row['password'])) {
                     $_SESSION['admin_login'] = $row['id'];
-                    header("location: ../../index.php");
+                    header("location: ../../page/dashboard.php");
 
                 } else {
                     echo "<body onload=\"window.alert('ชื่อผู้ใช้งาน หรือ รหัสผ่าน ของคุณไม่ถูกต้อง');\">";
