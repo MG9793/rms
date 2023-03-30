@@ -40,13 +40,6 @@
                 url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
         }
     </style>
-
-    <!-- script Datables ห้ามลบจ้า -->
-    <script>
-        $(document).ready( function () {
-            $('#myTable').DataTable();
-        } );
-    </script>
 </head>
 <body>
 
@@ -60,8 +53,8 @@
 
     <!-- input ห้ามลบ -->
     <section class="container">
-        <input class="form-control" type="text" placeholder="ค้นหาเลขที่ใบเสร็จ">
-        <div><b>*หมายเหตุ :</b> หากไม่พบเลขที่ใบเสร็จให้บันทึกค่าใช้จ่าย (ยอดรวม) ก่อน</div>
+        <!-- <input class="form-control" type="text" placeholder="ค้นหาเลขที่ใบเสร็จ"> -->
+        <!-- <div><b>*หมายเหตุ :</b> หากไม่พบเลขที่ใบเสร็จให้บันทึกค่าใช้จ่าย (ยอดรวม) ก่อน</div> -->
 
         <fieldset class="p-3 shadow-sm mt-3">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
