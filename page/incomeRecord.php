@@ -21,7 +21,12 @@
 <html lang="en">
 
 <head>
-
+ <!-- script Datables ห้ามลบจ้า -->
+ <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
 </head>
 <body>
 
@@ -128,9 +133,8 @@
     <section class="container">
         <div class="collapse show" id="collapseTable">
             <fieldset class="p-3 shadow-sm mt-2">
-                <h5 class="fw-bold"><i class="fa-solid fa-table-list"></i> ข้อมูลบันทึก/แก้ไข</h5>
-                <table class="table table-striped table-hover table-sm table-bordered css-serial">
-                    <thead class="bg-dark text-light">
+                <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
+                    <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">ไซต์งาน</th>
@@ -176,6 +180,8 @@
                                 </div>
                             </td>
                         </tr>
+
+ 
 
 
                         <!-- Modal แก้ไขข้อมูล ห้ามลบ -->
@@ -265,4 +271,3 @@
 </html>
 
 <?php   } ?>
-
