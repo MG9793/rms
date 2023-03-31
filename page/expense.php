@@ -27,8 +27,11 @@
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
 
-        <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
-        <legend class="fw-bold text-dark text-center  p-1"> บันทึกรายจ่าย </legend>
+    <!-- button แสดง/ซ่อน input -->
+    <button type="button" class="btn btn-light w-100" data-bs-toggle="collapse" href="#displayInput" aria-expanded="false" aria-controls="displayInput"><i class="fa-solid fa-plus"></i> บันทึกรายจ่าย</button>
+        
+        <div class="fw-bold text-dark bg-secondary shadow-sm p-2 collapse mt-2" id="displayInput">
+        <!-- <legend class="fw-bold text-dark text-center p-1"> บันทึกรายจ่าย </legend> -->
         <form action="#" method="POST">
                         <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
                         <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
@@ -83,7 +86,7 @@
     <section class="container">
         
 
-        <fieldset class="p-3 shadow-sm mt-3">
+        <fieldset class="p-3 shadow-sm mt-2">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
 
@@ -116,11 +119,10 @@
                         <td><?php echo $fetch_bill['receipt_no']; ?></td>
                         <td><?php echo $fetch_bill['sales_name']; ?></td>
                         <td><?php echo $fetch_bill['tax_no']; ?></td>
-                        <td><?php echo number_format(($fetch_bill['sum']),2); ?></td>
+                        <td><?php echo number_format(($fetch_bill['sum']), 2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT<?php echo $fetch_bill['id']; ?>"><i class="fas fa-edit"></i></button>
-                 
+                                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT<?php echo $fetch_bill['id']; ?>"><i class="fas fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteBill<?php echo $fetch_bill['id']; ?>"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>

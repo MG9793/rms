@@ -1,7 +1,6 @@
 <?php
-    
-    require_once "../include/header.php";
     require_once "../include/dependency.php";
+    require_once "../include/header.php";
     require_once "../db/config/deleteRow.php";
 
         $site = $conn->prepare("SELECT* FROM site_info");
@@ -35,8 +34,12 @@
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-    <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
-        <legend class="fw-bold text-dark text-center  p-1"> บันทึกรายรับ </legend>
+    
+    <!-- button แสดง/ซ่อน input -->
+    <button type="button" class="btn btn-light w-100" data-bs-toggle="collapse" href="#displayInput" aria-expanded="false" aria-controls="displayInput"><i class="fa-solid fa-plus"></i> บันทึกรายรับ</button>
+    
+    <div class="fw-bold text-dark bg-secondary shadow-sm p-2 collapse mt-2" id="displayInput">
+        <!-- <legend class="fw-bold text-dark text-center  p-1"> บันทึกรายรับ </legend> -->
         <form action="../db/db_income.php" method="POST">
         <label class="form-label fw-bold" >ไซต์งาน :</label>
                 <select name="addSiteName" class="form-control" required>
@@ -99,7 +102,7 @@
 
     <!-- ตาราง ห้ามลบ -->
     <section class="container">
-        <div class="collapse show" id="collapseTable">
+
             <fieldset class="p-3 shadow-sm mt-2">
                 <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
@@ -111,7 +114,6 @@
                             <th scope="col">จำนวนงวด</th>
                             <th scope="col">ยอดรวม</th>
                             <th scope="col">แก้ไข</th>
-                            <th scope="col">ลบ</th>
                         </tr>
                     </thead>
                     <tbody class="align-middle">
@@ -142,12 +144,6 @@
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
-                                    
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    
                                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
                             </td>
@@ -220,7 +216,6 @@
                     </tbody>
                 </table>
             </fieldset>
-        </div>
     </section>
 
 
