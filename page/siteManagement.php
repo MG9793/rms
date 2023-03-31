@@ -1,8 +1,8 @@
 
 <?php
 
-require_once "include/header.php";
-require_once "include/dependency.php";
+require_once "../include/header.php";
+require_once "../include/dependency.php";
 require_once "../db/config/deleteRow.php";
 
 ?>
