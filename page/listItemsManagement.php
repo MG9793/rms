@@ -1,50 +1,20 @@
 <?php
-    session_start();
-    require_once "../db/config/conn.php";
+    require_once "include/header.php";
+    require_once "include/dependency.php";
     require_once "../db/config/deleteRow.php";
-
-    if (!isset($_SESSION['admin_login'])) {
-        header("location: ../login.php");
-    } else {
-
-        // query ชื่อผู้ใช้งาน
-        $id = $_SESSION['admin_login'];
-        $stmt = $conn->query("SELECT name, lastname, username FROM user_info WHERE id = $id");
-        $stmt->execute();
-        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>จัดการรายการสินค้า (Items Management) | ระบบบริหารจัดการใบเสร็จ</title>
-
-    <!-- Dependency ห้ามลบ -->
-    <?php include "include/dependency.php"; ?>
-
-    <!-- Font kanit-300 ห้ามเอาออก -->
-    <style>
-        @font-face {
-            font-display: swap;
-            font-family: 'Kanit';
-            font-style: normal;
-            font-weight: 300;
-            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot'); /* IE9 Compat Modes */
-            src: url('../resources/fonts/kanit-v12-latin_thai-300.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-                url('../resources/fonts/kanit-v12-latin_thai-300.woff2') format('woff2'), /* Super Modern Browsers */
-                url('../resources/fonts/kanit-v12-latin_thai-300.woff') format('woff'), /* Modern Browsers */
-                url('../resources/fonts/kanit-v12-latin_thai-300.ttf') format('truetype'), /* Safari, Android, iOS */
-                url('../resources/fonts/kanit-v12-latin_thai-300.svg#Kanit') format('svg'); /* Legacy iOS */
-        }
-    </style>
+     <!-- script Datables ห้ามลบจ้า -->
+ <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        } );
+    </script>
 </head>
 <body>
-
-    <!-- navbar ห้ามลบ -->
-    <?php include 'include/navbar.php'; ?>
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
@@ -237,4 +207,3 @@
 </body>
 </html>
 
-<?php } ?>

@@ -1,7 +1,7 @@
 <?php
-    session_start();
-    require_once "../db/config/conn.php";
+  //  session_start();
     require_once "../db/config/deleteRow.php";
+    require_once "../page/include/header.php";
 
     // if (!isset($_SESSION['admin_login'])) {
     //     header("location: ../login.php");
@@ -86,7 +86,7 @@
                     }
                 }
                 ?>
-
+                
                 <tr>
                     <td class="text-center">รวม</td>
                 </tr>

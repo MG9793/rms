@@ -2,18 +2,20 @@
     
     require_once "include/header.php";
     require_once "include/dependency.php";
+    require_once "../db/config/deleteRow.php";
 
         $site = $conn->prepare("SELECT* FROM site_info");
         $site->execute();
         $rs = $site->fetchAll();
 
-        if (!isset($_SESSION['siteName_incomeHead'])) {
-            header("location: incomeRecord.php");
+      if (!isset($_SESSION['siteName_incomeHead'])) {
+          //  header("location: incomeRecord.php");
+          $siteName = "";
         } else {
 
         // ดึง sitename จาก session
         $siteName = $_SESSION['siteName_incomeHead'];
-        
+        }
 ?>
 
 
@@ -92,41 +94,7 @@
         </div>
     </section>
 
-    <!-- Alert ห้ามลบ -->
-    <section class="container">
-        <div class="row">
-            <div class="col-md">
-            <?php
-                // Alert เพิ่มรายการสำเร็จ
-                if(isset($_SESSION['addIncomeHead_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['addIncomeHead_success'];
-                    unset($_SESSION['addIncomeHead_success']);
-                    echo "</div>";
-                }
-
-                // Alert แก้ไขรายการสำเร็จ
-                else if(isset($_SESSION['editIncomeHead_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['editIncomeHead_success'];
-                    unset($_SESSION['editIncomeHead_success']);
-                    echo "</div>";
-                }
-
-                // Alert ลบรายการสำเร็จ
-                else if(isset($_SESSION['deleteIncomeHead_success'])) {
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['deleteIncomeHead_success'];
-                    unset($_SESSION['deleteIncomeHead_success']);
-                    echo "</div>";
-                }
-            ?>
-            </div>
-        </div>
-    </section>
+    
 
 
     <!-- ตาราง ห้ามลบ -->
@@ -134,7 +102,7 @@
         <div class="collapse show" id="collapseTable">
             <fieldset class="p-3 shadow-sm mt-2">
                 <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
-                    <thead>
+                <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">ไซต์งาน</th>
@@ -150,13 +118,17 @@
 
                         <!-- query ตาราง ห้ามลบ -->
                         <?php
-                            $stmt = $conn->query("SELECT * FROM income_head WHERE site_name = '$siteName'");
-                            $stmt->execute();
-                            $incomeHead = $stmt->fetchAll();
+                            
 
-                            if (!$incomeHead) {
-                                echo "<p><td colspan='7' class='text-center'>ไม่พบข้อมูล</td></p>";
+                            if (!$siteName) {
+                                $stmt = $conn->query("SELECT * FROM income_head ");
+                                $stmt->execute();
+                                $incomeHead = $stmt->fetchAll();
                             } else {
+                                $stmt = $conn->query("SELECT * FROM income_head WHERE site_name = '$siteName'");
+                                $stmt->execute();
+                                $incomeHead = $stmt->fetchAll();
+                            }
                                 foreach ($incomeHead as $fetch_incomeHead) {
                         ?>
 
@@ -181,15 +153,13 @@
                             </td>
                         </tr>
 
- 
-
 
                         <!-- Modal แก้ไขข้อมูล ห้ามลบ -->
                         <div class="modal fade" id="modalEditRecord<?php echo $fetch_incomeHead['id']; ?>" tabindex="-1" aria-labelledby="modalEditRecord" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalEditRecord"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลรายรับ (Edit Income)</h5>
+                                        <h5 class="modal-title" id="modalEditRecord"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลรายรับ</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
 
@@ -216,10 +186,10 @@
                                                 <label for="editSum" class="col-form-label">ยอดรวม :</label>
                                                 <input type="number" class="form-control" name="editSum" id="editSum" step="any" value="<?php echo $fetch_incomeHead['sum']; ?>" required>
                                             </div>
-
+                                            
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary" name="editIncome_head"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                                <button type="submit" class="btn btn-primary" name="editIncome_head"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
                                             </div>
                                         </form>
                                     </div>
@@ -233,20 +203,20 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title"><i class="fas fa-trash"></i> ยืนยันลบรายการ ?</h5>
+                                        <h5 class="modal-title"> ยืนยันการลบรายการ </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <h6 class="text-center">ต้องการลบรายการหรือไม่ ? กรุณายืนยัน</h6>
+                                        <h6 class="text-center">กรุณายืนยันการลบรายการ</h6>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <a data-id="<?php echo $fetch_incomeHead['id']; ?>" href="?deleteIncome_head=<?php echo $fetch_incomeHead['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                        <a data-id="<?php echo $fetch_incomeHead['id']; ?>" href="?deleteIncome_head=<?php echo $fetch_incomeHead['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> ยืนยัน</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <?php } } ?>        <!-- endforeach -->
+                        <?php }  ?>        <!-- endforeach -->
                     </tbody>
                 </table>
             </fieldset>
@@ -270,4 +240,5 @@
 
 </html>
 
-<?php   } ?>
+<?php // } ?>
+
