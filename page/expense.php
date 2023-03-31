@@ -204,7 +204,7 @@
                 newRow.find("input").val("");
                 $("#items-row").after(newRow);
             });
-
+                
             $(document).on("click", ".remove-item-btn", function() {
                 $(this).parents(".row").remove();
             });
