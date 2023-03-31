@@ -34,9 +34,19 @@
 
         // Alert Success
         $_SESSION['deleteItems_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
-        header("../page/listItemsManagement.php");
+       // header("../page/listItemsManagement.php");
     }
 
+    // ลบ bill_head
+    else if (isset($_GET['deleteBill'])) {
+        $delete_id = $_GET['deleteBill'];
+        $deleteStmt = $conn->query("DELETE FROM bill_head WHERE id = $delete_id");
+        $deleteStmt->execute();
+
+        // Alert Success
+        $_SESSION['deleteBill_success'] = '<i class="fa-solid fa-circle-check"></i> ลบรายการสำเร็จ';
+    //    header("../page/expense.php");
+    }
 
 
     // ลบ site_info
@@ -73,7 +83,7 @@
 
         // Alert Success
         $_SESSION['deleteIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
-        header("../page/incomeRecord_Total.php");
+      //  header("../page/incomeRecord_Total.php");
     }
 
 
