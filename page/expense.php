@@ -87,14 +87,14 @@
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
 
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">วันที่ซื้อ</th>
-                        <th scope="col">เลขที่ใบเสร็จ</th>
-                        <th scope="col">ชื่อผู้ขาย</th>
-                        <th scope="col">เลขประจำตัวผู้เสียภาษี</th>
-                        <th scope="col">ยอดรวม</th>
-                        <th scope="col">แก้ไข</th>
+                    <tr >
+                        <th scope="col" style="text-align:center;">#</th>
+                        <th scope="col" style="text-align:center;">วันที่ซื้อ</th>
+                        <th scope="col" style="text-align:center;">เลขที่ใบเสร็จ</th>
+                        <th scope="col" style="text-align:center;">ชื่อผู้ขาย</th>
+                        <th scope="col" style="text-align:center;">เลขประจำตัวผู้เสียภาษี</th>
+                        <th scope="col" style="text-align:center;">ยอดรวม</th>
+                        <th scope="col" style="text-align:center;">แก้ไข</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,7 +110,7 @@
                             foreach ($bill as $fetch_bill) {
                     ?>
 
-                    <tr>
+                    <tr style="text-align:center;">
                         <td></td>
                         <td><?php echo $fetch_bill['sales_date']; ?></td>
                         <td><?php echo $fetch_bill['receipt_no']; ?></td>
@@ -210,15 +210,15 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title"><i class="fas fa-trash"></i> ยืนยันลบรายการสินค้า ?</h5>
+                                    <h5 class="modal-title"> ลบรายการ</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <h6 class="text-center">ต้องการลบรายการสินค้าหรือไม่ ? กรุณายืนยัน</h6>
+                                    <h6 class="text-center">กรุณายืนยันการลบรายการ</h6>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <a data-id="<?php echo $fetch_bill['id']; ?>" href="?deleteBill=<?php echo $fetch_bill['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                    <a data-id="<?php echo $fetch_bill['id']; ?>" href="?deleteBill=<?php echo $fetch_bill['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> ยืนยัน</a>
                                 </div>
                             </div>
                         </div>

@@ -104,14 +104,14 @@
                 <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">ไซต์งาน</th>
-                            <th scope="col">วันที่เริ่ม</th>
-                            <th scope="col">วันที่สิ้นสุด</th>
-                            <th scope="col">จำนวนงวด</th>
-                            <th scope="col">ยอดรวม</th>
-                            <th scope="col">แก้ไข</th>
-                            <th scope="col">ลบ</th>
+                            <th scope="col" style="text-align:center;">#</th>
+                            <th scope="col" style="text-align:center;">ไซต์งาน</th>
+                            <th scope="col" style="text-align:center;">วันที่เริ่ม</th>
+                            <th scope="col" style="text-align:center;">วันที่สิ้นสุด</th>
+                            <th scope="col" style="text-align:center;">จำนวนงวด</th>
+                            <th scope="col" style="text-align:center;">ยอดรวม</th>
+                            <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
+
                         </tr>
                     </thead>
                     <tbody class="align-middle">
@@ -132,25 +132,21 @@
                                 foreach ($incomeHead as $fetch_incomeHead) {
                         ?>
 
-                        <tr>
+                        <tr style="text-align:center;">
                             <td></td>
                             <td><?php echo $fetch_incomeHead['site_name']; ?></td>
-                            <td><?php echo $fetch_incomeHead['installment']; ?></td>
                             <td><?php echo $fetch_incomeHead['start_date']; ?></td>
                             <td><?php echo $fetch_incomeHead['finish_date']; ?></td>
-                            <td><?php echo $fetch_incomeHead['sum']; ?></td>
+                            <td><?php echo $fetch_incomeHead['installment']; ?></td>
+                            <td><?php echo number_format(($fetch_incomeHead['sum']),2); ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
-                                    
-                                </div>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                    
                                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
+                                </div>
                             </td>
+                            
                         </tr>
 
 
@@ -184,7 +180,7 @@
                                             </div>
                                             <div class="mb-2">
                                                 <label for="editSum" class="col-form-label">ยอดรวม :</label>
-                                                <input type="number" class="form-control" name="editSum" id="editSum" step="any" value="<?php echo $fetch_incomeHead['sum']; ?>" required>
+                                                <input type="number" class="form-control" name="editSum" id="editSum" step="any" value="<?php echo number_format(($fetch_incomeHead['sum']),2); ?>" required>
                                             </div>
                                             
                                             <div class="modal-footer">
@@ -203,7 +199,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title"> ยืนยันการลบรายการ </h5>
+                                        <h5 class="modal-title"> ลบรายการ </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
