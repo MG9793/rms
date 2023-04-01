@@ -12,7 +12,7 @@
     
             // Alert Delete Failure
             $_SESSION['deleteUser_error'] = '<i class="fa-solid fa-circle-check"></i> Error! ไม่สามารถลบผู้ใช้งานคนสุดท้ายได้ เนื่องจากไม่มีผู้ใช้งานระบบ';
-            header("../page/userManagement.php");
+         //   header("../page/userManagement.php");
     
         } else {
             $deletestmt = $conn->query("DELETE FROM user_info WHERE id = $delete_id");
@@ -20,7 +20,7 @@
     
             // Alert Success
             $_SESSION['deleteUser_success'] = '<i class="fa-solid fa-circle-check"></i> Error! ดำเนินการสำเร็จ ลบข้อมูลผู้ใช้เรียบร้อยแล้ว';
-            header("../page/userManagement.php");
+         //   header("../page/userManagement.php");
         }
     }
 
@@ -57,7 +57,7 @@
 
         // Alert Success
         $_SESSION['deleteSite_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบไซต์งานเรียบร้อยแล้ว';
-        header("../page/siteManagement.php");
+     //   header("../page/siteManagement.php");
     }
 
 
@@ -70,7 +70,7 @@
 
         // Alert Success
         $_SESSION['deleteSales_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
-        header("../page/sellerManagement.php");
+     //   header("../page/sellerManagement.php");
     }
 
 
@@ -95,7 +95,7 @@
 
         // Alert Success
         $_SESSION['deleteIncomeLine_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
-        header("../page/incomeRecord_Line.php");
+    //    header("../page/incomeRecord_Line.php");
     }
 
 ?>
