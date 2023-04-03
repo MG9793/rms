@@ -1,5 +1,6 @@
 <?php
     require_once "../include/header.php";
+    require_once "../include/dependency.php";
 ?>
 <head>
 
@@ -7,7 +8,7 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid" style="width: 100%; overflow: auto;">
     <div class="text-center">
         <h5 class="fw-bold p-5" >สรุปค่าใช้จ่ายประจำเดือน มกราคม-ธันวาคม พ.ศ.2565 บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด (ทำงบ)</h5>
     </div>
@@ -46,7 +47,7 @@
                         echo "<tr><td rowspan='1'>" . $fetch_itemInfo['item_name'] . "</td></tr>";
                     }
                 }
-                ?>
+            ?>
                 
                 <tr>
                     <td class="text-center">รวม</td>

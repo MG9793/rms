@@ -1,5 +1,6 @@
 <?php
     require_once "../include/header.php";
+    require_once "../include/dependency.php";
 ?>
 
 <head>
@@ -7,17 +8,16 @@
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid" style="width: 100%; overflow: auto;">
     <div class="text-center">
         <h5 class="fw-bold p-5 ">สรุปโครงการก่อสร้าง : บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</h5>
         <h6 class="fst-italic">สรุปงบประมาณปี 2564 เดือน มกราคม - ธันวาคม 2564</h6>
     </div>
 
-
     <table class="table table-bordered border-dark table-sm css-serial">
         <thead class="text-center" style="background-color: rgb(230, 230, 230);">
             <tr>
-                <th valign="middle" rowspan="2">ลำดับ</th>
+                <th valign="middle" rowspan="2" style="width: 50px;">ลำดับ</th>
                 <th valign="middle" rowspan="2">รายการ</th>
 
                 <!-- site งาน -->
@@ -130,7 +130,6 @@
 
 
 </div>
-
     
 </body>
 </html>
