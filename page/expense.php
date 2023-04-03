@@ -8,7 +8,14 @@
     $bill->execute();
     $rs = $bill->fetchAll();
 
-   
+    $site_name = $conn->prepare("SELECT site_name FROM site_info");
+    $site_name->execute();
+    $rs_site = $site_name->fetchAll();
+
+    $sales_name = $conn->prepare("SELECT * FROM sales_info");
+    $sales_name->execute();
+    $rs_sales = $sales_name->fetchAll();
+
       
 ?>
 
@@ -21,6 +28,10 @@
             $('#myTable').DataTable();
         } );
     </script>
+
+            <!-- Bootstrap CSS -->
+
+        <script src="../resources/lib/dselect.js"></script>
 </head>
 <body>
     
@@ -29,43 +40,91 @@
 
         <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
         <legend class="fw-bold text-dark text-center  p-1"> บันทึกรายจ่าย </legend>
-        <form action="#" method="POST">
+        <form action="../db/db_expense.php" method="POST">
                         <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
-                        <input type="hidden" readonly value="<?php //echo $userAccount['id_users']; ?>" required class="form-control" name="id_site">
+                        
                         <div class="row">
-                            <div class="col-md-6">
+                        <div class="col-md-4">
+                                <label class="form-label fw-bold" for="siteName">ไซต์งาน :</label>
+                                <select name="siteName" class="form-select" id="siteName">
+                                    <option value="">กรุณาเลือกไซต์งาน</option>
+                                    <?php 
+                                    foreach($rs_site as $row_site)
+                                    {
+                                        echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
+                                    }
+                                    ?>  
+                                </select>
+                            </div>
+                            <div class="col-md-4">
                                 <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
                                 <input type="text" class="form-control" placeholder="กรุณากรอกเลขที่ใบเสร็จ..." name="receiptNo" id="receiptNo" required>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
-                                <input type="date" class="form-control" name="buyDate" id="buyDate" required>
-                            </div>
+                                    <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
+                                    <input type="date" class="form-control" name="buyDate" id="buyDate" required>
+                                </div>
+
                         </div>
                         <div class="row mt-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold" for="sellerName">ชื่อผู้ขาย :</label>
-                                <input type="text" class="form-control" name="sellerName" id="sellerName" placeholder="กรุณากรอกชื่อผู้ขาย..." required>
+                        <div class="col-md-4">
+                      
+                                <label class="form-label fw-bold" for="salesName">ชื่อผู้ขาย :</label>
+                                <select name="salesName" class="form-select" id="salesName" onChange="taxID();">
+                                    <option value="">กรุณาเลือกผู้ขาย</option>
+                                    <?php 
+                                    foreach($rs_sales as $row_sales)
+                                    {
+                                        echo '<option value="'.$row_sales["sales_name"].$row_sales["tax_no"].'">'.$row_sales["sales_name"].'</option>';
+                                    }
+                                    ?>
+                                </select>
                             </div>
                             <div class="col-md-4">
-                                <label class="form-label fw-bold" for="taxID">เลขประจำตัวผู้เสียภาษี :</label>
-                                <input type="text" class="form-control" name="taxID" id="taxID" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี..." required>
-                            </div>
-                        </div>
+                                <label class="form-label fw-bold" for="taxNO">เลขประจำตัวผู้เสียภาษี :</label>
+                                <input type="text" class="form-control" name="taxNO" id="taxNO" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี"  required>
+                            
+                             
+                                </div>
+                              
+                                
+                                <input type="hidden" class="form-control" name="sales" id="sales"  required>
+                            
                        
-                        <div class="row">
+                               
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold" for="type">ประเภท :</label>
+                                <select name="type" id="type" class="form-control" required>
+                                <option value="" >--เลือกประเภท--</option>
+                                <option value="ค่าวัสดุ" >ค่าวัสดุ</option>
+                                <option value="ค่าแรง" >ค่าแรง</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold" for="calVat">คำนวนภาษี :</label>
+                                <select name="calVat" id="calVat" class="form-control" onChange="changetextbox();" required>
+                                <option value="" >--เลือกการคำนวนภาษี--</option>
+                                <option value="VAT" >VAT</option>
+                                <option value="noVAT">noVAT</option>
+                                </select>
+                            </div>
+                           
+                         
+                        </div>
+                        <div class="row mt-3">
+                            
                         <div class="col-md-4">
                                 <label class="col-form-label fw-bold">รวมเงินค่าสินค้าและค่าขนส่ง :</label>
-                                <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" required disabled>
+                                <input type="text" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM">
                             </div>
                             <div class="col-md-2">
                                 <label class="col-form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
-                                <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
+                                <input type="text" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
                             </div>
                             
                             <div class="col-md-4">
                                 <label class="col-form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
-                                <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" oninput="calculateVAT()" required>
+                                <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal"  oninput="calculateVAT()" required>
                             </div>
                         </div>
 
@@ -100,7 +159,7 @@
                 <tbody>
                 <!-- query ตาราง ห้ามลบ -->
                 <?php
-                        $stmt = $conn->query("SELECT * FROM bill_head");
+                        $stmt = $conn->query("SELECT * FROM bill_head ORDER BY id DESC");
                         $stmt->execute();
                         $bill = $stmt->fetchAll();
 
@@ -112,7 +171,7 @@
 
                     <tr style="text-align:center;">
                         <td></td>
-                        <td><?php echo $fetch_bill['sales_date']; ?></td>
+                        <td><?php echo $fetch_bill['buy_date']; ?></td>
                         <td><?php echo $fetch_bill['receipt_no']; ?></td>
                         <td><?php echo $fetch_bill['sales_name']; ?></td>
                         <td><?php echo $fetch_bill['tax_no']; ?></td>
@@ -135,13 +194,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="#" method="POST">
+                    <form action="../db/db_expense.php" method="POST">
                         <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
-                        <input type="hidden" readonly value="<?php echo $fetch_bill['id']; ?>" required class="form-control" name="id_site">
+                        <input type="hidden" value="<?php echo $fetch_bill['receipt_no']; ?>" required class="form-control" name="receipt_line">
                         <div class="row">
                         
                             <div class="col-md d-flex" >
-                                
+        
                                 <div><h5>เลขที่ใบสั่งซื้อ <b><?php echo $fetch_bill['receipt_no']; ?></b></h5></div>
                             </div>
                         </div>
@@ -173,7 +232,7 @@
                                 <input type="number" class="form-control" name="unitPrice" id="unitPrice" oninput="calculateSum()" required>
                             </div>
                             <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="itemSum" id="itemSum" disabled required>
+                                <input type="number" class="form-control" name="itemSum" id="itemSum"  required>
                             </div>
                             <div class="col-md-1 my-1">
                                 <button type="button" class="btn btn-danger btn-sm remove-item-btn"><i class="fas fa-trash"></i></button>
@@ -234,6 +293,39 @@
     </section>  
 
     
+    <script>
+
+var select_box_element_site = document.querySelector('#siteName');
+
+dselect(select_box_element_site, {
+    search: true
+});
+
+</script>
+
+<script>
+
+var select_box_element_sales = document.querySelector('#salesName');
+
+
+dselect(select_box_element_sales, {
+    search: true
+});
+
+</script>
+
+<script>
+function taxID() {
+    if(document.getElementById("salesName").value === ''){
+        document.getElementById("taxNO").value = '';
+    }else{
+        var tax_sales = document.getElementById("salesName").value;
+        document.getElementById("sales").value = tax_sales.slice(0,-13);
+        document.getElementById("taxNO").value = tax_sales.slice(-13);
+    }
+
+}
+</script>
 
 
 
@@ -253,9 +345,55 @@
     </script>
 
 <script>
+        function changetextbox() {
+
+            if(document.getElementById("calVat").value === "VAT"){
+                document.getElementById("expenseSUM").value = "";;
+                document.getElementById("expenseVAT").value = "";;
+                document.getElementById("expenseTotal").value = "";
+
+                $vatC = 0.07;
+
+            }
+            else if (document.getElementById("calVat").value === "noVAT"){
+                document.getElementById("expenseSUM").value = "";;
+                document.getElementById("expenseVAT").value = "";;
+                document.getElementById("expenseTotal").value = "";;
+
+                $vatC = 0;
+
+                
+            }
+        }
+    </script>
+
+<script>
+        function changetax() {
+
+            if(document.getElementById("calVat").value === "VAT"){
+                document.getElementById("expenseSUM").value = "";;
+                document.getElementById("expenseVAT").value = "";;
+                document.getElementById("expenseTotal").value = "";
+
+                $vatC = 0.07;
+
+            }
+            else if (document.getElementById("calVat").value === "noVAT"){
+                document.getElementById("expenseSUM").value = "";;
+                document.getElementById("expenseVAT").value = "";;
+                document.getElementById("expenseTotal").value = "";;
+
+                $vatC = 0;
+
+                
+            }
+        }
+    </script>
+
+<script>
         function calculateVAT() {
             var price = document.getElementById("expenseTotal").value;
-            var vat = price * 0.07;
+            var vat = price * $vatC;
             document.getElementById("expenseVAT").value = vat.toFixed(2);
             document.getElementById("expenseSUM").value = (parseFloat(price) - vat).toFixed(2);
         }
@@ -267,7 +405,7 @@
             var quantity = document.getElementById("unitPrice").value;
             var sum = price * quantity;
 
-            document.getElementById("itemSum").value = parseFloat(sum).toFixed(2);;
+            document.getElementById("itemSum").value = parseFloat(sum).toFixed(2);
         }
 
         // function calculateVAT() {
