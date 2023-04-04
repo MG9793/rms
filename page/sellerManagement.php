@@ -80,7 +80,7 @@
                         </div>
                         <div class="mb-2">
                             <label for="taxNo" class="form-label">เลขประจำตัวผู้เสียภาษี :</label>
-                            <input type="text" class="form-control" name="taxNo" id="taxNo" required>
+                            <input type="text" class="form-control" name="taxNo" id="taxNo" minlength="13" maxlength="13" required>
                         </div>
                         <div class="mb-2">
                             <input class="form-check-input" type="checkbox" value="" id="exampleCheck1" onchange="toggleInput()" checked>
