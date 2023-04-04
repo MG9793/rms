@@ -15,4 +15,10 @@
         echo "Connection failed: " . $e->getMessage();
     }
 
+// query ชื่อผู้ใช้งาน
+        $id = $_SESSION['admin_login'];
+        $stmt = $conn->query("SELECT name, lastname, username FROM user_info WHERE id = $id");
+        $stmt->execute();
+        $userName_query = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>

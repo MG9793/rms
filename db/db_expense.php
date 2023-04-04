@@ -7,22 +7,24 @@
     // เพิ่มข้อมูล bill_head
     if (isset($_POST['receiptNo'])) {
 
-    
+        $siteName = $_POST['siteName'];
         $receiptNo = $_POST['receiptNo'];
         $buyDate = $_POST['buyDate'];
         $sellerName = $_POST['sales'];
         $taxNO = $_POST['taxNO'];
+        $type = $_POST['type'];
         $expenseSUM = $_POST['expenseSUM'];
         $expenseVAT = $_POST['expenseVAT'];
         $expenseTotal = $_POST['expenseTotal'];
 
-        $stmt = $conn->prepare("INSERT INTO bill_head(receipt_no, buy_date, sales_name, tax_no, sum , vat , total)
-                                VALUES(:receipt_no, :buy_date, :sales_name, :tax_no, :sum, :vat, :total)");
-
+        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no,type, sum , vat , total)
+                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no,:type, :sum, :vat, :total)");
+        $stmt->bindParam(":site_name", $siteName);
         $stmt->bindParam(":receipt_no", $receiptNo);
         $stmt->bindParam(":buy_date", $buyDate);
         $stmt->bindParam(":sales_name", $sellerName);
         $stmt->bindParam(":tax_no", $taxNO);
+        $stmt->bindParam(":type", $type);
         $stmt->bindParam(":sum", $expenseSUM);
         $stmt->bindParam(":vat", $expenseVAT);
         $stmt->bindParam(":total", $expenseTotal);

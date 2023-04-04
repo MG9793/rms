@@ -5,8 +5,8 @@
 
     if (!isset($_SESSION['admin_login'])) {
         header("location: ../../index.php");
-    } else {
-        require_once "../db/db_dashboard.php";
+    } 
+       
         
 ?>
 <!DOCTYPE html>
@@ -164,4 +164,3 @@
 </body>
 </html>
 
-<?php } ?>

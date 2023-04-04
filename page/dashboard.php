@@ -1,6 +1,6 @@
 <?php
     require_once "../include/header.php";
-        
+    require_once "../db/db_dashboard.php";    
 ?>
 
 <!DOCTYPE html>

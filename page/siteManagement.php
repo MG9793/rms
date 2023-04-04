@@ -1,214 +1,221 @@
-
 <?php
+    
+    require_once "../include/header.php";
+    require_once "../include/dependency.php";
+    require_once "../db/config/deleteRow.php";
 
-require_once "../include/header.php";
-require_once "../include/dependency.php";
-require_once "../db/config/deleteRow.php";
+      
+
 
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-         <!-- script Datables ห้ามลบจ้า -->
+ <!-- script Datables ห้ามลบจ้า -->
  <script>
         $(document).ready( function () {
             $('#myTable').DataTable();
         } );
     </script>
+
+
 </head>
 <body>
-    
+
+
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการไซต์งาน (Site Management)</legend>
-    </section>
-
-    <!-- Alert ห้ามลบ -->
-    <section class="container">
-        <div class="row">
-            <div class="col-md">
-                <?php
-                    // Alert เพิ่มรายการสำเร็จ
-                    if(isset($_SESSION['addSite_success'])) {
-                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['addSite_success'];
-                        unset($_SESSION['addSite_success']);
-                        echo "</div>";
-                    }
-
-                    // Alert แก้ไขรายการสำเร็จ
-                    else if(isset($_SESSION['editSite_success'])) {
-                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['editSite_success'];
-                        unset($_SESSION['editSite_success']);
-                        echo "</div>";
-                    }
-
-                    // Alert ลบรายการสำเร็จ
-                    else if(isset($_SESSION['deleteSite_success'])) {
-                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['deleteSite_success'];
-                        unset($_SESSION['deleteSite_success']);
-                        echo "</div>";
-                    }
-
-                    // Alert รายการซ้ำ
-                    else if(isset($_SESSION['addSite_error'])) {
-                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['addSite_error'];
-                        unset($_SESSION['addSite_error']);
-                        echo "</div>";
-                    }
-                ?>
-            </div>
-        </div>
-    </section>
-
-    <div class="container">
-        <button type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#modalAddSite"><i class="fa-solid fa-plus"></i> เพิ่มไซต์งาน</button>
-    </div>
-
-    <!-- Modal เพิ่มข้อมูล ห้ามลบ -->
-    <div class="modal fade" id="modalAddSite" tabindex="-1" aria-labelledby="modalAddSite" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddSite"><i class="fa-solid fa-plus"></i> เพิ่มไซต์งาน (Add Sites)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <form action="../db/db_siteManagement.php" method="POST">
-                        <div class="mb-2">
-                            <label for="siteName" class="form-label">ชื่อไซต์งาน :</label>
-                            <input type="text" class="form-control" name="siteName" id="siteName" required>
+    <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
+        <legend class="fw-bold text-dark text-center  p-1"> ไซต์งาน </legend>
+        <form action="../db/db_siteManagement.php" method="POST">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold" for="SiteName">ชื่อไซต์งาน :</label>
+                                <input type="text" class="form-control" name="SiteName" id="SiteName" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold" for="SiteAbbre">ตัวย่อไซต์งาน :</label>
+                                <input type="text" class="form-control" name="SiteAbbre" id="SiteAbbre" required>
+                            </div>
                         </div>
-                        <div class="mb-2">
-                            <label for="siteAbbre" class="form-label">อักษรย่อไซต์งาน :</label>
-                            <input type="text" class="form-control" name="siteAbbre" id="siteAbbre" required>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold" for="StartDate">วันที่เริ่ม :</label>
+                                <input type="date" class="form-control" name="StartDate" id="StartDate" required>
+                            
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label fw-bold" for="FinishDate">วันที่สิ้นสุด :</label>
+                                <input type="date" class="form-control" name="FinishDate" id="FinishDate" required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label fw-bold" for="Installment">จำนวนงวดงานทั้งหมด :</label>
+                                <input type="number" class="form-control" name="Installment" id="Installment" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold" for="Total">จำนวนเงินทั้งสิ้น :</label>
+                                <input type="number" class="form-control" name="Total" id="Total" step="any" required>
+                            </div>
                         </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-dark w-100" name="addSite"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+    
+                        <div class="row mt-4">
+                            <div class="col-md">
+                                <button type="submit" name="addSite" class="btn btn-success w-100">บันทึก</button>
+                            </div>
                         </div>
                     </form>
-                </div>
-            </div>
+
+
         </div>
-    </div>
+    </section>
 
-    <section class="container my-2">
-        <fieldset class="p-3 shadow-sm mt-2">
-            <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
+    
+
+
+    <!-- ตาราง ห้ามลบ -->
+    <section class="container">
+        <div class="collapse show" id="collapseTable">
+            <fieldset class="p-3 shadow-sm mt-2">
+                <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">ชื่อไซต์งาน</th>
-                        <th scope="col">อักษรย่อ</th>
-                        <th scope="col">แก้ไข/อัพเดทข้อมูล</th>
-                    </tr>
-                </thead>
-                <tbody class="align-middle">
+                        <tr>
+                            <th scope="col" style="text-align:center;">#</th>
+                            <th scope="col" style="text-align:center;">ชื่อไซต์งาน</th>
+                            <th scope="col" style="text-align:center;">ตัวย่อไซต์งาน</th>
+                            <th scope="col" style="text-align:center;">วันที่เริ่ม</th>
+                            <th scope="col" style="text-align:center;">วันที่สิ้นสุด</th>
+                            <th scope="col" style="text-align:center;">จำนวนงวดงานทั้งหมด</th>
+                            <th scope="col" style="text-align:center;">จำนวนเงินทั้งสิ้น</th>
+                            <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
 
-                    <!-- query ตาราง ห้ามลบ -->
-                    <?php
-                        $stmt = $conn->query("SELECT * FROM site_info");
-                        $stmt->execute();
-                        $site = $stmt->fetchAll();
+                        </tr>
+                    </thead>
+                    <tbody class="align-middle">
 
-                        if (!$site) {
-                            echo "<p><td colspan='4' class='text-center'>ไม่พบข้อมูล</td></p>";
-                        } else {
-                            foreach ($site as $fetch_siteInfo) {
-                    ?>
+                        <!-- query ตาราง ห้ามลบ -->
+                        <?php
+                            
 
-                    <tr>
-                        <td></td>
-                        <td><?php echo $fetch_siteInfo['site_name']; ?></td>
-                        <td><?php echo $fetch_siteInfo['site_abbre']; ?></td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditSite<?php echo $fetch_siteInfo['id']; ?>"><i class="fas fa-edit"></i></button>
-                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteSite<?php echo $fetch_siteInfo['id']; ?>"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </td>
-                    </tr>
+                            
+                                $stmt = $conn->query("SELECT * FROM site_info ");
+                                $stmt->execute();
+                                $site_info = $stmt->fetchAll();
+                           
+                                foreach ($site_info as $fetch_site) {
+                        ?>
 
-
-                    <!-- Modal แก้ไขข้อมูล ห้ามลบ -->
-                    <div class="modal fade" id="modalEditSite<?php echo $fetch_siteInfo['id']; ?>" tabindex="-1" aria-labelledby="modalEditSite" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalEditSite"><i class="fa-solid fa-pen-to-square"></i> แก้ไขรายการไซต์งาน (Edit Sites)</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <tr style="text-align:center;">
+                            <td></td>
+                            <td><?php echo $fetch_site['site_name']; ?></td>
+                            <td><?php echo $fetch_site['site_abbre']; ?></td>
+                            <td><?php echo $fetch_site['start_date']; ?></td>
+                            <td><?php echo $fetch_site['finish_date']; ?></td>
+                            <td><?php echo $fetch_site['installment']; ?></td>
+                            <td><?php echo number_format(($fetch_site['total']),2); ?></td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                                    <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_site['id']; ?>"><i class="fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteRecord<?php echo $fetch_site['id']; ?>"><i class="fas fa-trash"></i></button>
                                 </div>
+                                </div>
+                            </td>
+                            
+                        </tr>
 
-                                <div class="modal-body">
-                                    <form action="../db/db_siteManagement.php" method="POST">
-                                        <div class="mb-0">
-                                            <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_siteInfo['id']; ?>" readonly required>
-                                            <label for="editSiteName" class="col-form-label">ชื่อไซต์งาน :</label>
-                                            <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_siteInfo['site_name']; ?>" required>
-                                        </div>
-                                        <div class="mb-2">
-                                            <label for="editSiteAbbre" class="col-form-label">อักษรย่อไซต์งาน :</label>
-                                            <input type="text" class="form-control" name="editSiteAbbre" id="editSiteAbbre" value="<?php echo $fetch_siteInfo['site_abbre']; ?>" required>
-                                        </div>
 
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-dark" name="editSite"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                                        </div>
-                                    </form>
+                        <!-- Modal แก้ไขข้อมูล ห้ามลบ -->
+                        <div class="modal fade" id="modalEditRecord<?php echo $fetch_site['id']; ?>" tabindex="-1" aria-labelledby="modalEditRecord" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalEditRecord"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลรายรับ</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <form action="../db/db_siteManagement.php" method="POST">
+                                            <div class="mb-0">
+                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_site['id']; ?>" readonly required>
+                                                <label for="editSiteName" class="col-form-label">ชื่อไซต์งาน :</label>
+                                                <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_site['site_name']; ?>" readonly>
+                                            </div>
+                                            <div class="mb-0">
+                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_site['id']; ?>" readonly required>
+                                                <label for="editSiteName" class="col-form-label">ตัวย่อไซต์งาน :</label>
+                                                <input type="text" class="form-control" name="editSiteAbbre" id="editSiteAbbre" value="<?php echo $fetch_site['site_abbre']; ?>" readonly>
+                                            </div>
+                                            <div class="mb-0">
+                                                <label for="editStartDate" class="col-form-label">วันที่เริ่ม :</label>
+                                                <input type="date" class="form-control" name="editStartDate" id="editStartDate" value="<?php echo $fetch_site['start_date']; ?>" required>
+                                            </div>
+                                            <div class="mb-0">
+                                                <label for="editFinishDate" class="col-form-label">วันที่สิ้นสุด :</label>
+                                                <input type="date" class="form-control" name="editFinishDate" id="editFinishDate" value="<?php echo $fetch_site['finish_date']; ?>" required>
+                                            </div>
+                                            <div class="mb-0">
+                                                <label for="editInstallment" class="col-form-label">จำนวนงวด :</label>
+                                                <input type="number" class="form-control" name="editInstallment" id="editInstallment" value="<?php echo $fetch_site['installment']; ?>" required>
+                                            </div>
+                                            <div class="mb-2">
+                                                <label for="editSum" class="col-form-label">จำนวนเงินทั้งสิ้น :</label>
+                                                <input type="text" class="form-control" name="editTotal" id="editTotal" step="any" value="<?php echo $fetch_site['total']; ?>" required>
+                                            </div>
+                                            
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                                <button type="submit" class="btn btn-primary" name="editSite"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <!-- Modal ยืนยันลบข้อมูล ห้ามลบ -->
-                    <div class="modal fade" id="modalDeleteSite<?php echo $fetch_siteInfo['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title"><i class="fas fa-trash"></i> ยืนยันลบรายการไซต์งาน ?</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <h6 class="text-center">ต้องการลบไซต์งานหรือไม่ ? กรุณายืนยัน</h6>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <a data-id="<?php echo $fetch_siteInfo['id']; ?>" href="?deleteSite=<?php echo $fetch_siteInfo['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+                        <!-- Modal ยืนยันลบข้อมูล ห้ามลบ -->
+                        <div class="modal fade" id="modalDeleteRecord<?php echo $fetch_site['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"> ลบรายการ </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6 class="text-center">กรุณายืนยันการลบรายการ</h6>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                        <a data-id="<?php echo $fetch_site['id']; ?>" href="?deleteIncome_head=<?php echo $fetch_site['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> ยืนยัน</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <?php } } ?>        <!-- endforeach -->
-                </tbody>
-            </table>
-        </fieldset>
+                        <?php }  ?>        <!-- endforeach -->
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
     </section>
 
 
+<!-- 
     <script>
-        // function calculateDays() {
-        //     var startDate = new Date(document.getElementById("projectStart").value);
-        //     var endDate = new Date(document.getElementById("projectEnd").value);
-        //     var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-        //     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-        //     document.getElementById("totalDays").value = diffDays;
-        // }
-    </script>
-
+        function calculateDays() {
+            var startDate = new Date(document.getElementById("projectStart").value);
+            var endDate = new Date(document.getElementById("projectEnd").value);
+            var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            document.getElementById("totalDays").value = diffDays;
+        }
+    </script> -->
 
 </body>
+
+
 </html>
+
+<?php // } ?>
 

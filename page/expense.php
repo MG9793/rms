@@ -148,12 +148,14 @@
 
                     <tr >
                         <th scope="col" style="text-align:center;">#</th>
-                        <th scope="col" style="text-align:center;">วันที่ซื้อ</th>
+                        <th scope="col" style="text-align:center;">ไซต์งาน</th>
                         <th scope="col" style="text-align:center;">เลขที่ใบเสร็จ</th>
+                        <th scope="col" style="text-align:center;">วันที่ซื้อ</th>
                         <th scope="col" style="text-align:center;">ชื่อผู้ขาย</th>
                         <th scope="col" style="text-align:center;">เลขประจำตัวผู้เสียภาษี</th>
-                        <th scope="col" style="text-align:center;">ยอดรวม</th>
-                        <th scope="col" style="text-align:center;">แก้ไข</th>
+                        <th scope="col" style="text-align:center;">ประเภท</th>
+                        <th scope="col" style="text-align:center;">จำนวนเงินทั้งสิ้น</th>
+                        <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -171,11 +173,13 @@
 
                     <tr style="text-align:center;">
                         <td></td>
-                        <td><?php echo $fetch_bill['buy_date']; ?></td>
+                        <td><?php echo $fetch_bill['site_name']; ?></td>
                         <td><?php echo $fetch_bill['receipt_no']; ?></td>
+                        <td><?php echo $fetch_bill['buy_date']; ?></td>
                         <td><?php echo $fetch_bill['sales_name']; ?></td>
                         <td><?php echo $fetch_bill['tax_no']; ?></td>
-                        <td><?php echo number_format(($fetch_bill['sum']),2); ?></td>
+                        <td><?php echo $fetch_bill['type']; ?></td>
+                        <td><?php echo number_format(($fetch_bill['total']),2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
                             <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT<?php echo $fetch_bill['id']; ?>"><i class="fas fa-edit"></i></button>
