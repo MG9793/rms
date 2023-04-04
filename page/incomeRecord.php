@@ -121,11 +121,11 @@
                             
 
                             if (!$siteName) {
-                                $stmt = $conn->query("SELECT * FROM income_head ");
+                                $stmt = $conn->query("SELECT * FROM site_info ");
                                 $stmt->execute();
                                 $incomeHead = $stmt->fetchAll();
                             } else {
-                                $stmt = $conn->query("SELECT * FROM income_head WHERE site_name = '$siteName'");
+                                $stmt = $conn->query("SELECT * FROM site_info WHERE site_name = '$siteName'");
                                 $stmt->execute();
                                 $incomeHead = $stmt->fetchAll();
                             }
