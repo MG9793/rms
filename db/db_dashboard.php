@@ -6,7 +6,7 @@
    
        
         // query materialTotal
-        $materialTotal = $conn->query("SELECT SUM(total) as materialSum FROM bill_head where bill_type = 'ค่าวัสดุ'");
+        $materialTotal = $conn->query("SELECT SUM(total) as materialSum FROM bill_head where type = 'ค่าวัสดุ'");
         $materialTotal->execute();
         $material = $materialTotal->fetch(PDO::FETCH_ASSOC);
         if ($material) {
@@ -14,7 +14,7 @@
           }
 
         // query labourTotal
-        $labourTotal = $conn->prepare("SELECT SUM(total) as labourSum FROM bill_head where bill_type = 'ค่าแรง'");
+        $labourTotal = $conn->prepare("SELECT SUM(total) as labourSum FROM bill_head where type = 'ค่าแรง'");
         $labourTotal->execute();
         $labour = $labourTotal->fetch(PDO::FETCH_ASSOC);
         if ($labour) {
