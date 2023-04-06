@@ -47,7 +47,7 @@
             <form action="../db/db_expense.php" method="POST">
                 <div class="row">
                     <div class="col-md">
-                        <label for="addItem" class="col-form-label fw-bold"><i class="fa-solid fa-plus"></i> รายการ :</label>
+                        <label for="itemName" class="col-form-label fw-bold"><i class="fa-solid fa-plus"></i> รายการ :</label>
                     </div>
                     <div class="col-md-2">
                         <label for="itemPrice" class="col-form-label fw-bold">จำนวน :</label>
@@ -64,16 +64,17 @@
                 </div>
                 <div class="row" id="item_fields">
                     <div class="col-md">
-                        <input type="text" class="form-control" name="addItem[]" id="addItem" list="addItems" required>
+                        <input type="hidden" class="form-control" name="receiptNo" value="<?php echo $selectLine_query['receipt_no']; ?>" readonly>
+                        <input type="text" class="form-control" name="itemName[]" id="itemName" list="addItems" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="itemPrice[]" id="itemPrice" oninput="calculateSum()" required>
+                        <input type="number" class="form-control" name="itemQty[]" id="itemQty" oninput="calculateSum()" required>
                     </div>
                     <div class="col-md-2">
                         <input type="number" class="form-control" name="unitPrice[]" id="unitPrice" oninput="calculateSum()" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="itemSum[]" id="itemSum" required>
+                        <input type="number" class="form-control" name="itemTotal[]" id="itemTotal" required>
                     </div>
                     <div class="col-md-1">
                     </div>
@@ -93,7 +94,7 @@
 
                 <div class="row mt-4">
                     <div class="col-md">
-                        <button type="submit" class="btn btn-success text-light w-100"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
+                        <button type="submit" name="add_billLine" class="btn btn-success text-light w-100"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
                     </div>
                 </div>
             </form>
@@ -107,16 +108,16 @@
             var uniqueId = Date.now(); // Generate a unique ID for each row
 			div.innerHTML = '<div class="row">' +
                                 '<div class="col-md mt-2">' +
-                                    '<input type="text" class="form-control" name="addItem[]" list="addItems" required>' +
+                                    '<input type="text" class="form-control" name="itemName[]" list="addItems" required>' +
                                 '</div>' +
                                 '<div class="col-md-2 mt-2">' +
-                                    '<input type="number" class="form-control" name="itemPrice[]" id="itemPrice_add' + uniqueId + '" oninput="calculateSum_add(' + uniqueId + ')" required>' +
+                                    '<input type="number" class="form-control" name="itemQty[]" id="itemQty_add' + uniqueId + '" oninput="calculateSum_add(' + uniqueId + ')" required>' +
                                 '</div>' +
                                 '<div class="col-md-2 mt-2">' +
                                     '<input type="number" class="form-control" name="unitPrice[]" id="unitPrice_add' + uniqueId + '" oninput="calculateSum_add(' + uniqueId + ')" required>' +
                                 '</div>' +
                                 '<div class="col-md-2 mt-2">' +
-                                    '<input type="number" class="form-control" name="itemSum[]" id="itemSum_add' + uniqueId + '" required>' +
+                                    '<input type="number" class="form-control" name="itemTotal[]" id="itemTotal_add' + uniqueId + '" required>' +
                                 '</div>' +
                                 '<div class="col-md-1 mt-2">' +
                                     '<button type="button" class="btn btn-danger" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>' +
@@ -134,7 +135,7 @@
     <!-- Autocomplete -->
     <datalist id="addItems">
         <?php
-            $stmt = $conn->query("SELECT item_name FROM item_info");
+            $stmt = $conn->query("SELECT item_name FROM bill_line");
             $stmt->execute();
             $item = $stmt->fetchAll();
 
@@ -152,11 +153,11 @@
     <!-- สคริป ยอดรวม -->
     <script>
         function calculateSum() {
-            var price = document.getElementById("itemPrice").value;
+            var price = document.getElementById("itemQty").value;
             var quantity = document.getElementById("unitPrice").value;
             var sum = price * quantity;
 
-            document.getElementById("itemSum").value = parseFloat(sum).toFixed(2);;
+            document.getElementById("itemTotal").value = parseFloat(sum).toFixed(2);;
         }
     </script>
 
@@ -164,23 +165,24 @@
     <!-- สคริป ยอดรวม สำหรับปุ่ม Add -->
     <script>
         function calculateSum_add(uniqueId) {
-            var price = document.getElementById("itemPrice_add" + uniqueId).value;
+            var price = document.getElementById("itemQty_add" + uniqueId).value;
             var quantity = document.getElementById("unitPrice_add" + uniqueId).value;
             var sum = price * quantity;
 
-            document.getElementById("itemSum_add" + uniqueId).value = parseFloat(sum).toFixed(2);;
+            document.getElementById("itemTotal_add" + uniqueId).value = parseFloat(sum).toFixed(2);;
         }
     </script>
 
 
     <!-- input ห้ามลบ -->
     <section class="container">
-        <fieldset class="p-3 shadow-sm mt-2">
+        <fieldset class="p-3 shadow-sm my-2">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
                     <tr >
                         <th scope="col" style="text-align:center;">#</th>
                         <th scope="col" style="text-align:center;">เลขที่ใบเสร็จ</th>
+                        <th scope="col" style="text-align:center;">รายการ</th>
                         <th scope="col" style="text-align:center;">จำนวน</th>
                         <th scope="col" style="text-align:center;">ราคา/หน่วย</th>
                         <th scope="col" style="text-align:center;">ยอดรวม</th>
@@ -192,7 +194,9 @@
 
                     <!-- query ตาราง ห้ามลบ -->
                     <?php
-                        $stmt = $conn->query("SELECT * FROM bill_line WHERE id = $id ORDER BY id DESC");
+                        $receiptNo = $selectLine_query['receipt_no'];
+
+                        $stmt = $conn->query("SELECT * FROM bill_line WHERE receipt_no = '$receiptNo'");
                         $stmt->execute();
                         $bill = $stmt->fetchAll();
 
@@ -205,9 +209,9 @@
                     <tr style="text-align:center;">
                         <td></td>
                         <td><?php echo $fetch_bill['receipt_no']; ?></td>
+                        <td><?php echo $fetch_bill['item_name']; ?></td>
+                        <td><?php echo $fetch_bill['qty']; ?></td>
                         <td><?php echo $fetch_bill['amount']; ?></td>
-                        <td><?php echo $fetch_bill['price']; ?></td>
-                        <td><?php echo $fetch_bill['discount']; ?></td>
                         <td><?php echo number_format(($fetch_bill['total']), 2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">

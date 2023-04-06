@@ -11,6 +11,56 @@
         header("location: ../page/expenseLine.php");
     }
 
+
+    else if (isset($_POST['add_billLine'])) {
+        $receiptNo = $_POST['receiptNo'];
+
+        $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
+                                VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
+
+        $stmt->bindParam(':receipt_no', $receiptNo);
+        $stmt->bindParam(':item_name', $item_name);
+        $stmt->bindParam(':qty', $qty);
+        $stmt->bindParam(':amount', $amount);
+        $stmt->bindParam(':total', $total);
+
+        // loop array
+        $itemName_array = $_POST["itemName"];
+        $itemQty_array = $_POST["itemQty"];
+        $unitPrice_array = $_POST['unitPrice'];
+        $itemTotal_array = $_POST['itemTotal'];
+
+        for ($i = 0; $i < count($itemQty_array); $i++) {
+            $item_name = $itemName_array[$i];
+            $qty = $itemQty_array[$i];
+            $amount = $unitPrice_array[$i];
+            $total = $itemTotal_array[$i];
+            $stmt->execute();
+        }
+
+        header("location: ../page/expenseLine.php");
+
+    }
+    
+// Prepare SQL statement
+    // $stmt = $conn->prepare("INSERT INTO items (item_name, item_qty, item_price) VALUES (:item_name, :item_qty, :item_price)");
+
+    // // Bind parameters
+    // $stmt->bindParam(':item_name', $item_name);
+    // $stmt->bindParam(':item_qty', $item_qty);
+    // $stmt->bindParam(':item_price', $item_price);
+
+    // // Set parameters and execute SQL statement for each item
+    // $item_name_array = $_POST["item_name"];
+    // $item_qty_array = $_POST["item_qty"];
+    // $item_price_array = $_POST["item_price"];
+    // for ($i = 0; $i < count($item_qty_array); $i++) {
+    //     $item_name = $item_name_array[$i];
+    //     $item_qty = $item_qty_array[$i];
+    //     $item_price = $item_price_array[$i];
+    //     $stmt->execute();
+    // }
+
     // เพิ่มข้อมูล bill_head
     // if (isset($_POST['receiptNo'])) {
 
