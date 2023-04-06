@@ -47,42 +47,41 @@
             <form action="../db/db_expense.php" method="POST">
                 <div class="row">
                     <div class="col-md">
-                        <label class="col-form-label fw-bold"><i class="fa-solid fa-plus"></i> รายการ :</label>
+                        <label for="addItem" class="col-form-label fw-bold"><i class="fa-solid fa-plus"></i> รายการ :</label>
                     </div>
                     <div class="col-md-2">
-                        <label class="col-form-label fw-bold">จำนวน :</label>
+                        <label for="itemPrice" class="col-form-label fw-bold">จำนวน :</label>
                     </div>
                     <div class="col-md-2">
-                        <label class="col-form-label fw-bold">ราคา/หน่วย :</label>
+                        <label for="unitPrice" class="col-form-label fw-bold">ราคา/หน่วย :</label>
                     </div>
                     <div class="col-md-2">
-                        <label class="col-form-label fw-bold">ยอดรวม :</label>
+                        <label for="itemSum" class="col-form-label fw-bold">ยอดรวม :</label>
                     </div>
                     <div class="col-md-1">
                         <label class="col-form-label fw-bold">ลบ</label>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="item_fields">
                     <div class="col-md">
-                        <input type="text" class="form-control" name="addItems" id="addItems" list="addItems" required>
+                        <input type="text" class="form-control" name="addItem[]" id="addItem" list="addItems" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="itemPrice" id="itemPrice" oninput="calculateSum()" required>
+                        <input type="number" class="form-control" name="itemPrice[]" id="itemPrice" oninput="calculateSum()" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="unitPrice" id="unitPrice" oninput="calculateSum()" required>
+                        <input type="number" class="form-control" name="unitPrice[]" id="unitPrice" oninput="calculateSum()" required>
                     </div>
                     <div class="col-md-2">
-                        <input type="number" class="form-control" name="itemSum" id="itemSum" required>
+                        <input type="number" class="form-control" name="itemSum[]" id="itemSum" required>
                     </div>
-                    <div class="col-md-1 my-1">
-                        <button type="button" class="btn btn-danger remove-item-btn"><i class="fas fa-trash"></i></button>
+                    <div class="col-md-1">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-5">
-                        <button type="button" class="btn btn-primary mt-2 w-100" id="add-item-btn">Add Item</button>
+                        <button type="button" class="btn btn-primary mt-2 w-100" id="add-item-btn" onclick="addRows()">Add Item</button>
                     </div>
                 </div>
                 <div>หมายเหตุ : หากไม่พบรายการค่าใช้จ่ายให้ไปที่เมนูตั้งค่า และเพิ่มรายการบันทึก</div>
@@ -100,6 +99,78 @@
             </form>
         </div>
     </section>
+
+    <!-- script Add InputField -->
+    <script>
+		function addRows() {
+			var div = document.createElement("div");
+            var uniqueId = Date.now(); // Generate a unique ID for each row
+			div.innerHTML = '<div class="row">' +
+                                '<div class="col-md mt-2">' +
+                                    '<input type="text" class="form-control" name="addItem[]" list="addItems" required>' +
+                                '</div>' +
+                                '<div class="col-md-2 mt-2">' +
+                                    '<input type="number" class="form-control" name="itemPrice[]" id="itemPrice_add' + uniqueId + '" oninput="calculateSum_add(' + uniqueId + ')" required>' +
+                                '</div>' +
+                                '<div class="col-md-2 mt-2">' +
+                                    '<input type="number" class="form-control" name="unitPrice[]" id="unitPrice_add' + uniqueId + '" oninput="calculateSum_add(' + uniqueId + ')" required>' +
+                                '</div>' +
+                                '<div class="col-md-2 mt-2">' +
+                                    '<input type="number" class="form-control" name="itemSum[]" id="itemSum_add' + uniqueId + '" required>' +
+                                '</div>' +
+                                '<div class="col-md-1 mt-2">' +
+                                    '<button type="button" class="btn btn-danger" onclick="removeItem(this)"><i class="fas fa-trash"></i></button>' +
+                                '</div>';
+			document.getElementById("item_fields").appendChild(div);
+		}
+		
+        function removeItem(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+	</script>
+
+
+    <!-- Autocomplete -->
+    <datalist id="addItems">
+        <?php
+            $stmt = $conn->query("SELECT item_name FROM item_info");
+            $stmt->execute();
+            $item = $stmt->fetchAll();
+
+            if (!$item) {            
+            
+            } else {
+                foreach ($item as $fetch_item) {
+        ?>
+
+        <option value="<?php echo $fetch_item['item_name']; ?>"></option>
+        <?php } } ?>
+    </datalist>
+
+
+    <!-- สคริป ยอดรวม -->
+    <script>
+        function calculateSum() {
+            var price = document.getElementById("itemPrice").value;
+            var quantity = document.getElementById("unitPrice").value;
+            var sum = price * quantity;
+
+            document.getElementById("itemSum").value = parseFloat(sum).toFixed(2);;
+        }
+    </script>
+
+
+    <!-- สคริป ยอดรวม สำหรับปุ่ม Add -->
+    <script>
+        function calculateSum_add(uniqueId) {
+            var price = document.getElementById("itemPrice_add" + uniqueId).value;
+            var quantity = document.getElementById("unitPrice_add" + uniqueId).value;
+            var sum = price * quantity;
+
+            document.getElementById("itemSum_add" + uniqueId).value = parseFloat(sum).toFixed(2);;
+        }
+    </script>
 
 
     <!-- input ห้ามลบ -->
@@ -119,8 +190,8 @@
                 <tbody>
 
 
-                <!-- query ตาราง ห้ามลบ -->
-                <?php
+                    <!-- query ตาราง ห้ามลบ -->
+                    <?php
                         $stmt = $conn->query("SELECT * FROM bill_line WHERE id = $id ORDER BY id DESC");
                         $stmt->execute();
                         $bill = $stmt->fetchAll();
@@ -137,7 +208,7 @@
                         <td><?php echo $fetch_bill['amount']; ?></td>
                         <td><?php echo $fetch_bill['price']; ?></td>
                         <td><?php echo $fetch_bill['discount']; ?></td>
-                        <td><?php echo number_format(($fetch_bill['total']),2); ?></td>
+                        <td><?php echo number_format(($fetch_bill['total']), 2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
                                 <button type="submit" class="btn btn-sm btn-outline-dark" name="expenseLine"><i class="fas fa-edit"></i></button>
@@ -153,82 +224,6 @@
 
 
 
-<!-- Modal -->
-<!-- <div class="modal fade" id="expenseDetailsVAT<?php //echo $fetch_bill['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="../db/db_expense.php" method="POST">
-                        <input type="hidden" value="<?php //echo $fetch_bill['receipt_no']; ?>" required class="form-control" name="receipt_line">
-                        <div class="row">
-                        
-                            <div class="col-md d-flex" >
-        
-                                <div><h5>เลขที่ใบสั่งซื้อ <b><?php //echo $fetch_bill['receipt_no']; ?></b></h5></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <label class="col-form-label fw-bold"></i> รายการ :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">จำนวน :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">ราคา/หน่วย :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">จำนวนเงิน :</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label class="col-form-label fw-bold">ลบ</label>
-                            </div>
-                        </div>
-                        <div class="row" id="items-row">
-                            <div class="col-md my-1">
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems" required>
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="itemPrice" id="itemPrice" oninput="calculateSum()" required>
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="unitPrice" id="unitPrice" oninput="calculateSum()" required>
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="itemSum" id="itemSum"  required>
-                            </div>
-                            <div class="col-md-1 my-1">
-                                <button type="button" class="btn btn-danger btn-sm remove-item-btn"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-5">
-                                <button type="button" class="btn btn-primary w-20 mt-2" id="add-item-btn">เพิ่มรายการ</button>
-                            </div>
-                        </div>
-
-                        <hr class="headerUnderline mt-4">
-                        <div class="row">
-                            
-                            <div class="col-md-4" style="text-align:right;width:90%;">
-                            <div ><h5>จำนวนเงินทั้งสิ้น <b><?php //echo number_format(($fetch_bill['sum']),2) ?></b> บาท</h5></div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-4">
-                            <div class="col-md">
-                                <button type="submit" class="btn btn-success text-light w-100"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div> -->
 
 
 
