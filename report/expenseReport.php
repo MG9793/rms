@@ -1,74 +1,72 @@
 <?php
     require_once "../include/header.php";
+
+
 ?>
 <head>
+    <style>
+div.headReport {
+  text-align: left;
+  background-color: #D3D3D3;
+  border-radius: 5px;
+}
+iframe {
+    height :700px;
+    width :100%;
+    display:block;
 
+}
+menu {
+
+    display:block;
+    margin-bottom: -4;
+    width: auto; 
+    
+    height: 16px; >
+}
+a:link {
+  color: green;
+  font-weight: bold;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: white;
+  background-color: transparent;
+}
+a:active {
+  color: yellow;
+  background-color: transparent;
+}
+</style>
+    
 
 </head>
 <body>
-
-<div class="container">
-    <div class="text-center">
-        <h5 class="fw-bold p-5" >สรุปค่าใช้จ่ายประจำเดือน มกราคม-ธันวาคม พ.ศ.2565 บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด (ทำงบ)</h5>
+<section class="container mt-1">
+ <div class="card">
+                    
+                        <div class="card-body">                          
+<div class="headReport">
+        <h5 class="fw-bold p-2 " >PAY001 | รายงานสรุปค่าใช้จ่าย</h5>
     </div>
+    <table style="background: #FFA500;" width="100%" height="35">
+    <tbody><tr>
+				<td style="text-align: center;">
+					<a href="" class="menu"><img src="../image/icon/undo.png" width="auto" height="16"> กลับหน้าหลัก </a>
+					<a href="" class="menu"><img src="../image/icon/excel.png" width="auto" height="16">Export to Excel </a>
+				</td>
+			</tr>
+		</tbody></table>
 
-
-    <table class="table table-bordered border-dark table-sm">
-        <thead class="text-center" style="background-color: rgb(230, 230, 230);">
-            <tr>
-                <th>รายละเอียด</th>
-                <th>มกราคม</th>
-                <th>กุมภาพันธ์</th>
-                <th>มีนาคม</th>
-                <th>เมษายน</th>
-                <th>พฤษภาคม</th>
-                <th>มิถุนายน</th>
-                <th>กรกฎาคม</th>
-                <th>สิงหาคม</th>
-                <th>กันยายน</th>
-                <th>ตุลาคม</th>
-                <th>พฤศจิกายน</th>
-                <th>ธันวาคม</th>
-                <th>TOTAL</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                $stmt = $conn->query("SELECT item_name FROM item_info");
-                $stmt->execute();
-                $item = $stmt->fetchAll();
-
-                if (!$item) {
-                    echo "<p><td colspan='15' class='text-center'>ไม่พบข้อมูล</td></p>";
-                } else {
-                    foreach ($item as $fetch_itemInfo) {
-                        echo "<tr><td rowspan='1'>" . $fetch_itemInfo['item_name'] . "</td></tr>";
-                    }
-                }
-                ?>
-                
-                <tr>
-                    <td class="text-center">รวม</td>
-                </tr>
-        </tbody>
-    </table>
-
-
-
-    <script>
-        function formatNumberWithCommas(number) {
-            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-        
-        document.querySelectorAll('.commas').forEach(function(element) {
-            element.textContent = formatNumberWithCommas(element.textContent);
-        });
-    </script>
-
-
+<iframe src="../report/expenseDetail.php" ></iframe>
 </div>
-
-    
+</div>
 </body>
 </html>
+

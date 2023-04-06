@@ -138,7 +138,7 @@
                             <td><?php echo $fetch_incomeHead['start_date']; ?></td>
                             <td><?php echo $fetch_incomeHead['finish_date']; ?></td>
                             <td><?php echo $fetch_incomeHead['installment']; ?></td>
-                            <td><?php echo number_format(($fetch_incomeHead['sum']),2); ?></td>
+                            <td><?php echo number_format(($fetch_incomeHead['total']),2); ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
