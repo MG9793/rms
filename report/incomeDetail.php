@@ -16,35 +16,43 @@
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$sql = "SELECT * FROM item_info";
+	$sql = "SELECT site_name , total  FROM site_info";
 	
 	$result = mysqli_query($conn, $sql);
 	$content = "";
+    $i=1;
 	if (mysqli_num_rows($result) > 0) {
 		while($row = mysqli_fetch_assoc($result)) {
 			$content .= '<tr style="border:1px solid #000;">
-				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['item_name'].'</td>
-				<td style="border-right:1px solid #000;padding:3px;text-align:center;" ></td>
-				<td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
+            <td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$i.'</td>
+				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['site_name'].'</td>
+				<td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.number_format(($row['total']),2).'</td>
+				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+                <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
         
 			</tr>
       
       ';
+      $sumTotal=$row['total']+$sumTotal;
+      $i++;
 		} 
+        
     $content .= '<tr style="border:1px solid #000;">
-    <td style="border-right:1px solid #000;padding:3px;text-align:center;"   >รวม</td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;" ></td>
+    <td style="border-right:1px solid #000;padding:3px;text-align:center;"   >รวม</td>
+    <td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.number_format(($sumTotal),2).'</td>
+    <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
@@ -80,11 +88,20 @@ $head = '
 	}
 </style>
 
-<h2 style="text-align:center">สรุปค่าใช้จ่าย เดือน มกราคม - ธันวาคม พ.ศ.2566 บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด (ทำงบ)</h2>
+<h2 style="text-align:center">สรุปรายรับ</h2>
 
 <table id="bg-table" width="100%" style="border-collapse: collapse;font-size:12pt;margin-top:8px;">
+
     <tr style="border:1px solid #000;padding:4px;">
-        <td  style="border-right:1px solid #000;padding:4px;text-align:center;"   width="25%">รายละเอียด</td>
+    <td  rowspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"   width="5%">ลำดับ</td>
+    <td  rowspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"  width="25%">รายการ</td>
+    <td  rowspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">มูลค่างาน<br>(NOVAT)</td>
+    <td  rowspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">รายรับสะสม</td>
+    <td colspan="12" style="border-right:1px solid #000;padding:4px;text-align:center;">'. (date("Y")+543) .'</td>
+    </tr>
+    <tr style="border:1px solid #000;padding:4px;">
+
+
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">มกราคม</td>
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">กุมภาพันธ์</td>
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">มีนาคม</td>
@@ -97,7 +114,6 @@ $head = '
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">ตุลาคม</td>
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">พฤศจิกายน</td>
         <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">ธันวาคม</td>
-        <td  style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">TOTAL</td>
 
 
     </tr>

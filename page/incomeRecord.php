@@ -29,6 +29,9 @@
             $('#myTable').DataTable();
         } );
     </script>
+               <!-- Bootstrap CSS -->
+
+               <script src="../resources/lib/dselect.js"></script>
 </head>
 <body>
 
@@ -38,54 +41,48 @@
     <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
         <legend class="fw-bold text-dark text-center  p-1"> บันทึกรายรับ </legend>
         <form action="../db/db_income.php" method="POST">
-        <label class="form-label fw-bold" >ไซต์งาน :</label>
-                <select name="addSiteName" class="form-control" required>
-                    <?php if($_SESSION['siteName_incomeHead']=="") { ?>
-                       <option value="" >--เลือกไซต์งาน--</option>
-                       <?php foreach($rs as $row) { ?>
-                          
-                          <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
-                        <?php } ?>
-                        <?php } else{
-    ?>
-                        <option value="<?php echo $_SESSION['siteName_incomeHead']; ?>" >--<?php echo $_SESSION['siteName_incomeHead']; ?>--</option>
-                        <?php foreach($rs as $row) { ?>
-                          
-                          <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
-                        <?php } ?>
-    <?php
-                        }
-                         
-                        ?>
-                     </select>
-                    
-                
-                            <br>
-    
-                    
-                        <div class="row">
+               
+                                 <div class="row">
+                                     
+                                    <div class="col-md-4">
+                                    <label class="form-label fw-bold" >ไซต์งาน :</label>
+                                    <select name="siteName" class="form-select" id="siteName">
+                                    <?php if($_SESSION['siteName_incomeHead']=="") { ?>
+                                    <option value="">กรุณาเลือกไซต์งาน</option>
+                                    <?php foreach($rs as $row) { ?>
+                                        <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
+                                    <?php
+                                     } 
+                                     } else{
+                                        ?>
+                                    <?php 
+                                    foreach($rs as $row)
+                                    {
+                                        echo '<option value="'.$rs["site_name"].'">'.$row["site_name"].'</option>';
+                                    }}
+                                    ?>  
+
+                                </select>
+                                </div>  
                             <div class="col-md-2">
-                                <label class="form-label fw-bold" for="addStartDate">วันที่เริ่ม :</label>
-                                <input type="date" class="form-control" name="addStartDate" id="addStartDate" required>
+                                <label class="form-label fw-bold" for="paidDate">วันที่ :</label>
+                                <input type="date" class="form-control" name="paidDate" id="paidDate" required>
                             
                             </div>
+                            
                             <div class="col-md-2">
-                                <label class="form-label fw-bold" for="addFinishDate">วันที่สิ้นสุด :</label>
-                                <input type="date" class="form-control" name="addFinishDate" id="addFinishDate" required>
+                                <label class="form-label fw-bold" for="installmentNO">งวดที่ :</label>
+                                <input type="number" class="form-control" name="installmentNO" id="installmentNO" required>
                             </div>
-                            <div class="col-md-2">
-                                <label class="form-label fw-bold" for="addInstallment">จำนวนงวด :</label>
-                                <input type="number" class="form-control" name="addInstallment" id="addInstallment" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-bold" for="addSum">จำนวนเงินทั้งสิ้น :</label>
-                                <input type="number" class="form-control" name="addSum" id="addSum" step="any" required>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold" for="Amount">จำนวนเงิน :</label>
+                                <input type="number" class="form-control" name="Amount" id="Amount" step="any" required>
                             </div>
                         </div>
     
                         <div class="row mt-4">
                             <div class="col-md">
-                                <button type="submit" name="addIncome_head" class="btn btn-success w-100">บันทึก</button>
+                                <button type="submit" name="addIncome" class="btn btn-success w-100">บันทึก</button>
                             </div>
                         </div>
                     </form>
@@ -106,10 +103,9 @@
                         <tr>
                             <th scope="col" style="text-align:center;">#</th>
                             <th scope="col" style="text-align:center;">ไซต์งาน</th>
-                            <th scope="col" style="text-align:center;">วันที่เริ่ม</th>
-                            <th scope="col" style="text-align:center;">วันที่สิ้นสุด</th>
-                            <th scope="col" style="text-align:center;">จำนวนงวด</th>
-                            <th scope="col" style="text-align:center;">ยอดรวม</th>
+                            <th scope="col" style="text-align:center;">งวดที่</th>
+                            <th scope="col" style="text-align:center;">วันที่</th>
+                            <th scope="col" style="text-align:center;">จำนวนเงิน</th>
                             <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
 
                         </tr>
@@ -121,11 +117,11 @@
                             
 
                             if (!$siteName) {
-                                $stmt = $conn->query("SELECT * FROM site_info ");
+                                $stmt = $conn->query("SELECT * FROM income ");
                                 $stmt->execute();
                                 $incomeHead = $stmt->fetchAll();
                             } else {
-                                $stmt = $conn->query("SELECT * FROM site_info WHERE site_name = '$siteName'");
+                                $stmt = $conn->query("SELECT * FROM income WHERE site_name = '$siteName'");
                                 $stmt->execute();
                                 $incomeHead = $stmt->fetchAll();
                             }
@@ -135,10 +131,9 @@
                         <tr style="text-align:center;">
                             <td></td>
                             <td><?php echo $fetch_incomeHead['site_name']; ?></td>
-                            <td><?php echo $fetch_incomeHead['start_date']; ?></td>
-                            <td><?php echo $fetch_incomeHead['finish_date']; ?></td>
-                            <td><?php echo $fetch_incomeHead['installment']; ?></td>
-                            <td><?php echo number_format(($fetch_incomeHead['total']),2); ?></td>
+                            <td><?php echo $fetch_incomeHead['installment_no']; ?></td>
+                            <td><?php echo $fetch_incomeHead['paid_date']; ?></td>
+                            <td><?php echo number_format(($fetch_incomeHead['amount']),2); ?></td>
                             <td>
                                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                                     <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditRecord<?php echo $fetch_incomeHead['id']; ?>"><i class="fas fa-edit"></i></button>
@@ -167,20 +162,17 @@
                                                 <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_incomeHead['site_name']; ?>" readonly>
                                             </div>
                                             <div class="mb-0">
-                                                <label for="editStartDate" class="col-form-label">วันที่เริ่ม :</label>
-                                                <input type="date" class="form-control" name="editStartDate" id="editStartDate" value="<?php echo $fetch_incomeHead['start_date']; ?>" required>
+                                                <label for="editPaidtDate" class="col-form-label">วันที่ :</label>
+                                                <input type="date" class="form-control" name="editPaidtDate" id="editPaidtDate" value="<?php echo $fetch_incomeHead['paid_date']; ?>" required>
                                             </div>
+                                        
                                             <div class="mb-0">
-                                                <label for="editFinishDate" class="col-form-label">วันที่สิ้นสุด :</label>
-                                                <input type="date" class="form-control" name="editFinishDate" id="editFinishDate" value="<?php echo $fetch_incomeHead['finish_date']; ?>" required>
-                                            </div>
-                                            <div class="mb-0">
-                                                <label for="editInstallment" class="col-form-label">จำนวนงวด :</label>
-                                                <input type="number" class="form-control" name="editInstallment" id="editInstallment" value="<?php echo $fetch_incomeHead['installment']; ?>" required>
+                                                <label for="editInstallmentNO" class="col-form-label">งวดที่ :</label>
+                                                <input type="number" class="form-control" name="editInstallmentNO" id="editInstallmentNO" value="<?php echo $fetch_incomeHead['installment_no']; ?>" required>
                                             </div>
                                             <div class="mb-2">
-                                                <label for="editSum" class="col-form-label">ยอดรวม :</label>
-                                                <input type="number" class="form-control" name="editSum" id="editSum" step="any" value="<?php echo number_format(($fetch_incomeHead['sum']),2); ?>" required>
+                                                <label for="editAmount" class="col-form-label">จำนวนเงิน :</label>
+                                                <input type="text" class="form-control" name="editAmount" id="editAmount" step="any" value="<?php echo $fetch_incomeHead['amount']; ?>" required>
                                             </div>
                                             
                                             <div class="modal-footer">
@@ -219,7 +211,15 @@
         </div>
     </section>
 
+    <script>
 
+var select_box_element_site = document.querySelector('#siteName');
+
+dselect(select_box_element_site, {
+    search: true
+});
+
+</script>
 <!-- 
     <script>
         function calculateDays() {
