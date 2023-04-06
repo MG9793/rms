@@ -52,7 +52,7 @@ a:active {
                     
                         <div class="card-body">                          
 <div class="headReport">
-        <h5 class="fw-bold p-2 " >INC001 | รายงานสรุปรายรับ</h5>
+        <h5 class="fw-bold p-2 " >SUM002 | รายงานสรุปรายรับ</h5>
     </div>
     <table style="background: #FFA500;" width="100%" height="35">
     <tbody><tr>

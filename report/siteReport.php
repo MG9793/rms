@@ -1,136 +1,71 @@
 <?php
     require_once "../include/header.php";
-?>
 
+
+?>
 <head>
+    <style>
+div.headReport {
+  text-align: left;
+  background-color: #D3D3D3;
+  border-radius: 5px;
+}
+iframe {
+    height :700px;
+    width :100%;
+    display:block;
+
+}
+menu {
+
+    display:block;
+    margin-bottom: -4;
+    width: auto; 
+    
+    height: 16px; >
+}
+a:link {
+  color: green;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: black;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:hover {
+  color: white;
+  background-color: transparent;
+}
+a:active {
+  color: yellow;
+  background-color: transparent;
+}
+</style>
+    
 
 </head>
 <body>
-
-<div class="container">
-    <div class="text-center">
-        <h5 class="fw-bold p-5 ">สรุปโครงการก่อสร้าง : บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</h5>
-        <h6 class="fst-italic">สรุปงบประมาณปี 2564 เดือน มกราคม - ธันวาคม 2564</h6>
+<section class="container mt-1">
+ <div class="card">
+                    
+                        <div class="card-body">                          
+<div class="headReport">
+        <h5 class="fw-bold p-2 " >SUM003 | สรุปโครงการก่อสร้าง</h5>
     </div>
+    <table style="background: #FFA500;" width="100%" height="35">
+    <tbody><tr>
+				<td style="text-align: center;">
+					<a href="" class="menu"><img src="../image/icon/undo.png" width="auto" height="16"> กลับหน้าหลัก </a>
+					<a href="" class="menu"><img src="../image/icon/excel.png" width="auto" height="16">Export to Excel </a>
+				</td>
+			</tr>
+		</tbody></table>
 
-
-    <table class="table table-bordered border-dark table-sm css-serial">
-        <thead class="text-center" style="background-color: rgb(230, 230, 230);">
-            <tr>
-                <th valign="middle" rowspan="2">ลำดับ</th>
-                <th valign="middle" rowspan="2">รายการ</th>
-
-                <!-- site งาน -->
-                <th colspan="2">MT3-2</th>
-                <th colspan="2">MTุ-1</th>
-                <th colspan="2">รวมทั้งสิ้น</th>
-            </tr>
-            <tr>
-                <!-- Subheader -->
-                <th colspan="2">คิดเป็น %</th>
-                <th colspan="2">คิดเป็น %</th>
-                <th colspan="2">คิดเป็น %</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="text-center"></td>
-                <td>ค่างานก่อน VAT</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-            <tr>
-                <td class="text-center"></td>
-                <td>รายรับ ณ ปัจจุบัน</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-            <tr>
-                <td class="text-center"></td>
-                <td>Direct cost</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-            <tr>
-                <td class="text-center"></td>
-                <td>กำไรขั้นต้น</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-            <tr>
-                <td class="text-center"></td>
-                <td>OH site</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-            <tr>
-                <td class="text-center"></td>
-                <td>OH office</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-            <tr>
-                <td class="text-center"></td>
-                <td>OH All</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-            <tr>
-                <td class="text-center"></td>
-                <td>กำไรสุทธิ</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>   <!--รวมทั้งสิ้น-->
-                <td></td>   <!--คิดเป็น %-->
-            </tr>
-        </tbody>
-    </table>
-
-
-
-    <script>
-        function formatNumberWithCommas(number) {
-            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-        
-        document.querySelectorAll('.commas').forEach(function(element) {
-            element.textContent = formatNumberWithCommas(element.textContent);
-        });
-    </script>
-
-
+<iframe src="../report/siteDetail.php" ></iframe>
 </div>
-
-    
+</div>
 </body>
 </html>
+
