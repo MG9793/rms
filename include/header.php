@@ -95,7 +95,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> รายงาน</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item text-black" href="../report/expenseReport.php"> สรุปค่าใช้จ่ายประจำเดือน</a></li>
+                            <li><a class="dropdown-item text-black" href="../report/expenseReport.php"> สรุปค่าใช้จ่าย(ทำงบ)</a></li>
                             <li><a class="dropdown-item text-black" href="../report/finalReport.php"> สรุปรายรับ</a></li>
                             <li><a class="dropdown-item text-black" href="../report/reportTax.php"> ภาษีซื้อ</a></li>
                             <li><a class="dropdown-item text-black" href="../report/siteReport.php"> สรุปโครงการก่อสร้าง</a></li>

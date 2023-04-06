@@ -26,7 +26,6 @@ menu {
 }
 a:link {
   color: green;
-  font-weight: bold;
   background-color: transparent;
   text-decoration: none;
 }
@@ -53,7 +52,7 @@ a:active {
                     
                         <div class="card-body">                          
 <div class="headReport">
-        <h5 class="fw-bold p-2 " >PAY001 | รายงานสรุปค่าใช้จ่าย</h5>
+        <h5 class="fw-bold p-2 " >EXP001 | รายงานสรุปค่าใช้จ่าย</h5>
     </div>
     <table style="background: #FFA500;" width="100%" height="35">
     <tbody><tr>
