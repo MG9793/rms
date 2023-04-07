@@ -37,111 +37,95 @@
     
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
+        <div class="container border border-3 border-light bg-secondary shadow-sm">
+            <legend class="fw-bold text-dark text-center p-2">บันทึกรายจ่าย </legend>
+            <form action="../db/db_expense.php" method="POST">
 
-        <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
-        <legend class="fw-bold text-dark text-center  p-1"> บันทึกรายจ่าย </legend>
-        <form action="../db/db_expense.php" method="POST">
-                        <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
-                        
-                        <div class="row">
-                        <div class="col-md-4">
-                                <label class="form-label fw-bold" for="siteName">ไซต์งาน :</label>
-                                <select name="siteName" class="form-select" id="siteName">
-                                    <option value="">กรุณาเลือกไซต์งาน</option>
-                                    <?php 
-                                    foreach($rs_site as $row_site)
-                                    {
-                                        echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
-                                    }
-                                    ?>  
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
-                                <input type="text" class="form-control" placeholder="กรุณากรอกเลขที่ใบเสร็จ..." name="receiptNo" id="receiptNo" required>
-                            </div>
-                            <div class="col-md-4">
-                                    <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
-                                    <input type="date" class="form-control" name="buyDate" id="buyDate" required>
-                                </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold" for="siteName">ไซต์งาน :</label>
+                        <select name="siteName" class="form-select" id="siteName">
+                            <option value="">กรุณาเลือกไซต์งาน</option>
+                            <?php 
+                                foreach($rs_site as $row_site)
+                                {
+                                    echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
+                                }
+                            ?>  
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
+                        <input type="text" class="form-control" placeholder="กรุณากรอกเลขที่ใบเสร็จ..." name="receiptNo" id="receiptNo" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
+                        <input type="date" class="form-control" name="buyDate" id="buyDate" required>
+                    </div>
+                </div>
 
-                        </div>
-                        <div class="row mt-3">
-                        <div class="col-md-4">
-                      
-                                <label class="form-label fw-bold" for="salesName">ชื่อผู้ขาย :</label>
-                                <select name="salesName" class="form-select" id="salesName" onChange="taxID();">
-                                    <option value="">กรุณาเลือกผู้ขาย</option>
-                                    <?php 
-                                    foreach($rs_sales as $row_sales)
-                                    {
-                                        echo '<option value="'.$row_sales["sales_name"].$row_sales["tax_no"].'">'.$row_sales["sales_name"].'</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold" for="taxNO">เลขประจำตัวผู้เสียภาษี :</label>
-                                <input type="text" class="form-control" name="taxNO" id="taxNO" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี"  required>
-                            
-                             
-                                </div>
-                              
-                                
-                                <input type="hidden" class="form-control" name="sales" id="sales"  required>
-                            
-                       
-                               
-                            <div class="col-md-2">
-                                <label class="form-label fw-bold" for="type">ประเภท :</label>
-                                <select name="type" id="type" class="form-control" required>
-                                <option value="" >--เลือกประเภท--</option>
-                                <option value="ค่าวัสดุ" >ค่าวัสดุ</option>
-                                <option value="ค่าแรง" >ค่าแรง</option>
-                                </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label fw-bold" for="calVat">คำนวนภาษี :</label>
-                                <select name="calVat" id="calVat" class="form-control" onChange="changetextbox();" required>
-                                <option value="" >--เลือกการคำนวนภาษี--</option>
-                                <option value="VAT" >VAT</option>
-                                <option value="noVAT">noVAT</option>
-                                </select>
-                            </div>
-                           
-                         
-                        </div>
-                        <div class="row mt-3">
-                            
-                        <div class="col-md-4">
-                                <label class="col-form-label fw-bold">รวมเงินค่าสินค้าและค่าขนส่ง :</label>
-                                <input type="text" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM">
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
-                                <input type="text" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
-                            </div>
-                            
-                            <div class="col-md-4">
-                                <label class="col-form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
-                                <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal"  oninput="calculateVAT()" required>
-                            </div>
-                        </div>
+                <div class="row mb-2">
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold" for="salesName">ชื่อผู้ขาย :</label>
+                        <select name="salesName" class="form-select" id="salesName" onChange="taxID();">
+                            <option value="">กรุณาเลือกผู้ขาย</option>
+                            <?php 
+                                foreach($rs_sales as $row_sales)
+                                {
+                                    echo '<option value="'.$row_sales["sales_name"].$row_sales["tax_no"].'">'.$row_sales["sales_name"].'</option>';
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold" for="taxNO">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
+                        <input type="text" class="form-control" name="taxNO" id="taxNO" minlength="13" maxlength="13" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี" required>
+                        <input type="hidden" class="form-control" name="sales" id="sales"  required>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold" for="type">ประเภท :</label>
+                        <select name="type" id="type" class="form-control" required>
+                            <option value="" >--เลือกประเภท--</option>
+                            <option value="ค่าวัสดุ" >ค่าวัสดุ</option>
+                            <option value="ค่าแรง" >ค่าแรง</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold" for="calVat">คำนวนภาษี :</label>
+                        <select name="calVat" id="calVat" class="form-control" onChange="changetextbox();" required>
+                            <option value="">--เลือกการคำนวนภาษี--</option>
+                            <option value="VAT">VAT</option>
+                            <option value="noVAT">noVAT</option>
+                        </select>
+                    </div>
+                </div>
 
-                        <div class="row mt-4">
-                            <div class="col-md">
-                                <button type="submit" class="btn btn-success text-light w-100">บันทึก</button>
-                            </div>
-                        </div>
-                    </form>
- 
-    </div>
+                <div class="row mb-3"> 
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">รวมเงินค่าสินค้าและค่าขนส่ง :</label>
+                        <input type="text" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
+                        <input type="text" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
+                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" oninput="calculateVAT()" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-success w-100" name="add_billHead">บันทึก</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </section>
 
     <!-- input ห้ามลบ -->
     <section class="container">
-        
-
         <fieldset class="p-3 shadow-sm mt-3">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
@@ -182,94 +166,71 @@
                         <td><?php echo number_format(($fetch_bill['total']),2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
-                            <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#expenseDetailsVAT<?php echo $fetch_bill['id']; ?>"><i class="fas fa-edit"></i></button>
-                 
+                                <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditBill<?php echo $fetch_bill['id']; ?>"><i class="fas fa-edit"></i></button>
                                 <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDeleteBill<?php echo $fetch_bill['id']; ?>"><i class="fas fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
 
 
-<!-- Modal -->
-<div class="modal fade" id="expenseDetailsVAT<?php echo $fetch_bill['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog modal-xl">
-            <div class="modal-content">
-            <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="../db/db_expense.php" method="POST">
-                        <!-- <div class="text-center"><img src="../image/icon/cost.png" class="w-25" alt=""></div> -->
-                        <input type="hidden" value="<?php echo $fetch_bill['receipt_no']; ?>" required class="form-control" name="receipt_line">
-                        <div class="row">
-                        
-                            <div class="col-md d-flex" >
-        
-                                <div><h5>เลขที่ใบสั่งซื้อ <b><?php echo $fetch_bill['receipt_no']; ?></b></h5></div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md">
-                                <label class="col-form-label fw-bold"></i> รายการ :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">จำนวน :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">ราคา/หน่วย :</label>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="col-form-label fw-bold">จำนวนเงิน :</label>
-                            </div>
-                            <div class="col-md-1">
-                                <label class="col-form-label fw-bold">ลบ</label>
-                            </div>
-                        </div>
-                        <div class="row" id="items-row">
-                            <div class="col-md my-1">
-                                <input type="text" class="form-control" name="addItems" id="addItems" list="addItems" required>
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="itemPrice" id="itemPrice" oninput="calculateSum()" required>
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="unitPrice" id="unitPrice" oninput="calculateSum()" required>
-                            </div>
-                            <div class="col-md-2 my-1">
-                                <input type="number" class="form-control" name="itemSum" id="itemSum"  required>
-                            </div>
-                            <div class="col-md-1 my-1">
-                                <button type="button" class="btn btn-danger btn-sm remove-item-btn"><i class="fas fa-trash"></i></button>
-                            </div>
-                        </div>
+                    <!-- Modal Edit billHead -->
+                    <div class="modal fade" id="modalEditBill<?php echo $fetch_bill['id']; ?>" tabindex="-1" aria-labelledby="modalEditBill" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalEditBill"><i class="fa-solid fa-pen-to-square"></i> แก้ไขรายการรายจ่าย</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
 
-                        <div class="row">
-                            <div class="col-md-5">
-                                <button type="button" class="btn btn-primary w-20 mt-2" id="add-item-btn">เพิ่มรายการ</button>
+                                <div class="modal-body">
+                                    <form action="../db/db_expense.php" method="POST">
+                                        <div class="mb-0">
+                                            <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_bill['id']; ?>" readonly required>
+                                            <label for="editSiteName" class="col-form-label">ไซต์งาน :</label>
+                                            <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_bill['site_name']; ?>" required>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="editReceiptNo" class="col-form-label">เลขที่ใบเสร็จ :</label>
+                                            <input type="text" class="form-control" name="editReceiptNo" id="editReceiptNo" value="<?php echo $fetch_bill['receipt_no']; ?>" required>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="editBuyDate" class="col-form-label">วันที่ซื้อ :</label>
+                                            <input type="date" class="form-control" name="editBuyDate" id="editBuyDate" value="<?php echo $fetch_bill['buy_date']; ?>" required>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="editSalesName" class="col-form-label">ชื่อผู้ขาย :</label>
+                                            <input type="text" class="form-control" name="editSalesName" id="editSalesName" value="<?php echo $fetch_bill['sales_name']; ?>" required>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="editTaxNO" class="col-form-label">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
+                                            <input type="text" class="form-control" name="editTaxNO" id="editTaxNO" minlength="13" maxlength="13" value="<?php echo $fetch_bill['tax_no']; ?>" required>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="editType" class="col-form-label">ประเภท :</label>
+                                            <select class="form-select" aria-label="editType" name="editType" required>
+                                                <option>ค่าวัสดุ</option>
+                                                <option>ค่าแรง</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="editExpenseTotal" class="col-form-label">จำนวนเงินทั้งสิ้น :</label>
+                                            <input type="number" class="form-control" name="editExpenseTotal" id="editExpenseTotal" value="<?php echo $fetch_bill['total']; ?>" required>
+                                        </div>
+
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-dark w-25" name="edit_billHead"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
+                    </div>
 
-                        <hr class="headerUnderline mt-4">
-                        <div class="row">
-                            
-                            <div class="col-md-4" style="text-align:right;width:90%;">
-                            <div ><h5>จำนวนเงินทั้งสิ้น <b><?php echo number_format(($fetch_bill['sum']),2) ?></b> บาท</h5></div>
-                            </div>
-                        </div>
 
-                        <div class="row mt-4">
-                            <div class="col-md">
-                                <button type="submit" class="btn btn-success text-light w-100"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
- <!-- Modal ยืนยันลบข้อมูล ห้ามลบ -->
- <div class="modal fade" id="modalDeleteBill<?php echo $fetch_bill['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- Modal ยืนยันลบข้อมูล ห้ามลบ -->
+                    <div class="modal fade" id="modalDeleteBill<?php echo $fetch_bill['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -388,8 +349,6 @@ function taxID() {
                 document.getElementById("expenseTotal").value = "";;
 
                 $vatC = 0;
-
-                
             }
         }
     </script>
