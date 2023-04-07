@@ -124,7 +124,7 @@ $head = '
 mysqli_close($conn);    
 $end = "</tbody>
 </table>";
-$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'orientation' => 'L' , 'format' => 'A3'] );
+$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8' , 'format' => 'A4'] );
 
 
 $mpdf->SetAdditionalXmpRdf($rdf);
