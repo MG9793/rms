@@ -21,47 +21,35 @@
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-    <div class="container border border-3 border-light bg-secondary shadow-sm">
-        <legend class="fw-bold text-dark text-center  p-2">ข้อมูลผู้ขาย</legend>
-
-
-
-        
-
-    
-
-    
-    <div class="modal-body">
-                    <form action="../db/db_sellerManagement.php" method="POST">
-                    <div class="row">
-                    <div class="col-md-6">
-                            <label for="salesName" class="form-label fw-bold">ชื่อผู้ขาย :</label>
-                            <input type="text" class="form-control" name="salesName" id="salesName" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="taxNo" class="form-label fw-bold">เลขประจำตัวผู้เสียภาษี :</label>
-                            <input type="text" class="form-control" name="taxNo" id="taxNo" required>
-                        </div>
+        <div class="container border border-3 border-light bg-secondary shadow-sm">
+            <legend class="fw-bold text-dark text-center p-2">ข้อมูลผู้ขาย</legend>
+            <form action="../db/db_sellerManagement.php" method="POST">
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <label for="salesName" class="form-label fw-bold">ชื่อผู้ขาย :</label>
+                        <input type="text" class="form-control" name="salesName" id="salesName" required>
                     </div>
-                    <div class="row">
-                        <div class="mb-2 p-3">
-                            <input class="form-check-input" type="checkbox" value="" id="exampleCheck1" onchange="toggleInput()" checked>
-                            <label class="form-check-label fw-bold" for="exampleCheck1">สำนักงานใหญ่</label>
-                        
-                        <div class="mb-2">
-                            <label for="exampleFormControlInput1" class="form-label fw-bold">สาขา (กรณีไม่ใช่สำนักงานใหญ่) :</label>
-                            <input type="text" class="form-control" name="salesBranch" id="exampleFormControlInput1" placeholder="ชื่อสถานประกอบการ/สาขา..." required disabled>
-                        </div>
-                        <div class="row">
-                        <div class="modal-footer p-2">
-                            <button type="submit" class="btn btn-success w-100" name="addSales"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
-                        </div>
-                        </div>
-                    </form>
+                    <div class="col-md-6 mb-2">
+                        <label for="taxNo" class="form-label fw-bold">เลขประจำตัวผู้เสียภาษี :</label>
+                        <input type="text" class="form-control" name="taxNo" id="taxNo" required>
+                    </div>
                 </div>
-    </div>
-
-    </section>  
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <input class="form-check-input" type="checkbox" value="" id="exampleCheck1" onchange="toggleInput()" checked>
+                        <label class="form-check-label fw-bold" for="exampleCheck1">สำนักงานใหญ่</label>
+                        <label for="exampleFormControlInput1" class="form-label fw-bold">สาขา (กรณีไม่ใช่สำนักงานใหญ่) :</label>
+                        <input type="text" class="form-control" name="salesBranch" id="exampleFormControlInput1" placeholder="ชื่อสถานประกอบการ/สาขา..." required disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <button type="submit" class="btn btn-success w-100" name="addSales"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
 
     <script>
         function toggleInput() {

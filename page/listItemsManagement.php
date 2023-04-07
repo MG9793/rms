@@ -18,89 +18,30 @@
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการรายการสินค้า (Items Management)</legend>
-    </section>
-
-    <!-- Alert ห้ามลบ -->
-    <section class="container">
-        <div class="row">
-            <div class="col-md">
-                <?php
-                    // Alert เพิ่มรายการสำเร็จ
-                    if(isset($_SESSION['addItem_success'])) {
-                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['addItem_success'];
-                        unset($_SESSION['addItem_success']);
-                        echo "</div>";
-                    }
-
-                    // Alert แก้ไขรายการสำเร็จ
-                    else if(isset($_SESSION['editItem_success'])) {
-                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['editItem_success'];
-                        unset($_SESSION['editItem_success']);
-                        echo "</div>";
-                    }
-
-                    // Alert ลบรายการสำเร็จ
-                    else if(isset($_SESSION['deleteItems_success'])) {
-                        echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['deleteItems_success'];
-                        unset($_SESSION['deleteItems_success']);
-                        echo "</div>";
-                    }
-
-                    // Alert รายการซ้ำ
-                    else if(isset($_SESSION['addItem_error'])) {
-                        echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                        echo $_SESSION['addItem_error'];
-                        unset($_SESSION['addItem_error']);
-                        echo "</div>";
-                    }
-                ?>
-            </div>
+        <div class="container border border-3 border-light bg-secondary shadow-sm">
+            <legend class="fw-bold text-dark text-center p-2">จัดการรายการสินค้า (Items Management)</legend>
+            <form action="../db/db_listItemsManagement.php" method="POST">
+                <div class="row">
+                    <div class="col-md-8 mb-2">
+                        <label for="itemName" class="form-label">ชื่อรายการ :</label>
+                        <input type="text" class="form-control" name="itemName" id="itemName" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="itemType" class="form-label">ประเภทรายการ :</label>
+                        <select class="form-select" aria-label="itemType" name="itemType" required>
+                            <option selected>ค่าแรง</option>
+                            <option>ค่าวัสดุ</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <button type="submit" class="btn btn-success w-100" name="addItems"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
-
-    <div class="container">
-        <button type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#modalItems"><i class="fa-solid fa-plus"></i> เพิ่มรายการสินค้า</button>
-    </div>
-
-    <!-- Modal เพิ่มข้อมูล ห้ามลบ -->
-    <div class="modal fade" id="modalItems" tabindex="-1" aria-labelledby="modalItems" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalItems"><i class="fa-solid fa-plus"></i> เพิ่มรายการสินค้า (Add Items)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <form action="../db/db_listItemsManagement.php" method="POST">
-                        <div class="mb-2">
-                            <label for="itemName" class="form-label">ชื่อรายการ :</label>
-                            <input type="text" class="form-control" name="itemName" id="itemName" required>
-                        </div>
-                        <div class="mb-2">
-                            <label for="itemType" class="form-label">ประเภทรายการ :</label>
-                            <select class="form-select" aria-label="itemType" name="itemType" required>
-                                <option selected>ค่าแรง</option>
-                                <option>ค่าวัสดุ</option>
-                            </select>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-dark w-100" name="addItems"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     
     <section class="container my-2">
