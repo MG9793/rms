@@ -11,7 +11,7 @@
         $taxNo = $_POST['taxNo'];
 
         if ($salesBranch == "") {
-            $salesBranch = "สำนักงานใหญ่";
+            $salesBranch = $salesName . " (สำนักงานใหญ่)";
 
             $stmt = $conn->prepare("INSERT INTO sales_info(sales_name, sales_branch, tax_no) VALUES(:sales_name, :sales_branch, :tax_no)");
             $stmt->bindParam(":sales_name", $salesName);
@@ -23,6 +23,7 @@
             header("location: ../page/sellerManagement.php");
 
         } else {
+            $salesBranch = $salesName . " ($salesBranch)";
 
             $stmt = $conn->prepare("INSERT INTO sales_info(sales_name, sales_branch, tax_no) VALUES(:sales_name, :sales_branch, :tax_no)");
             $stmt->bindParam(":sales_name", $salesName);
