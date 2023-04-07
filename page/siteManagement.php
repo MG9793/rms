@@ -28,47 +28,43 @@
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-    <div class="fw-bold text-dark bg-secondary shadow-sm p-2 ">
-        <legend class="fw-bold text-dark text-center  p-1"> ไซต์งาน </legend>
-        <form action="../db/db_siteManagement.php" method="POST">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <label class="form-label fw-bold" for="SiteName">ชื่อไซต์งาน :</label>
-                                <input type="text" class="form-control" name="SiteName" id="SiteName" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold" for="SiteAbbre">ตัวย่อไซต์งาน :</label>
-                                <input type="text" class="form-control" name="SiteAbbre" id="SiteAbbre" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold" for="StartDate">วันที่เริ่ม :</label>
-                                <input type="date" class="form-control" name="StartDate" id="StartDate" required>
-                            
-                            </div>
-                            <div class="col-md-3">
-                                <label class="form-label fw-bold" for="FinishDate">วันที่สิ้นสุด :</label>
-                                <input type="date" class="form-control" name="FinishDate" id="FinishDate" required>
-                            </div>
-                            <div class="col-md-2">
-                                <label class="form-label fw-bold" for="Installment">จำนวนงวดงานทั้งหมด :</label>
-                                <input type="number" class="form-control" name="Installment" id="Installment" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold" for="Total">จำนวนเงินทั้งสิ้น :</label>
-                                <input type="number" class="form-control" name="Total" id="Total" step="any" required>
-                            </div>
-                        </div>
-    
-                        <div class="row mt-4">
-                            <div class="col-md">
-                                <button type="submit" name="addSite" class="btn btn-success w-100">บันทึก</button>
-                            </div>
-                        </div>
-                    </form>
-
-
+        <div class="container border border-3 border-light bg-secondary shadow-sm">
+            <legend class="fw-bold text-dark text-center p-2"> จัดการไซต์งาน (Site Management)</legend>
+            <form action="../db/db_siteManagement.php" method="POST">
+                <div class="row">
+                    <div class="col-md-8 mb-2">
+                        <label class="form-label fw-bold" for="SiteName">ชื่อไซต์งาน :</label>
+                        <input type="text" class="form-control" name="SiteName" id="SiteName" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="form-label fw-bold" for="SiteAbbre">ตัวย่อไซต์งาน :</label>
+                        <input type="text" class="form-control" name="SiteAbbre" id="SiteAbbre" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label fw-bold" for="StartDate">วันที่เริ่ม :</label>
+                        <input type="date" class="form-control" name="StartDate" id="StartDate" required>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label class="form-label fw-bold" for="FinishDate">วันที่สิ้นสุด :</label>
+                        <input type="date" class="form-control" name="FinishDate" id="FinishDate" required>
+                    </div>
+                    <div class="col-md-2 mb-2">
+                        <label class="form-label fw-bold" for="Installment">จำนวนงวดงานทั้งหมด :</label>
+                        <input type="number" class="form-control" name="Installment" id="Installment" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="form-label fw-bold" for="Total">จำนวนเงินทั้งสิ้น :</label>
+                        <input type="number" class="form-control" name="Total" id="Total" step="any" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <button type="submit" class="btn btn-success w-100" name="addSite">บันทึก</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 

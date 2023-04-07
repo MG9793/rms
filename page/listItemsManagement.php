@@ -43,7 +43,7 @@
         </div>
     </section>
 
-    
+
     <section class="container my-2">
         <fieldset class="p-3 shadow-sm mt-2">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">

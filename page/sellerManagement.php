@@ -30,8 +30,8 @@
                         <input type="text" class="form-control" name="salesName" id="salesName" required>
                     </div>
                     <div class="col-md-6 mb-2">
-                        <label for="taxNo" class="form-label fw-bold">เลขประจำตัวผู้เสียภาษี :</label>
-                        <input type="text" class="form-control" name="taxNo" id="taxNo" required>
+                        <label for="taxNo" class="form-label fw-bold">เลขประจำตัวผู้เสียภาษี (13 หลัก):</label>
+                        <input type="text" class="form-control" name="taxNo" id="taxNo" minlength="13" maxlength="13" required>
                     </div>
                 </div>
                 <div class="row">

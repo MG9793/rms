@@ -23,141 +23,48 @@ require_once "../db/config/deleteRow.php";
 
     <!-- pagename ห้ามลบ -->
     <section class="container mt-2">
-        <legend class="fw-bold text-dark text-center border border-3 border-light bg-secondary shadow-sm p-2">จัดการผู้ใชังาน (User Management)</legend>
-    </section>
-
-    <!-- Alert ห้ามลบ -->
-    <section class="container">
-        <div class="row">
-            <div class="col-md">
-            <?php
-                // Alert เพิ่มผู้ใช้สำเร็จ
-                if(isset($_SESSION['addUser_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['addUser_success'];
-                    unset($_SESSION['addUser_success']);
-                    echo "</div>";
-                }
-
-                // Alert ยืนยันรหัสผ่านไม่ถูกต้อง
-                else if(isset($_SESSION['confirmPassword_error'])) {
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['confirmPassword_error'];
-                    unset($_SESSION['confirmPassword_error']);
-                    echo "</div>";
-                }
-
-                // Alert username ซ้ำ
-                else if(isset($_SESSION['userName_error'])) {
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['userName_error'];
-                    unset($_SESSION['userName_error']);
-                    echo "</div>";
-                }
-
-                // Alert ลงทะเบียนสำเร็จ
-                else if(isset($_SESSION['registerSuccess'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['registerSuccess'];
-                    unset($_SESSION['registerSuccess']);
-                    echo "</div>";
-                }
-
-                // Alert ลบรายการสำเร็จ
-                else if(isset($_SESSION['deleteUser_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['deleteUser_success'];
-                    unset($_SESSION['deleteUser_success']);
-                    echo "</div>";
-                }
-
-                // Alert ลบรายการไม่สำเร็จ
-                else if(isset($_SESSION['deleteUser_error'])) {
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['deleteUser_error'];
-                    unset($_SESSION['deleteUser_error']);
-                    echo "</div>";
-                }
-
-                // Alert ยืนยันรหัสผ่านไม่ถูกต้อง
-                else if(isset($_SESSION['editPassword_error'])) {
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['editPassword_error'];
-                    unset($_SESSION['editPassword_error']);
-                    echo "</div>";
-                }
-
-                // Alert แก้ไขข้อมูลผู้ใช้สำเร็จ
-                else if(isset($_SESSION['editUser_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['editUser_success'];
-                    unset($_SESSION['editUser_success']);
-                    echo "</div>";
-                }
-            ?>
-            </div>
+        <div class="container border border-3 border-light bg-secondary shadow-sm">
+        <legend class="fw-bold text-dark text-center p-2">จัดการผู้ใชังาน (User Management)</legend>
+            <form action="../db/db_userManagement.php" method="POST">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label for="name" class="form-label">ชื่อ :</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="lastName" class="form-label">นามสกุล :</label>
+                        <input type="text" class="form-control" name="lastName" id="lastName" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="userPermission" class="form-label">สิทธิการใช้งาน :</label>
+                        <select class="form-select" aria-label="userPermission" name="userPermission" required>
+                            <option>Admin</option>
+                            <option>User</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <label for="userName" class="form-label">ชื่อผู้ใช้ (Username) :</label>
+                        <input type="text" class="form-control" name="userName" id="userName" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="password" class="form-label">Password (อย่างน้อย 8 ตัวอักษร) :</label>
+                        <input type="password" class="form-control" name="password" id="password" placeholder="xxxxxxxx" minlength="8" required>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label for="confirmPassword" class="form-label">Confirm Password :</label>
+                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-2">
+                        <button type="submit" class="btn btn-success w-100" name="registerUser"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
-
-    <div class="container">
-        <button type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#modalAddUsers"><i class="fa-solid fa-plus"></i> เพิ่มผู้ใช้งาน</button>
-    </div>
-
-    <!-- Modal เพิ่มข้อมูล ห้ามลบ -->
-    <div class="modal fade" id="modalAddUsers" tabindex="-1" aria-labelledby="modalAddUsers" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalAddUsers"><i class="fa-solid fa-plus"></i> เพิ่มผู้ใช้งาน (Add Users)</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body">
-                    <form action="../db/db_userManagement.php" method="POST">
-                        <div class="mb-2">
-                            <label for="name" class="form-label">ชื่อ :</label>
-                            <input type="text" class="form-control" name="name" id="name" required>
-                        </div>
-                        <div class="mb-2">
-                            <label for="lastName" class="form-label">นามสกุล :</label>
-                            <input type="text" class="form-control" name="lastName" id="lastName" required>
-                        </div>
-                        <div class="mb-2">
-                            <label for="userPermission" class="form-label">สิทธิการใช้งาน :</label>
-                            <select class="form-select" aria-label="userPermission" name="userPermission" required>
-                                <option>Admin</option>
-                                <option>User</option>
-                            </select>
-                        </div>
-                        <div class="mb-2">
-                            <label for="userName" class="form-label">ชื่อผู้ใช้ (Username) :</label>
-                            <input type="text" class="form-control" name="userName" id="userName" required>
-                        </div>
-                        <div class="mb-2">
-                            <label for="password" class="form-label">Password (อย่างน้อย 8 ตัวอักษร) :</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="xxxxxxxx" minlength="8" required>
-                        </div>
-                        <div class="mb-2">
-                            <label for="confirmPassword" class="form-label">Confirm Password :</label>
-                            <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="xxxxxxxx" minlength="8" required>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-dark w-100" name="registerUser"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
     
     <section class="container my-2">
