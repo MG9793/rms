@@ -78,15 +78,11 @@
       
       ';
 
-      	$sql = "SELECT *  FROM site_info";
+      
+
+      $sql = "SELECT *  FROM site_info";
 	
-	$result = mysqli_query($conn, $sql);
-	$head = "";
-
-    	if (mysqli_num_rows($result) > 0) {
-    		while($row = mysqli_fetch_assoc($result)) {
-
-
+      $result = mysqli_query($conn, $sql);
 	
 $head = '
 <style>
@@ -103,19 +99,29 @@ $head = '
     <tr style="border:1px solid #000;padding:4px;">
     <td  rowspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"  width="5%">ลำดับ</td>
     <td  rowspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"  width="25%">รายการ</td>
+    
+';
+
+
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            $head2 =       '
+           
     <td  colspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">'.$row['site_abbre'].'</td>
     </tr>
     <tr style="border:1px solid #000;padding:4px;">
     <td  colspan="2" style="border-right:1px solid #000;padding:4px;text-align:center;"  width="10%">คิดเป็น%</td>
     </tr>
+    ';
+   
+}
+        $head3 = ' 
 </thead>
 	<tbody>';
+   
 
-  		} 
-
-	}
-  mysqli_close($conn);
-      
+} 
+mysqli_close($conn);    
 $end = "</tbody>
 </table>";
 $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'orientation' => 'L' , 'format' => 'A3'] );
@@ -127,7 +133,8 @@ $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'orientation' => 'L' , 'format' => 'A
 
 $mpdf->SetAdditionalXmpRdf($rdf);
 $mpdf->WriteHTML($head);
-
+$mpdf->WriteHTML($head2);
+$mpdf->WriteHTML($head3);
 $mpdf->WriteHTML($content);
 
 $mpdf->WriteHTML($end);
