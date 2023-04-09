@@ -67,7 +67,7 @@
                 <div class="row mb-2">
                     <div class="col-md-4">
                         <label class="form-label fw-bold" for="salesName">ชื่อผู้ขาย :</label>
-                        <select name="salesName" class="form-select" id="salesName" onChange="taxID();">
+                        <select class="form-select" name="salesName" id="salesName" onChange="taxID();">
                             <option value="">กรุณาเลือกผู้ขาย</option>
                             <?php 
                                 foreach($rs_sales as $row_sales)
@@ -79,8 +79,8 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold" for="taxNO">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
-                        <input type="text" class="form-control" name="taxNO" id="taxNO" minlength="13" maxlength="13" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี" required>
-                        <input type="hidden" class="form-control" name="sales" id="sales"  required>
+                        <input type="text" class="form-control" name="taxNO" id="taxNO" minlength="13" maxlength="13" placeholder="กรุณากรอกเลขประจำตัวผู้เสียภาษี" readonly required>
+                        <input type="hidden" class="form-control" name="sales" id="sales" required>
                     </div>
                     <div class="col-md-2">
                         <label class="form-label fw-bold" for="type">ประเภท :</label>
@@ -259,38 +259,33 @@
 
     
     <script>
+        var select_box_element_site = document.querySelector('#siteName');
 
-var select_box_element_site = document.querySelector('#siteName');
+        dselect(select_box_element_site, {
+            search: true
+        });
+    </script>
 
-dselect(select_box_element_site, {
-    search: true
-});
+    <script>
+        var select_box_element_sales = document.querySelector('#salesName');
 
-</script>
+        dselect(select_box_element_sales, {
+            search: true
+        });
+    </script>
 
-<script>
+    <script>
+        function taxID() {
+            if(document.getElementById("salesName").value === ''){
+                document.getElementById("taxNO").value = '';
+            }else{
+                var tax_sales = document.getElementById("salesName").value;
+                document.getElementById("sales").value = tax_sales.slice(0,-13);
+                document.getElementById("taxNO").value = tax_sales.slice(-13);
+            }
 
-var select_box_element_sales = document.querySelector('#salesName');
-
-
-dselect(select_box_element_sales, {
-    search: true
-});
-
-</script>
-
-<script>
-function taxID() {
-    if(document.getElementById("salesName").value === ''){
-        document.getElementById("taxNO").value = '';
-    }else{
-        var tax_sales = document.getElementById("salesName").value;
-        document.getElementById("sales").value = tax_sales.slice(0,-13);
-        document.getElementById("taxNO").value = tax_sales.slice(-13);
-    }
-
-}
-</script>
+        }
+    </script>
 
 
 
