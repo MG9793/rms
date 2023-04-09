@@ -5,7 +5,7 @@
 
 
     // เพิ่มข้อมูล bill_head
-    if (isset($_POST['receiptNo'])) {
+    if (isset($_POST['add_billHead'])) {
 
         $siteName = $_POST['siteName'];
         $receiptNo = $_POST['receiptNo'];
@@ -30,34 +30,51 @@
         $stmt->bindParam(":total", $expenseTotal);
 
         $stmt->execute();
-     //   $_SESSION['siteName_incomeHead'] = $site;
-    //    $_SESSION['addIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกรายรับสำเร็จ';
         header("location: ../page/expense.php");
 
     }
-    else if (isset($_POST['receipt_line'])) {
 
-    
-        $receipt_line = $_POST['receipt_line'];
-        $itemPrice = $_POST['itemPrice'];
-        $unitPrice = $_POST['unitPrice'];
+    else if (isset($_POST['add_billLine'])) {
+
+        $receiptTotal = $_POST['receiptTotal'];
         $itemSum = $_POST['itemSum'];
 
+        // check ยอดกรอกต้องตรงกับยอดใบเสร็จ
+        if ($receiptTotal === $itemSum) {
+            $billName = $_POST['searchReceipt'];
+            $receiptNo = substr_replace($billName, "", 10, 8);
 
-        $stmt = $conn->prepare("INSERT INTO bill_line(receipt_no, amount, price, total)
-                                VALUES(:receipt_no, :amount, :price, :total)");
+            $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
+                                    VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
 
-        $stmt->bindParam(":receipt_no", $receipt_line);
-        $stmt->bindParam(":amount", $itemPrice);
-        $stmt->bindParam(":price", $unitPrice);
-        $stmt->bindParam(":total", $itemSum);
+            $stmt->bindParam(':receipt_no', $receiptNo);
+            $stmt->bindParam(':item_name', $item_name);
+            $stmt->bindParam(':qty', $qty);
+            $stmt->bindParam(':amount', $amount);
+            $stmt->bindParam(':total', $total);
+
+            // loop array
+            $itemName_array = $_POST["itemName"];
+            $itemQty_array = $_POST["itemQty"];
+            $unitPrice_array = $_POST['unitPrice'];
+            $itemTotal_array = $_POST['itemTotal'];
+
+            for ($i = 0; $i < count($itemQty_array); $i++) {
+                $item_name = $itemName_array[$i];
+                $qty = $itemQty_array[$i];
+                $amount = $unitPrice_array[$i];
+                $total = $itemTotal_array[$i];
+                $stmt->execute();
+            }
+
+            header("location: ../page/expenseLine.php");
 
 
-        $stmt->execute();
-     //   $_SESSION['siteName_incomeHead'] = $site;
-    //    $_SESSION['addIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกรายรับสำเร็จ';
-        header("location: ../page/expense.php");
+        } else {
 
+            $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-circle-check"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
+            header("location: ../page/expenseLine.php");
+        }
     }
 
 /*
