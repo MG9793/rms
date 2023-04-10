@@ -150,68 +150,6 @@
 	</script>
 
 
-    <!-- Auto-Fill ยอดเงิน -->
-    <script>
-        function fetchTotal() {
-            if (document.getElementById("searchReceipt").value === '') {
-                document.getElementById("receiptTotal").value = '';
-
-            } else {
-                var total = document.getElementById("searchReceipt").value;
-                document.getElementById("receiptTotal").value = total.slice(10);
-            }
-        }
-    </script>
-
-    <!-- สคริป ยอดรวม -->
-    <script>
-        function calculateSum() {
-            var price = document.getElementById("itemQty").value;
-            var quantity = document.getElementById("unitPrice").value;
-            var sum = price * quantity;
-
-            document.getElementById("itemTotal").value = parseFloat(sum).toFixed(2);
-
-            // เอาค่ายอดรวมแถวแรกมาใส่ใน input itemSum
-            var itemTotalInputs = document.getElementsByName('itemTotal[]');
-            var total = 0;
-            for (var i = 0; i < itemTotalInputs.length; i++) {
-                total += parseFloat(itemTotalInputs[i].value) || 0;
-            }
-            document.getElementById('itemSum').value = total.toFixed(2);
-        }
-    </script>
-
-
-    <!-- สคริป ยอดรวม สำหรับปุ่ม Add -->
-    <script>
-        function calculateSum_add(uniqueId) {
-            var price = document.getElementById("itemQty_add" + uniqueId).value;
-            var quantity = document.getElementById("unitPrice_add" + uniqueId).value;
-            var sum = price * quantity;
-
-            document.getElementById("itemTotal_add" + uniqueId).value = parseFloat(sum).toFixed(2);;
-
-            // เอาค่ายอดรวมปุ่ม Add มาบวกใน input itemSum
-            var itemQty = document.getElementById('itemQty_add' + uniqueId).value;
-            var unitPrice = document.getElementById('unitPrice_add' + uniqueId).value;
-            var itemTotal = itemQty * unitPrice;
-            document.getElementById('itemTotal_add' + uniqueId).value = itemTotal.toFixed(2);
-            calculateSum();
-        }
-    </script>
-
-
-    <!-- สคริป ค้นหาเลขที่ใบเสร็จ -->
-    <script>
-        var select_box_element_site = document.querySelector('#searchReceipt');
-
-        dselect(select_box_element_site, {
-            search: true
-        });
-    </script>
-
-
     <!-- input ห้ามลบ -->
     <section class="container">
         <fieldset class="p-3 shadow-sm my-2">
@@ -247,7 +185,7 @@
                         <td><?php echo $fetch_bill['receipt_no']; ?></td>
                         <td><?php echo $fetch_bill['item_name']; ?></td>
                         <td><?php echo $fetch_bill['qty']; ?></td>
-                        <td><?php echo $fetch_bill['amount']; ?></td>
+                        <td><?php echo number_format(($fetch_bill['amount']), 2); ?></td>
                         <td><?php echo number_format(($fetch_bill['total']), 2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -290,6 +228,7 @@
                                             <label for="editTotal" class="col-form-label">ยอดรวม :</label>
                                             <input type="number" class="form-control" name="editTotal" id="editTotal" value="<?php echo $fetch_bill['total']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
                                         </div>
+                                        <p>* หากต้องการแก้ไขเลขที่ใบเสร็จ, จำนวนเงิน ให้ลบรายการแล้วบันทึกใหม่</p>
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -315,7 +254,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                    <a data-id="<?php echo $fetch_bill['id']; ?>" href="?delete_BillHead=<?php echo $fetch_bill['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> ยืนยัน</a>
+                                    <a data-id="<?php echo $fetch_bill['id']; ?>" href="?delete_BillLine=<?php echo $fetch_bill['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> ยืนยัน</a>
                                 </div>
                             </div>
                         </div>
@@ -330,7 +269,7 @@
     <!-- Autocomplete -->
     <datalist id="addItems">
         <?php
-            $stmt = $conn->query("SELECT item_name FROM bill_line");
+            $stmt = $conn->query("SELECT item_name FROM item_info");
             $stmt->execute();
             $item = $stmt->fetchAll();
 
@@ -345,7 +284,67 @@
     </datalist>
 
 
+    <!-- สคริป ยอดรวม สำหรับปุ่ม Add -->
+    <script>
+        function calculateSum_add(uniqueId) {
+            var price = document.getElementById("itemQty_add" + uniqueId).value;
+            var quantity = document.getElementById("unitPrice_add" + uniqueId).value;
+            var sum = price * quantity;
 
+            document.getElementById("itemTotal_add" + uniqueId).value = parseFloat(sum).toFixed(2);;
+
+            // เอาค่ายอดรวมปุ่ม Add มาบวกใน input itemSum
+            var itemQty = document.getElementById('itemQty_add' + uniqueId).value;
+            var unitPrice = document.getElementById('unitPrice_add' + uniqueId).value;
+            var itemTotal = itemQty * unitPrice;
+            document.getElementById('itemTotal_add' + uniqueId).value = itemTotal.toFixed(2);
+            calculateSum();
+        }
+    </script>
+
+
+    <!-- สคริป ค้นหาเลขที่ใบเสร็จ -->
+    <script>
+        var select_box_element_site = document.querySelector('#searchReceipt');
+
+        dselect(select_box_element_site, {
+            search: true
+        });
+    </script>
+
+
+    <!-- Auto-Fill ยอดเงิน -->
+    <script>
+        function fetchTotal() {
+            if (document.getElementById("searchReceipt").value === '') {
+                document.getElementById("receiptTotal").value = '';
+
+            } else {
+                var total = document.getElementById("searchReceipt").value;
+                document.getElementById("receiptTotal").value = total.slice(10);
+            }
+        }
+    </script>
+
+
+    <!-- สคริป ยอดรวม -->
+    <script>
+        function calculateSum() {
+            var price = document.getElementById("itemQty").value;
+            var quantity = document.getElementById("unitPrice").value;
+            var sum = price * quantity;
+
+            document.getElementById("itemTotal").value = parseFloat(sum).toFixed(2);
+
+            // เอาค่ายอดรวมแถวแรกมาใส่ใน input itemSum
+            var itemTotalInputs = document.getElementsByName('itemTotal[]');
+            var total = 0;
+            for (var i = 0; i < itemTotalInputs.length; i++) {
+                total += parseFloat(itemTotalInputs[i].value) || 0;
+            }
+            document.getElementById('itemSum').value = total.toFixed(2);
+        }
+    </script>
 
 </body>
 </html>

@@ -187,7 +187,7 @@
                                         <div class="mb-0">
                                             <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_bill['id']; ?>" readonly required>
                                             <label for="editSiteName" class="col-form-label">ไซต์งาน :</label>
-                                            <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_bill['site_name']; ?>" required>
+                                            <input type="text" class="form-control" name="editSiteName" id="editSiteName" list="edit_SiteName" value="<?php echo $fetch_bill['site_name']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editReceiptNo" class="col-form-label">เลขที่ใบเสร็จ :</label>
@@ -199,7 +199,7 @@
                                         </div>
                                         <div class="mb-0">
                                             <label for="editSalesName" class="col-form-label">ชื่อผู้ขาย :</label>
-                                            <input type="text" class="form-control" name="editSalesName" id="editSalesName" value="<?php echo $fetch_bill['sales_name']; ?>" required>
+                                            <input type="text" class="form-control" name="editSalesName" id="editSalesName" list="edit_SalesName" value="<?php echo $fetch_bill['sales_name']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editTaxNO" class="col-form-label">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                    <a data-id="<?php echo $fetch_bill['id']; ?>" href="?deleteBill=<?php echo $fetch_bill['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> ยืนยัน</a>
+                                    <a data-id="<?php echo $fetch_bill['id']; ?>" href="?delete_BillHead=<?php echo $fetch_bill['id']; ?>" class="btn btn-danger"><i class="fas fa-trash"></i> ยืนยัน</a>
                                 </div>
                             </div>
                         </div>
@@ -257,6 +257,42 @@
         </fieldset>
     </section>  
 
+
+    <!-- Autocomplete -->
+    <datalist id="edit_SiteName">
+        <?php
+            $stmt = $conn->query("SELECT site_name FROM site_info");
+            $stmt->execute();
+            $site = $stmt->fetchAll();
+
+            if (!$site) {            
+            
+            } else {
+                foreach ($site as $fetch_site) {
+        ?>
+
+        <option value="<?php echo $fetch_site['site_name']; ?>"></option>
+        <?php } } ?>
+    </datalist>
+
+
+    <!-- Autocomplete -->
+    <datalist id="edit_SalesName">
+        <?php
+            $stmt = $conn->query("SELECT sales_name FROM sales_info");
+            $stmt->execute();
+            $sales = $stmt->fetchAll();
+
+            if (!$sales) {            
+            
+            } else {
+                foreach ($sales as $fetch_sales) {
+        ?>
+
+        <option value="<?php echo $fetch_sales['sales_name']; ?>"></option>
+        <?php } } ?>
+    </datalist>
+
     
     <script>
         var select_box_element_site = document.querySelector('#siteName');
@@ -266,6 +302,7 @@
         });
     </script>
 
+
     <script>
         var select_box_element_sales = document.querySelector('#salesName');
 
@@ -273,6 +310,7 @@
             search: true
         });
     </script>
+
 
     <script>
         function taxID() {
@@ -288,23 +326,7 @@
     </script>
 
 
-
-
     <script>
-        $(document).ready(function() {
-            $("#add-item-btn").click(function() {
-                var newRow = $("#items-row").clone();
-                newRow.find("input").val("");
-                $("#items-row").after(newRow);
-            });
-                
-            $(document).on("click", ".remove-item-btn", function() {
-                $(this).parents(".row").remove();
-            });
-        });
-    </script>
-
-<script>
         function changetextbox() {
 
             if(document.getElementById("calVat").value === "VAT"){
@@ -321,13 +343,12 @@
                 document.getElementById("expenseTotal").value = "";;
 
                 $vatC = 0;
-
-                
             }
         }
     </script>
 
-<script>
+
+    <script>
         function changetax() {
 
             if(document.getElementById("calVat").value === "VAT"){
@@ -348,7 +369,8 @@
         }
     </script>
 
-<script>
+
+    <script>
         function calculateVAT() {
             var price = document.getElementById("expenseTotal").value;
             var vat = price * $vatC;
@@ -356,6 +378,7 @@
             document.getElementById("expenseSUM").value = (parseFloat(price) - vat).toFixed(2);
         }
     </script>
+
 
     <script>
         function calculateSum() {
