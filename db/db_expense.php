@@ -34,6 +34,8 @@
 
     }
 
+
+    // เพิ่มข้อมูล bill_line
     else if (isset($_POST['add_billLine'])) {
 
         $receiptTotal = $_POST['receiptTotal'];
@@ -72,69 +74,28 @@
 
         } else {
 
-            $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-circle-check"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
+            $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
             header("location: ../page/expenseLine.php");
         }
     }
 
-/*
-    // แก้ไขข้อมูล income_head
-    else if (isset($_POST['editIncome_head'])) {
+
+    // แก้ไขข้อมูล bill_line
+    else if (isset($_POST['edit_billLine'])) {
+
         $id = $_POST['id'];
-        $site = $_POST['editSiteName'];
-        $installment = $_POST['editInstallment'];
-        $startDate = $_POST['editStartDate'];
-        $finishDate = $_POST['editFinishDate'];
-        $sum = $_POST['editSum'];
+        $editItems = $_POST['editItems'];
+        $editQty = $_POST['editQty'];
 
-        $stmt = $conn->prepare("UPDATE income_head
-                                SET site_name = :site_name, installment = :installment, start_date = :start_date, finish_date = :finish_date, sum = :sum
-                                WHERE id = :id");
-
+        $stmt = $conn->prepare("UPDATE bill_line SET item_name = :item_name, qty = :qty WHERE id = :id");
         $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":site_name", $site);
-        $stmt->bindParam(":installment", $installment);
-        $stmt->bindParam(":start_date", $startDate);
-        $stmt->bindParam(":finish_date", $finishDate);
-        $stmt->bindParam(":sum", $sum);
+        $stmt->bindParam(":item_name", $editItems);
+        $stmt->bindParam(":qty", $editQty);
         $stmt->execute();
 
-        $_SESSION['editIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขรายรับสำเร็จ';
-        header("location: ../page/incomeRecord.php");
+        header("location: ../page/expenseLine.php");
     }
 
-
-
-    // check มีการส่ง selectSite_Head จาก incomeRecord.php หรือไม่
-    else if (isset($_POST['selectSite_Head'])) {
-        $siteName = $_POST['siteName'];
-
-        $_SESSION['siteName_incomeHead'] = $siteName;
-        header("location: ../page/incomeRecord.php");
-    }
-
-
-    // เพิ่มข้อมูล income_line
-    else if (isset($_POST['addIncome_line'])) {
-        $site = $_POST['addSiteName'];
-        $payer = $_POST['addPayerName'];
-        $paidDate = $_POST['addPaidDate'];
-        $installment = $_POST['addInstallmentNo'];
-        $price = $_POST['addPrice'];
-
-        $stmt = $conn->prepare("INSERT INTO income_line(site_name, payer_name, installment_no, paid_date, price)
-                                VALUES(:site_name, :payer_name, :installment_no, :paid_date, :price)");
-
-        $stmt->bindParam(":site_name", $site);
-        $stmt->bindParam(":payer_name", $payer);
-        $stmt->bindParam(":installment_no", $installment);
-        $stmt->bindParam(":paid_date", $paidDate);
-        $stmt->bindParam(":price", $price);
-        $stmt->execute();
-
-        $_SESSION['addIncomeLine_success'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกรายรับ (รายละเอียด) สำเร็จ';
-        header("location: ../page/incomeRecord_Line.php");
-    }
 
 
 
@@ -143,12 +104,10 @@
 
     
     // check มีการส่ง selectSite_Line จาก incomeRecord.php หรือไม่
-    else if (isset($_POST['selectSite_Line'])) {
-        $siteName = $_POST['siteName'];
+    // else if (isset($_POST['selectSite_Line'])) {
+    //     $siteName = $_POST['siteName'];
 
-        $_SESSION['siteName_incomeLine'] = $siteName;
-        header("location: ../page/incomeRecord_Line.php");
-    }
-
-    */
+    //     $_SESSION['siteName_incomeLine'] = $siteName;
+    //     header("location: ../page/incomeRecord_Line.php");
+    // }
 ?>
