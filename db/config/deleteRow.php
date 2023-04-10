@@ -24,7 +24,6 @@
         }
     }
 
-    
 
     // ลบ item_info
     else if (isset($_GET['deleteItems'])) {
@@ -37,15 +36,20 @@
        // header("../page/listItemsManagement.php");
     }
 
+
     // ลบ bill_head
-    else if (isset($_GET['deleteBill'])) {
-        $delete_id = $_GET['deleteBill'];
+    else if (isset($_GET['delete_BillHead'])) {
+        $delete_id = $_GET['delete_BillHead'];
         $deleteStmt = $conn->query("DELETE FROM bill_head WHERE id = $delete_id");
         $deleteStmt->execute();
+    }
 
-        // Alert Success
-        $_SESSION['deleteBill_success'] = '<i class="fa-solid fa-circle-check"></i> ลบรายการสำเร็จ';
-    //    header("../page/expense.php");
+
+    // ลบ bill_line
+    else if (isset($_GET['delete_BillLine'])) {
+        $delete_id = $_GET['delete_BillLine'];
+        $deleteStmt = $conn->query("DELETE FROM bill_line WHERE id = $delete_id");
+        $deleteStmt->execute();
     }
 
 
