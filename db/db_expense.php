@@ -17,8 +17,9 @@
         $expenseVAT = $_POST['expenseVAT'];
         $expenseTotal = $_POST['expenseTotal'];
 
-        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no,type, sum , vat , total)
-                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no,:type, :sum, :vat, :total)");
+        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total)
+                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total)");
+        
         $stmt->bindParam(":site_name", $siteName);
         $stmt->bindParam(":receipt_no", $receiptNo);
         $stmt->bindParam(":buy_date", $buyDate);
@@ -32,6 +33,29 @@
         $stmt->execute();
         header("location: ../page/expense.php");
 
+    }
+
+
+    // แก้ไขข้อมูล bill_head
+    else if (isset($_POST['edit_billHead'])) {
+
+        $id = $_POST['id'];
+        $siteName = $_POST['editSiteName'];
+        $receiptNo = $_POST['editReceiptNo'];
+        $buyDate = $_POST['editBuyDate'];
+        $type = $_POST['editType'];
+
+        $stmt = $conn->prepare("UPDATE bill_head SET site_name = :site_name, receipt_no = :receipt_no, buy_date = :buy_date, type = :type
+                                WHERE id = :id");
+
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":site_name", $siteName);
+        $stmt->bindParam(":receipt_no", $receiptNo);
+        $stmt->bindParam(":buy_date", $buyDate);
+        $stmt->bindParam(":type", $type);
+
+        $stmt->execute();
+        header("location: ../page/expense.php");
     }
 
 
@@ -75,7 +99,8 @@
         } else {
 
             $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
-            header("location: ../page/expenseLine.php");
+            echo "<script>setTimeout(function(){history.back();});</script>";
+            // header("location: ../page/expenseLine.php");
         }
     }
 
