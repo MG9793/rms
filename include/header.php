@@ -87,7 +87,7 @@
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> บันทึกรายจ่าย</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item text-black" href="../page/expense.php"> บันทึกรายจ่าย</a></li>
-                            <li><a class="dropdown-item text-black" href=""> บันทึกรายจ่าย (รายละเอียด)</a></li>
+                            <li><a class="dropdown-item text-black" href="../page/expenseLine.php"> บันทึกรายจ่าย (รายละเอียด)</a></li>
                         </ul>
                     </li>
                     <!-- <li class="nav-item">
