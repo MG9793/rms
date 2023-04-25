@@ -55,10 +55,14 @@
                                      } 
                                      } else{
                                         ?>
+                                    
+                                        <option value="<?=$_SESSION['siteName_incomeHead'];?>"><?=$_SESSION['siteName_incomeHead'];?></option>
+
                                     <?php 
                                     foreach($rs as $row)
-                                    {
-                                        echo '<option value="'.$rs["site_name"].'">'.$row["site_name"].'</option>';
+                                    { ?>
+                                        <option value="<?=$row['site_name'];?>"><?=$row['site_name'];?></option>
+                                        <?php
                                     }}
                                     ?>  
 
