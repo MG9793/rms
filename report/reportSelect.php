@@ -117,42 +117,8 @@
 
                 <!-- สรุปค่าใช้จ่าย -->
                 <div class="row hidden content" id="expenseSummary">
-                    <div class="d-flex justify-content-center">
-                        <div class="col-md-3">
-                            <label for="monthSelect" class="form-label fw-bold">เริ่มต้นเดือน :</label>
-                            <select class="form-select" aria-label="Default select example" id="monthSelect">
-                                <option value="1">มกราคม</option>
-                                <option value="2">กุมภาพันธ์</option>
-                                <option value="3">มีนาคม</option>
-                                <option value="4">เมษายน</option>
-                                <option value="5">พฤษภาคม</option>
-                                <option value="6">มิถุนายน</option>
-                                <option value="7">กรกฎาคม</option>
-                                <option value="8">สิงหาคม</option>
-                                <option value="9">กันยายน</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 mx-2">
-                            <label for="monthSelect" class="form-label fw-bold">สิ้นสุดเดือน :</label>
-                            <select class="form-select" aria-label="Default select example" id="monthSelect">
-                                <option value="1">มกราคม</option>
-                                <option value="2">กุมภาพันธ์</option>
-                                <option value="3">มีนาคม</option>
-                                <option value="4">เมษายน</option>
-                                <option value="5">พฤษภาคม</option>
-                                <option value="6">มิถุนายน</option>
-                                <option value="7">กรกฎาคม</option>
-                                <option value="8">สิงหาคม</option>
-                                <option value="9">กันยายน</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-4 mx-auto">
                             <label for="yearSelect" class="form-label fw-bold">ประจำปี :</label>
                             <select class="form-select" aria-label="Default select example" id="yearSelect">
                                 <option value="2565">2565</option>
@@ -162,31 +128,6 @@
                                 <option value="2569">2569</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-md-12 my-3">
-                        <div class="text-center"><b><i class="fa-solid fa-magnifying-glass-dollar"></i> เลือกรายการ</b></div>
-
-                        <?php
-                            $stmt = $conn->query("SELECT item_name FROM item_info");
-                            $stmt->execute();
-                            $site = $stmt->fetchAll();
-                            echo '<div class="row">';
-
-                            foreach ($site as $row) {
-
-                                
-                                echo '<div class="col-3">';
-                                echo '<div class="form-check">';
-                                echo '<input class="form-check-input" type="checkbox" value="' . $row['item_name'] . '" id="' . $row['item_name'] . '" name="' . $row['item_name'] . '">';
-                                echo '<label class="form-check-label" for="' . $row['item_name'] . '">' . $row['item_name'] . '</label>';
-                                echo '</div>';
-                                echo '</div>';
-
-                            }
-
-                            echo '</div>';
-                        ?>
-
                     </div>
 
                     <div class="row text-center mt-3">
@@ -200,74 +141,8 @@
 
                 <!-- สรุปรายรับ -->
                 <div class="row hidden content" id="sampleB">
-                    <div class="text-center"><b><i class="fa-solid fa-building-circle-arrow-right"></i> เลือกไซต์งาน</b></div>
-                    <div class="col-md-12">
-
-                        <?php
-                            $stmt = $conn->query("SELECT site_name FROM site_info");
-                            $stmt->execute();
-                            $site = $stmt->fetchAll();
-
-                            foreach ($site as $row) {
-
-                                echo '<div class="d-flex justify-content-center">';
-                                echo '<div class="form-check">';
-                                echo '<input class="form-check-input" type="checkbox" value="' . $row['site_name'] . '" id="' . $row['site_name'] . '" name="' . $row['site_name'] . '">';
-                                echo '<label class="form-check-label" for="' . $row['site_name'] . '">' . $row['site_name'] . '</label>';
-                                echo '</div>';
-                                echo '</div>';
-
-                            }
-                        ?>
-
-                    </div>
-
-                    <div class="row text-center mt-3">
-                        <div class="col-md">
-                            <button type="submit" class="btn btn-sm btn-primary w-25" name="submit_reportTax"><i class="fa-solid fa-magnifying-glass"></i> ดูรายงาน</button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- สรุปโครงการก่อสร้าง -->
-                <div class="row hidden content" id="siteSummary">
-                    <div class="d-flex justify-content-center">
-                        <div class="col-md-3">
-                            <label for="monthSelect" class="form-label fw-bold">เริ่มต้นเดือน :</label>
-                            <select class="form-select" aria-label="Default select example" id="monthSelect">
-                                <option value="1">มกราคม</option>
-                                <option value="2">กุมภาพันธ์</option>
-                                <option value="3">มีนาคม</option>
-                                <option value="4">เมษายน</option>
-                                <option value="5">พฤษภาคม</option>
-                                <option value="6">มิถุนายน</option>
-                                <option value="7">กรกฎาคม</option>
-                                <option value="8">สิงหาคม</option>
-                                <option value="9">กันยายน</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3 mx-2">
-                            <label for="monthSelect" class="form-label fw-bold">สิ้นสุดเดือน :</label>
-                            <select class="form-select" aria-label="Default select example" id="monthSelect">
-                                <option value="1">มกราคม</option>
-                                <option value="2">กุมภาพันธ์</option>
-                                <option value="3">มีนาคม</option>
-                                <option value="4">เมษายน</option>
-                                <option value="5">พฤษภาคม</option>
-                                <option value="6">มิถุนายน</option>
-                                <option value="7">กรกฎาคม</option>
-                                <option value="8">สิงหาคม</option>
-                                <option value="9">กันยายน</option>
-                                <option value="10">ตุลาคม</option>
-                                <option value="11">พฤศจิกายน</option>
-                                <option value="12">ธันวาคม</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-4 mx-auto">
                             <label for="yearSelect" class="form-label fw-bold">ประจำปี :</label>
                             <select class="form-select" aria-label="Default select example" id="yearSelect">
                                 <option value="2565">2565</option>
@@ -279,30 +154,78 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-12 text-center my-3">
+                            <b><i class="fa-solid fa-building-circle-arrow-right"></i> เลือกไซต์งาน</b>
 
-                    <div class="col-md-12 text-center my-3">
-                        <b><i class="fa-solid fa-building-circle-arrow-right"></i> เลือกไซต์งาน</b>
+                            <?php
+                                $stmt = $conn->query("SELECT site_name FROM site_info");
+                                $stmt->execute();
+                                $site = $stmt->fetchAll();
 
-                        <?php
-                            $stmt = $conn->query("SELECT site_name, site_abbre FROM site_info");
-                            $stmt->execute();
-                            $site = $stmt->fetchAll();
+                                foreach ($site as $row) {
 
-                            foreach ($site as $row) {
+                                    echo '<div class="d-flex justify-content-center">';
+                                    echo '<div class="form-check">';
+                                    echo '<input class="form-check-input" type="checkbox" value="' . $row['site_name'] . '" id="' . $row['site_name'] . '" name="' . $row['site_name'] . '">';
+                                    echo '<label class="form-check-label" for="' . $row['site_name'] . '">' . $row['site_name'] . '</label>';
+                                    echo '</div>';
+                                    echo '</div>';
 
-                                echo '<div class="d-flex justify-content-center">';
-                                echo '<div class="form-check">';
-                                echo '<input class="form-check-input" type="checkbox" value="' . $row['site_name'] . '" id="' . $row['site_name'] . '" name="' . $row['site_name'] . '">';
-                                echo '<label class="form-check-label" for="' . $row['site_name'] . '">' . $row['site_name'] . ' | ' . $row['site_abbre'] . '</label>';
-                                echo '</div>';
-                                echo '</div>';
+                                }
+                            ?>
 
-                            }
-                        ?>
-
+                        </div>
                     </div>
 
-                    <div class="row text-center mt-3">
+                    <div class="row text-center mt-2">
+                        <div class="col-md">
+                            <button type="submit" class="btn btn-sm btn-primary w-25" name="submit_reportTax"><i class="fa-solid fa-magnifying-glass"></i> ดูรายงาน</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- สรุปโครงการก่อสร้าง -->
+                <div class="row hidden content" id="siteSummary">
+                    <div class="row">
+                        <div class="col-md-4 mx-auto">
+                            <label for="yearSelect" class="form-label fw-bold">ประจำปี :</label>
+                            <select class="form-select" aria-label="Default select example" id="yearSelect">
+                                <option value="2565">2565</option>
+                                <option value="2566">2566</option>
+                                <option value="2567">2567</option>
+                                <option value="2568">2568</option>
+                                <option value="2569">2569</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 text-center my-3">
+                            <b><i class="fa-solid fa-building-circle-arrow-right"></i> เลือกไซต์งาน</b>
+
+                            <?php
+                                $stmt = $conn->query("SELECT site_name, site_abbre FROM site_info");
+                                $stmt->execute();
+                                $site = $stmt->fetchAll();
+
+                                foreach ($site as $row) {
+
+                                    echo '<div class="d-flex justify-content-center">';
+                                    echo '<div class="form-check">';
+                                    echo '<input class="form-check-input" type="checkbox" value="' . $row['site_name'] . '" id="' . $row['site_name'] . '" name="' . $row['site_name'] . '">';
+                                    echo '<label class="form-check-label" for="' . $row['site_name'] . '">' . $row['site_name'] . ' | ' . $row['site_abbre'] . '</label>';
+                                    echo '</div>';
+                                    echo '</div>';
+
+                                }
+                            ?>
+
+                        </div>
+                    </div>
+
+                    <div class="row text-center mt-2">
                         <div class="col-md">
                             <button type="submit" class="btn btn-sm btn-primary w-25" name="submit_reportTax"><i class="fa-solid fa-magnifying-glass"></i> ดูรายงาน</button>
                         </div>
@@ -341,12 +264,12 @@
                                 <option value="2569">2569</option>
                             </select>
                         </div>
-                        <div class="col-md-5">
+                        <!-- <div class="col-md-5">
                             <label for="companySelect" class="form-label fw-bold">ชื่อบริษัท :</label>
                             <select class="form-select" aria-label="Default select example" id="companySelect">
                                 <option>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="row text-center mt-3">
