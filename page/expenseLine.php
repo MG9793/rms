@@ -64,8 +64,8 @@
                                 $receipt = $receiptBill->fetchAll();
 
                                 foreach($receipt as $serachReceipt) {
-                                    echo '<option value="'.$serachReceipt["receipt_no"].'">'.$serachReceipt["receipt_no"].'</option>';
-                                    // echo '<option value="'.$serachReceipt["receipt_no"].$serachReceipt["total"].'">'.$serachReceipt["receipt_no"].'</option>';
+                                    // echo '<option value="'.$serachReceipt["receipt_no"].'">'.$serachReceipt["receipt_no"].'</option>';
+                                    echo '<option value="'.$serachReceipt["receipt_no"].$serachReceipt["total"].'">'.$serachReceipt["receipt_no"].'</option>';
                                 }
 
                             ?>
