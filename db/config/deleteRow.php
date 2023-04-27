@@ -50,6 +50,12 @@
         $delete_id = $_GET['delete_BillLine'];
         $deleteStmt = $conn->query("DELETE FROM bill_line WHERE id = $delete_id");
         $deleteStmt->execute();
+        $receiptNo = $_SESSION['receiptNo_billLine'];
+          // query ยอดเงิน line
+          $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
+          $stl->execute();
+         $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+      $_SESSION['lineTotal'] = $totalLine->lineTotal;
     }
 
 

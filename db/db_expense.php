@@ -35,6 +35,30 @@
 
     }
 
+     // แก้ไขข้อมูล search bill_head
+     else if (isset($_POST['searchReceipt'])) {
+        $receipt_no = $_POST['searchReceipt'];
+        // query ยอดเงิน head
+            $sth = $conn->prepare("SELECT total FROM bill_head WHERE receipt_no = '$receipt_no'");
+            $sth->execute();
+           $totalHead = $sth->fetch(PDO::FETCH_OBJ);
+        $_SESSION['receiptNo_billLine'] = $receipt_no;
+        $_SESSION['Total_billLine'] = $totalHead->total;
+
+
+
+        // query ยอดเงิน line
+        $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receipt_no'");
+            $stl->execute();
+           $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+        $_SESSION['lineTotal'] = $totalLine->lineTotal;
+
+        header("location: ../page/expenseLine.php");
+         }
+     
+ 
+
+
 
     // แก้ไขข้อมูล bill_head
     else if (isset($_POST['edit_billHead'])) {
@@ -67,8 +91,8 @@
 
         // check ยอดกรอกต้องตรงกับยอดใบเสร็จ
         if ($receiptTotal === $itemSum) {
-            $billName = $_POST['searchReceipt'];
-            $receiptNo = substr_replace($billName, "", 10, 8);
+
+            $receiptNo = $_SESSION['receiptNo_billLine'];
 
             $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
                                     VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
@@ -80,18 +104,19 @@
             $stmt->bindParam(':total', $total);
 
             // loop array
-            $itemName_array = $_POST["itemName"];
-            $itemQty_array = $_POST["itemQty"];
-            $unitPrice_array = $_POST['unitPrice'];
-            $itemTotal_array = $_POST['itemTotal'];
+            $item_name = $_POST["itemName"];
+            $qty = $_POST["itemQty"];
+            $amount = $_POST['unitPrice'];
+            $total = $_POST['itemTotal'];
+            $stmt->execute();
+            
 
-            for ($i = 0; $i < count($itemQty_array); $i++) {
-                $item_name = $itemName_array[$i];
-                $qty = $itemQty_array[$i];
-                $amount = $unitPrice_array[$i];
-                $total = $itemTotal_array[$i];
-                $stmt->execute();
-            }
+
+        // query ยอดเงิน line
+        $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
+            $stl->execute();
+           $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+        $_SESSION['lineTotal'] = $totalLine->lineTotal;
 
             header("location: ../page/expenseLine.php");
 
