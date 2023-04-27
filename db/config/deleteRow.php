@@ -12,7 +12,7 @@
     
             // Alert Delete Failure
             $_SESSION['deleteUser_error'] = '<i class="fa-solid fa-circle-check"></i> Error! ไม่สามารถลบผู้ใช้งานคนสุดท้ายได้ เนื่องจากไม่มีผู้ใช้งานระบบ';
-            header("../page/userManagement.php");
+         //   header("../page/userManagement.php");
     
         } else {
             $deletestmt = $conn->query("DELETE FROM user_info WHERE id = $delete_id");
@@ -20,11 +20,10 @@
     
             // Alert Success
             $_SESSION['deleteUser_success'] = '<i class="fa-solid fa-circle-check"></i> Error! ดำเนินการสำเร็จ ลบข้อมูลผู้ใช้เรียบร้อยแล้ว';
-            header("../page/userManagement.php");
+         //   header("../page/userManagement.php");
         }
     }
 
-    
 
     // ลบ item_info
     else if (isset($_GET['deleteItems'])) {
@@ -37,15 +36,28 @@
        // header("../page/listItemsManagement.php");
     }
 
+
     // ลบ bill_head
-    else if (isset($_GET['deleteBill'])) {
-        $delete_id = $_GET['deleteBill'];
+    else if (isset($_GET['delete_BillHead'])) {
+        $delete_id = $_GET['delete_BillHead'];
         $deleteStmt = $conn->query("DELETE FROM bill_head WHERE id = $delete_id");
         $deleteStmt->execute();
+    }
 
-        // Alert Success
-        $_SESSION['deleteBill_success'] = '<i class="fa-solid fa-circle-check"></i> ลบรายการสำเร็จ';
-    //    header("../page/expense.php");
+
+    // ลบรายการ bill_line
+    else if (isset($_GET['delete_BillLine'])) {
+        $delete_id = $_GET['delete_BillLine'];
+        $deleteStmt = $conn->query("DELETE FROM bill_line WHERE id = $delete_id");
+        $deleteStmt->execute();
+    }
+
+
+    // ลบ bill_line ทั้งหมด
+    else if (isset($_GET['delete_Bill'])) {
+        $delete_billReceipt = $_GET['delete_Bill'];
+        $deleteStmt = $conn->query("DELETE FROM bill_line WHERE receipt_no = '$delete_billReceipt'");
+        $deleteStmt->execute();
     }
 
 
@@ -57,7 +69,7 @@
 
         // Alert Success
         $_SESSION['deleteSite_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบไซต์งานเรียบร้อยแล้ว';
-        header("../page/siteManagement.php");
+     //   header("../page/siteManagement.php");
     }
 
 
@@ -69,8 +81,17 @@
         $deleteStmt->execute();
 
         // Alert Success
-        $_SESSION['deleteSales_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
-        header("../page/sellerManagement.php");
+        // $_SESSION['deleteSales_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
+     //   header("../page/sellerManagement.php");
+    }
+
+
+
+    // ลบสถานประกอบการ
+    else if (isset($_GET['deleteCompany'])) {
+        $delete_id = $_GET['deleteCompany'];
+        $deleteStmt = $conn->query("DELETE FROM company_info WHERE id = $delete_id");
+        $deleteStmt->execute();
     }
 
 
@@ -78,11 +99,11 @@
     // ลบ income_head
     else if (isset($_GET['deleteIncome_head'])) {
         $delete_id = $_GET['deleteIncome_head'];
-        $deleteStmt = $conn->query("DELETE FROM income_head WHERE id = $delete_id");
+        $deleteStmt = $conn->query("DELETE FROM site_info WHERE id = $delete_id");
         $deleteStmt->execute();
 
         // Alert Success
-        $_SESSION['deleteIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
+        // $_SESSION['deleteIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
       //  header("../page/incomeRecord_Total.php");
     }
 
@@ -95,7 +116,7 @@
 
         // Alert Success
         $_SESSION['deleteIncomeLine_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
-        header("../page/incomeRecord_Line.php");
+    //    header("../page/incomeRecord_Line.php");
     }
 
 ?>
