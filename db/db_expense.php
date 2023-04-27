@@ -62,106 +62,61 @@
     // เพิ่มข้อมูล bill_line
     else if (isset($_POST['add_billLine'])) {
 
+        $receiptNo = $_POST['searchReceipt'];
         $receiptTotal = $_POST['receiptTotal'];
-        $itemSum = $_POST['itemSum'];
+        $itemName = $_POST['itemName'];
+        $qty = $_POST['itemQty'];
+        $amount = $_POST['unitPrice'];
+        $total = $_POST['itemTotal'];
 
         // check ยอดกรอกต้องตรงกับยอดใบเสร็จ
-        if ($receiptTotal === $itemSum || $receiptTotal >= $itemSum) {
-            $billName = $_POST['searchReceipt'];
-            $receiptNo = substr_replace($billName, "", 10, 8);
+        if ($receiptTotal >= $total) {
 
             $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
                                     VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
 
             $stmt->bindParam(':receipt_no', $receiptNo);
-            $stmt->bindParam(':item_name', $item_name);
+            $stmt->bindParam(':item_name', $itemName);
             $stmt->bindParam(':qty', $qty);
             $stmt->bindParam(':amount', $amount);
             $stmt->bindParam(':total', $total);
-            
-            // loop array
-            $itemName_array = $_POST["itemName"];
-            $itemQty_array = $_POST["itemQty"];
-            $unitPrice_array = $_POST['unitPrice'];
-            $itemTotal_array = $_POST['itemTotal'];
+            $stmt->execute();
 
-            for ($i = 0; $i < count($itemQty_array); $i++) {
-                $item_name = $itemName_array[$i];
-                $qty = $itemQty_array[$i];
-                $amount = $unitPrice_array[$i];
-                $total = $itemTotal_array[$i];
-                $stmt->execute();
-            }
-
+            $_SESSION['receiptNo_billLine'] = $receiptNo;
             $_SESSION['add_billLine_success'] = '<i class="fa-solid fa-triangle-exclamation"></i> Success! บันทึกรายการสำเร็จ';
             header("location: ../page/expenseLine.php");
 
         } else {
 
             $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกเกินยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
-            echo "<script>setTimeout(function(){history.back();});</script>";
-
-        }
-    }
-
-
-    // เลือกข้อมูล bill_line
-    else if (isset($_POST['editReceipt'])) {
-        $selectReceipt = $_POST['receipt'];
-
-        if ($selectReceipt === '') {
             header("location: ../page/expenseLine.php");
-
-        } else {
-            
-            $_SESSION['edit_billLine'] = $selectReceipt;
-            header("location: ../page/expenseLineEdit.php");
         }
     }
 
-    
-    // update แก้ไข bill_line
-    else if (isset($_POST['update_billLine'])) {
 
-        $num_rows = $_POST['num_rows'];
-        $selectReceipt = $_POST['get_receiptNo'];
+    // แก้ไข bill_line
+    else if (isset($_POST['edit_billLine'])) {
 
+        $id = $_POST['id'];
+        $itemName = $_POST['editItems'];
+        $qty = $_POST['editQty'];
+        $amount = $_POST['editAmount'];
+        $total = $_POST['editTotal'];
 
-        for ($i = 0; $i < $num_rows; $i++) {
-            $id = $_POST["id_$i"];
-            $item_name = $_POST["addItems_$i"];
-            $qty = $_POST["qty_$i"];
-            $amount = $_POST["amount_$i"];
-            $total = $_POST["total_$i"];
+        $stmt = $conn->prepare("UPDATE bill_line
+                                SET item_name = :item_name, qty = :qty, amount = :amount, total = :total
+                                WHERE id = :id");
 
-            $stmt = $conn->prepare("UPDATE bill_line 
-                                    SET item_name = :item_name, qty = :qty, amount = :amount, total = :total
-                                    WHERE receipt_no = :receipt_no AND id = :id");
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":item_name", $itemName);
+        $stmt->bindParam(":qty", $qty);
+        $stmt->bindParam(":amount", $amount);
+        $stmt->bindParam(":total", $total);
+        $stmt->execute();
 
-            $stmt->bindParam(":id", $id);
-            $stmt->bindParam(":receipt_no", $selectReceipt);
-            $stmt->bindParam(":item_name", $item_name);
-            $stmt->bindParam(":qty", $qty);
-            $stmt->bindParam(":amount", $amount);
-            $stmt->bindParam(":total", $total);
-            $stmt->execute();
-        }
+        header("location: ../page/expenseLine.php");
 
-        header("location: ../page/expenseLineEdit.php");
     }
 
 
-
-
-
-
-
-    
-    // check มีการส่ง selectSite_Line จาก incomeRecord.php หรือไม่
-    // else if (isset($_POST['selectSite_Line'])) {
-    //     $siteName = $_POST['siteName'];
-
-    //     $_SESSION['siteName_incomeLine'] = $siteName;
-    //     header("location: ../page/incomeRecord_Line.php");
-    // }
 ?>
