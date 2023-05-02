@@ -34,7 +34,7 @@
 
                 <legend class="fw-bold text-dark text-center p-2">กระจายค่าใช้จ่าย </legend>
 
-                <form method="POST">
+                <form action="../db/db_disperseCost.php"  method="POST">
                     <div class="row">
                         
                     <div class="col-md-4">
@@ -48,19 +48,26 @@
                             ?>
                                 
                                 <?php
-
+echo $_SESSION["id"]; 
+echo $_SESSION["Month"];
                                     $monthInfo = $conn->prepare("SELECT id,month_name FROM month_info");
                                     $monthInfo->execute();
                                     $month = $monthInfo->fetchAll();
+                                    if($_SESSION['Month']=="") {
                                    ?>
-
+                                    
                                         <option value="">เลือกเดือน</option>
                                         <?php
                                     foreach($month as $monthName) {
                                         echo '<option value="'.$monthName["id"]. ' ">'.$monthName["month_name"].'</option>';
+                                    } 
+                                }else {
+                                        echo '<option value="' .$_SESSION["id"]. '">' .$_SESSION["Month"]. '</option>';
+                                        
+                                        foreach($month as $monthName) {
+                                            echo '<option value="'.$monthName["id"]. ' ">'.$monthName["month_name"].'</option>';
+                                        }
                                     }
-                                   
-                                    
                                 
                                 
                                 
@@ -75,16 +82,9 @@
                         <div class="col-md-1" style="margin-top: 32px;">
                             <button type="submit" class="btn btn-light w-100"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
                         </div>
-                    
+                        </form>
 
-                <?php
-
-                    if (isset($_POST['selectMonth'])) {
-                        $getMonth = $_POST['selectMonth'];
-                        $stmt = $conn->query("SELECT SUM(total) AS headSum FROM bill_head WHERE MONTH(buy_date) = '$getMonth'");
-                        $sumMonth = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                ?>
+                
                         <div class="col-md-3">
                             <label for="disperseSum" class="form-label fw-bold">ยอดกระจายค่าใช้จ่าย :</label>
                             <input type="number" class="form-control" name="disperseSum" id="disperseSum" value="<?php echo $sumMonth['headSum']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
@@ -92,10 +92,10 @@
 
                         <div class="col-md-3">
                             <label for="monthSum" class="form-label fw-bold">ยอดรวม :</label>
-                            <input type="number" class="form-control" name="monthSum" id="monthSum" value="<?php echo $sumMonth['headSum']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
+                            <input type="number" class="form-control" name="monthSum" id="monthSum" value="<?php echo   $_SESSION['Total']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
                         </div>
                     </div>
-                    </form>
+                    
                     <!-- แถว 2 -->
                     <!-- <form method="POST" id="formRow2"> -->
                         <div class="row ">
@@ -182,7 +182,7 @@
                                 
                             ?>
 
-                <?php } ?>
+              
             
         </div>
     </section>
@@ -201,9 +201,9 @@
                 <thead>
                     <tr>
                         <th scope="col" style="text-align:center;">#</th>
-                        <th scope="col" style="text-align:center;">เดือน</th>
                         <th scope="col" style="text-align:center;">ไซต์งาน</th>
-                        <th scope="col" style="text-align:center;">จำนวน</th>
+                        <th scope="col" style="text-align:center;">กระจายค่าใช้จ่าย(%)</th>
+                        <th scope="col" style="text-align:center;">ยอดรวม</th>
                         <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
                     </tr>
                 </thead>
@@ -343,27 +343,7 @@
         }
 	</script>
 
-
-
-    <!-- Autocomplete -->
-    <datalist id="selectSite2">
-        <?php
-            $stmt = $conn->query("SELECT DISTINCT site_name FROM bill_head");
-            $stmt->execute();
-            $siteSearch = $stmt->fetchAll();
-
-            if (!$siteSearch) {            
-            
-            } else {
-                foreach ($siteSearch as $fetch_site) {
-        ?>
-
-        <option value="<?php echo $fetch_site['site_name']; ?>"></option>
-        <?php } } ?>
-    </datalist>
-
-
-    
+  
     <!-- สคริป ค้นหาเดือน -->
     <script>
         var select_box_element_month = document.querySelector('#selectMonth');
