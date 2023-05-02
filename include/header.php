@@ -97,7 +97,7 @@
                         <a class="nav-link" href="../page/incomeRecord.php">บันทึกรายรับ</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">กระจายค่าใช้จ่าย</a>
+                        <a class="nav-link" href="../page/disperseCost.php">กระจายค่าใช้จ่าย</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> รายงาน</a>
@@ -118,6 +118,7 @@
                             <li><a class="dropdown-item text-black" href="../page/listItemsManagement.php"><i class="fa-solid fa-clipboard"></i> รายการบันทึก</a></li>
                             <li><a class="dropdown-item text-black" href="../page/sellerManagement.php"><i class="fa-solid fa-cart-shopping"></i> ข้อมูลผู้ขาย</a></li>
                             <li><a class="dropdown-item text-black" href="../page/siteManagement.php"><i class="fa-solid fa-building-circle-check"></i> ไซต์งาน</a></li>
+                            <li><a class="dropdown-item text-black" href="../page/companyManagement.php"><i class="fa-solid fa-building-circle-check"></i> สถานประกอบการ</a></li>
                             <li><a class="dropdown-item text-black" href="../page/userManagement.php"><i class="fa-solid fa-user-gear"></i> ผู้ใช้งาน</a></li>
                         </ul>
                     </li>
