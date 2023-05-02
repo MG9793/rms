@@ -16,6 +16,17 @@
     $sales_name->execute();
     $rs_sales = $sales_name->fetchAll();
 
+    if (!isset($_SESSION['site'])) {
+        //  header("location: incomeRecord.php");
+        $site="";
+      } else {
+
+      // ดึง sitename จาก session
+      $site = $_SESSION['site'];
+      }
+
+
+
       
 ?>
 
@@ -45,12 +56,23 @@
                     <div class="col-md-4">
                         <label class="form-label fw-bold" for="siteName">ไซต์งาน :</label>
                         <select name="siteName" class="form-select" id="siteName">
-                            <option value="">กรุณาเลือกไซต์งาน</option>
+                            
                             <?php 
-                                foreach($rs_site as $row_site)
-                                {
-                                    echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
-                                }
+                                    if($_SESSION['site']=="") { ?>
+
+                                        <option value="">กรุณาเลือกไซต์งาน</option>
+                                        <?php
+                                    foreach($rs_site as $row_site) {
+                                        echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
+                                    }
+                                    } else {
+                                    echo '<option value="' .$_SESSION["site"]. '">' .$_SESSION["site"]. '</option>';
+
+                                    foreach($rs_site as $row_site) {
+                                        echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
+                                    }
+
+                                    }
                             ?>  
                         </select>
                     </div>
@@ -145,10 +167,17 @@
                 <tbody>
                 <!-- query ตาราง ห้ามลบ -->
                 <?php
+                 
+                        if($site!="") { 
+                            $site=$_SESSION['site'];
+                            $stmt = $conn->query("SELECT * FROM bill_head WHERE site_name = '$site' ORDER BY id DESC");
+                        $stmt->execute();
+                        $bill = $stmt->fetchAll();
+                        }else{
                         $stmt = $conn->query("SELECT * FROM bill_head ORDER BY id DESC");
                         $stmt->execute();
                         $bill = $stmt->fetchAll();
-
+                    }
                         if (!$bill) {
                            
                         } else {

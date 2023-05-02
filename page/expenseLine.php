@@ -74,13 +74,19 @@
                                 
                                 ?>
                             </select>
+
+
+                            
+
+
+
                             </div>  
                         <div class="col-md-1" style="margin-top: 32px;">
                             <button type="submit" class="btn btn-light w-100"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
                         </div>
                         <div class="col-md-2">
                         <label for="receiptTotal" class="form-label fw-bold">ยอดเงินตามใบเสร็จ :</label>
-                        <input type="text" class="form-control" name="receiptTotal" id="receiptTotal" value="<?php echo $_SESSION['Total_billLine']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
+                        <input type="number" class="form-control" name="receiptTotal" id="receiptTotal" value="<?php echo $_SESSION['Total_billLine']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
                     </div>
                     <div class="col-md-2">
                         <label for="lineTotal" class="form-label fw-bold">ยอดเงินที่บันทึก :</label>
@@ -96,7 +102,32 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="itemName" class="col-form-label fw-bold">รายการ :</label>
-                        <input type="text" class="form-control" name="itemName" id="itemName" list="addItems" required>
+
+                        <select class="form-select" name="itemName" id="itemName" required>
+                            
+                                
+                                <?php
+
+                                    $itemInfo = $conn->prepare("SELECT item_name FROM item_info");
+                                    $itemInfo->execute();
+                                    $item = $itemInfo->fetchAll();
+                                   ?>
+
+                                        <option value="">เลือกรายการสินค้า</option>
+                                        <?php
+                                    foreach($item as $itemName) {
+                                        echo '<option value="'.$itemName["item_name"]. ' ">'.$itemName["item_name"].'</option>';
+                                    }
+                                   
+                                    
+                                
+                                
+                                
+                                ?>
+                            </select>
+
+
+
                     </div>
                     <div class="col-md-2">
                         <label for="itemQty" class="col-form-label fw-bold">จำนวน :</label>
@@ -111,7 +142,7 @@
                         <input type="number" class="form-control" name="itemTotal" id="itemTotal" step=".01" tabindex="-1" readonly required>
                     </div>
                 </div>
-                <div>หมายเหตุ : หากไม่พบรายการค่าใช้จ่ายให้ไปที่เมนูตั้งค่า และเพิ่มรายการบันทึก</div>
+                <div>หมายเหตุ : หากไม่พบรายการสินค้าให้ไปที่เมนูตั้งค่า</div>
 
                 <div class="row">
                     <div class="col-md my-3">
@@ -248,22 +279,7 @@
     </section>
 
 
-    <!-- Autocomplete -->
-    <datalist id="addItems">
-        <?php
-            $stmt = $conn->query("SELECT item_name FROM item_info");
-            $stmt->execute();
-            $item = $stmt->fetchAll();
-
-            if (!$item) {            
-            
-            } else {
-                foreach ($item as $fetch_item) {
-        ?>
-
-        <option value="<?php echo $fetch_item['item_name']; ?>"></option>
-        <?php } } ?>
-    </datalist>
+   
 
 
     <!-- สคริป ค้นหาเลขที่ใบเสร็จ -->
@@ -275,7 +291,12 @@
     </script>
 
 
-
+<script>
+        var select_box_element_site2 = document.querySelector('#itemName');
+        dselect(select_box_element_site2, {
+            search: true
+        });
+    </script>
 
 
     <!-- สคริป ยอดรวม -->

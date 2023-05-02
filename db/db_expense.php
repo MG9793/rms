@@ -16,7 +16,7 @@
         $expenseSUM = $_POST['expenseSUM'];
         $expenseVAT = $_POST['expenseVAT'];
         $expenseTotal = $_POST['expenseTotal'];
-
+        $_SESSION['site'] = $siteName;
         $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total)
                                 VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total)");
         
