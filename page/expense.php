@@ -125,11 +125,11 @@
                 <div class="row mb-3"> 
                     <div class="col-md-4">
                         <label class="form-label fw-bold">รวมเงินค่าสินค้าและค่าขนส่ง :</label>
-                        <input type="text" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM">
+                        <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
-                        <input type="text" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
+                        <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>

@@ -5,44 +5,44 @@
 
 
     // เพิ่มข้อมูล bill_head
-    if (isset($_POST['add_billHead'])) {
+    if (isset($_POST['saveDisperse'])) {
 
-        $siteName = $_POST['siteName'];
-        $receiptNo = $_POST['receiptNo'];
-        $buyDate = $_POST['buyDate'];
-        $sellerName = $_POST['sales'];
-        $taxNO = $_POST['taxNO'];
-        $type = $_POST['type'];
-        $expenseSUM = $_POST['expenseSUM'];
-        $expenseVAT = $_POST['expenseVAT'];
-        $expenseTotal = $_POST['expenseTotal'];
-        $_SESSION['site'] = $siteName;
-        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total)
-                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total)");
+        $selectSite = $_POST['selectSite'];
+        $CalPercent = $_POST['CalPercent'];
+        $SiteSum = $_POST['SiteSum'];
+        $headOffice = $_SESSION["headOffice"];
+        $Month = $_SESSION["Month"];
+
+        $stmt = $conn->prepare("INSERT INTO disperse_info(	disperse_site , disperse_percent, disperse_sum, office_name , month)
+                                VALUES(:disperse_site ,:disperse_percent, :disperse_sum, :office_name, :month)");
         
-        $stmt->bindParam(":site_name", $siteName);
-        $stmt->bindParam(":receipt_no", $receiptNo);
-        $stmt->bindParam(":buy_date", $buyDate);
-        $stmt->bindParam(":sales_name", $sellerName);
-        $stmt->bindParam(":tax_no", $taxNO);
-        $stmt->bindParam(":type", $type);
-        $stmt->bindParam(":sum", $expenseSUM);
-        $stmt->bindParam(":vat", $expenseVAT);
-        $stmt->bindParam(":total", $expenseTotal);
+        $stmt->bindParam(":disperse_site", $selectSite);
+        $stmt->bindParam(":disperse_percent", $CalPercent);
+        $stmt->bindParam(":disperse_sum", $SiteSum);
+        $stmt->bindParam(":office_name", $headOffice);
+        $stmt->bindParam(":month", $Month);
+
 
         $stmt->execute();
-        header("location: ../page/expense.php");
+
+        $std = $conn->prepare("SELECT SUM(disperse_sum) AS Sum ,SUM(disperse_percent) AS Percent FROM disperse_info WHERE month = '$Month' AND office_name = '$headOffice' ");
+        $std->execute();
+        $total = $std->fetch(PDO::FETCH_OBJ);
+        $_SESSION['Sum'] = $total->Sum;
+        $_SESSION['Percent'] = $total->Percent;
+        header("location: ../page/disperseCost.php");
 
     }
 
      // search bill_head ตามเดือน
      else if (isset($_POST['selectMonth'])) {
         $getMonth = $_POST['selectMonth'];
-        
+        $getHO = $_POST['selectHO'];
 
         // query ยอดเงิน head
-            $sth = $conn->prepare("SELECT SUM(total) AS headSum FROM bill_head WHERE MONTH(buy_date) = '$getMonth'");
+            $sth = $conn->prepare("SELECT SUM(total) AS headSum FROM bill_head WHERE MONTH(buy_date) = '$getMonth' AND site_name = '$getHO' ");
             $sth->execute();
+            
            $totalMonth = $sth->fetch(PDO::FETCH_OBJ);
            if ($_POST['selectMonth'] == 1){
             $_SESSION['Month'] = "มกราคม";
@@ -69,9 +69,16 @@
         }else if($_POST['selectMonth'] == 12){
             $_SESSION['Month'] = "ธันวาคม";
         }
-        $_SESSION['id'] = $getMonth;
-        $_SESSION['Total'] = $totalMonth->headSum;
+        $month=$_SESSION['Month'];
+        $std = $conn->prepare("SELECT SUM(disperse_sum) AS Sum ,SUM(disperse_percent) AS Percent FROM disperse_info WHERE month = '$month' AND office_name = '$getHO' ");
+        $std->execute();
+        $total = $std->fetch(PDO::FETCH_OBJ);
 
+        $_SESSION['id'] = $getMonth;
+        $_SESSION['headOffice'] = $getHO;
+        $_SESSION['Sum'] = $total->Sum;
+        $_SESSION['Percent'] = $total->Percent;
+        $_SESSION['Total'] = $totalMonth->headSum;
 
         header("location: ../page/disperseCost.php");
          }

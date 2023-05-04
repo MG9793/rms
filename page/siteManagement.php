@@ -127,21 +127,21 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalEditRecord"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลรายรับ</h5>
+                                        <h5 class="modal-title" id="modalEditRecord"><i class="fa-solid fa-pen-to-square"></i> แก้ไขข้อมูลไซต์งาน</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
 
                                     <div class="modal-body">
                                         <form action="../db/db_siteManagement.php" method="POST">
                                             <div class="mb-0">
-                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_site['id']; ?>" readonly required>
+                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_site['id']; ?>"  required>
                                                 <label for="editSiteName" class="col-form-label">ชื่อไซต์งาน :</label>
-                                                <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_site['site_name']; ?>" readonly>
+                                                <input type="text" class="form-control" name="editSiteName" id="editSiteName" value="<?php echo $fetch_site['site_name']; ?>" >
                                             </div>
                                             <div class="mb-0">
-                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_site['id']; ?>" readonly required>
+                                                <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_site['id']; ?>"  required>
                                                 <label for="editSiteName" class="col-form-label">ตัวย่อไซต์งาน :</label>
-                                                <input type="text" class="form-control" name="editSiteAbbre" id="editSiteAbbre" value="<?php echo $fetch_site['site_abbre']; ?>" readonly>
+                                                <input type="text" class="form-control" name="editSiteAbbre" id="editSiteAbbre" value="<?php echo $fetch_site['site_abbre']; ?>" >
                                             </div>
                                             <div class="mb-0">
                                                 <label for="editStartDate" class="col-form-label">วันที่เริ่ม :</label>

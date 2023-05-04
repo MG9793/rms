@@ -36,8 +36,50 @@
 
                 <form action="../db/db_disperseCost.php"  method="POST">
                     <div class="row">
+                    <div class="col-md-3">
                         
-                    <div class="col-md-4">
+
+                        <label for="selectHO" class="form-label fw-bold">สำนักงานใหญ่ :</label>
+                            <select class="form-select" name="selectHO" id="selectHO" required>
+                            <?php
+
+                                $siteInfo = $conn->prepare("SELECT id,site_name FROM site_info WHERE site_abbre = 'HO' ");
+                                $siteInfo->execute();
+                                $site = $siteInfo->fetchAll();
+                         
+                                
+                            
+                                if($_SESSION['headOffice']=="") {
+                                    ?>
+                                     
+                                     <option value="">เลือกสำนักงานใหญ่</option>
+                                         <?php
+                                     foreach($site as $headOffice) {
+                                        echo '<option value="'.$headOffice["site_name"]. ' ">'.$headOffice["site_name"].'</option>';
+                                    }
+                                 }else {
+                                         echo '<option value="' .$_SESSION["headOffice"]. '">' .$_SESSION["headOffice"]. '</option>';
+                                         
+                                         foreach($site as $headOffice) {
+                                            echo '<option value="'.$headOffice["site_name"]. ' ">'.$headOffice["site_name"].'</option>';
+                                        }
+                                     }
+                            
+                            ?>
+
+                           
+                                
+                                
+                                
+                                
+                            </select>
+
+                        
+
+
+
+                    </div>  
+                    <div class="col-md-2">
                         
 
                         <label for="selectMonth" class="form-label fw-bold">เดือน :</label>
@@ -84,39 +126,42 @@ echo $_SESSION["Month"];
                         </div>
                         </form>
 
-                
-                        <div class="col-md-3">
-                            <label for="disperseSum" class="form-label fw-bold">ยอดกระจายค่าใช้จ่าย :</label>
-                            <input type="number" class="form-control" name="disperseSum" id="disperseSum" value="<?php echo $sumMonth['headSum']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
+                        <div class="col-md-2">
+                            <label for="headSum" class="form-label fw-bold">รวมกระจายค่าใช้จ่าย(%) :</label>
+                            <input type="number" class="form-control" name="headSum" id="headSum" value="<?php echo $_SESSION['Percent']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="headSum" class="form-label fw-bold">ยอดกระจายค่าใช้จ่าย :</label>
+                            <input type="number" class="form-control" name="headSum" id="headSum" value="<?php echo $_SESSION['Sum']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label for="monthSum" class="form-label fw-bold">ยอดรวม :</label>
                             <input type="number" class="form-control" name="monthSum" id="monthSum" value="<?php echo   $_SESSION['Total']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
                         </div>
                     </div>
-                    
+                    <form action="../db/db_disperseCost.php"  method="POST" onSubmit="JavaScript:return fncSubmit();">
                     <!-- แถว 2 -->
                     <!-- <form method="POST" id="formRow2"> -->
                         <div class="row ">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <label for="selectSite" class="form-label fw-bold">เลือกไซต์งาน :</label>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <label for="inputPercent" class="form-label fw-bold">กระจายค่าใช้จ่าย(%) :</label>
                             </div>
-                            <div class="col-md-3">
-                                <label for="disperseSum" class="form-label fw-bold">ยอดรวม(ไซต์งาน) :</label>
+                            <div class="col-md-4">
+                                <label for="txtSum" class="form-label fw-bold">ยอด(ไซต์งาน) :</label>
                             </div>
                         </div>
                         <div class="row" id="item_fields">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                             <select class="form-select" name="selectSite" id="selectSite" required>
                             
                                 
                             <?php
 
-                                $siteInfo = $conn->prepare("SELECT id,site_name FROM site_info");
+                                $siteInfo = $conn->prepare("SELECT id,site_name FROM site_info WHERE site_abbre != 'HO' ");
                                 $siteInfo->execute();
                                 $site = $siteInfo->fetchAll();
                                ?>
@@ -124,7 +169,7 @@ echo $_SESSION["Month"];
                                     <option value="">เลือกไซต์งาน</option>
                                     <?php
                                 foreach($site as $siteName) {
-                                    echo '<option value="'.$siteName["id"]. ' ">'.$siteName["site_name"].'</option>';
+                                    echo '<option value="'.$siteName["site_name"]. ' ">'.$siteName["site_name"].'</option>';
                                 }
                                
                                 
@@ -135,55 +180,29 @@ echo $_SESSION["Month"];
                         </select>
 
                             </div>
-                            <div class="col-md-3">
-                                <input type="number" class="form-control" name="inputPercent[]" id="inputPercent" required>
+                            <div class="col-md-2">
+                                <input type="number" class="form-control" name="CalPercent" id="CalPercent" autocomplete="off" oninput="calDisperse()" required>
+                                
                             </div>
-                            <div class="col-md-3">
-                                <input type="number" class="form-control" name="disperseSum[]" id="disperseSum" value="<?php //echo $calcPercent; ?>" required readonly style="background-color: rgb(235, 235, 235);">
+                            <div class="col-md-4">
+                           
+                                <input type="number" class="form-control" name="SiteSum" id="SiteSum" autocomplete="off" oninput="calPercent()" required>
                             </div>
                             <div class="col-md-1">
 
                             </div>
                         </div>
 
-                        <!-- แถว 3 -->
-                        <div class="row">
-                            <div class="col-md-5">
-                                <button type="button" class="btn btn-light mt-2 w-100" id="add-item-btn" onclick="addRows()"><i class="fa-solid fa-plus"></i> Add Site</button>
-                            </div>
-                        </div>
 
-                        <!-- แถว 4 -->
+                        <!-- แถว 3 -->
                         <div class="row mt-2">
                             <div class="col">
-                                <button type="submit" name="saveDisperse" class="btn btn-success mt-2 w-100">Save</button>
+                                <button type="submit" name="saveDisperse" class="btn btn-success mt-2 w-100">บันทึก</button>
                             </div>
                         </div>
 
-
-
-                            <!-- <div class="col-md-1" style="margin-top: 32px;">
-                                <button type="submit" class="btn btn-primary w-100">คำนวณ</button>
-                            </div> -->
-                        <!-- </form> -->
-
-                            <?php
-
-                                // } else if (isset($_POST['selectSite'])) {
-                                //     $getSite = $_POST['selectSite'];
-                                //     $getPercent = intval($_POST['inputPercent']);
-
-                                        // คำนวณยอดกระจายค่าใช้จ่าย เฉพาะไซต์งานที่เลือก
-                                //     $stmt = $conn->query("SELECT SUM(total) AS siteTotal FROM bill_head WHERE site_name ='$getSite'");
-                                //     $siteTotal = $stmt->fetch(PDO::FETCH_ASSOC);
-                                //     $getSiteTotal = intval($siteTotal['siteTotal']);
-
-                                //     $calcPercent = ($getPercent / 100) * $getSiteTotal;
-                                
-                            ?>
-
               
-            
+                                </form>
         </div>
     </section>
 
@@ -204,28 +223,38 @@ echo $_SESSION["Month"];
                         <th scope="col" style="text-align:center;">ไซต์งาน</th>
                         <th scope="col" style="text-align:center;">กระจายค่าใช้จ่าย(%)</th>
                         <th scope="col" style="text-align:center;">ยอดรวม</th>
+                        <th scope="col" style="text-align:center;">สำนักงานใหญ่</th>
+                        <th scope="col" style="text-align:center;">เดือน</th>
                         <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
                     </tr>
                 </thead>
                 <tbody>
 
+                
+                <?php // query ตาราง
+                    if($_SESSION['headOffice']==null){
+                    
+                        $stmt = $conn->query("SELECT * FROM disperse_info ");
+                     
+                    }else{
+                        $Month = $_SESSION['Month'];
+                        $headOffice = $_SESSION['headOffice'];
+                        $stmt = $conn->query("SELECT * FROM disperse_info WHERE office_name = '$headOffice' AND month = '$Month'");
 
-                <?php
-
-                    // // query ตาราง
-                    // $stmt = $conn->query("SELECT * FROM bill_line WHERE receipt_no = '$selectedValue'");
-                    // $stmt->execute();
-                    // $bill = $stmt->fetchAll();
-
-                    // foreach ($bill as $fetch_bill) {
+                    }
+                    $stmt->execute();
+                     $disperse = $stmt->fetchAll();
+                     foreach ($disperse as $fetch_disperse) {
                                 
                 ?>
 
                     <tr style="text-align:center;">
                         <td></td>
-                        <td><?php //echo $fetch_bill['receipt_no']; ?></td>
-                        <td><?php //echo $fetch_bill['item_name']; ?></td>
-                        <td><?php //echo $fetch_bill['qty']; ?></td>
+                        <td><?php echo $fetch_disperse['disperse_site']; ?></td>
+                        <td><?php echo $fetch_disperse['disperse_percent']; ?></td>
+                        <td><?php echo $fetch_disperse['disperse_sum']; ?></td>
+                        <td><?php echo $fetch_disperse['office_name']; ?></td>
+                        <td><?php echo $fetch_disperse['month']; ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
                                 <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditDisperse<?php //echo $fetch_bill['id']; ?>"><i class="fas fa-edit"></i></button>
@@ -234,7 +263,7 @@ echo $_SESSION["Month"];
                         </td>
                     </tr>
 
-
+<?php } ?>
                     <!-- Modal Edit Disperse -->
                     <div class="modal fade" id="modalEditDisperse<?php //echo $fetch_bill['id']; ?>" tabindex="-1" aria-labelledby="modalEditBill" aria-hidden="true">
                         <div class="modal-dialog">
@@ -316,32 +345,6 @@ echo $_SESSION["Month"];
 
 
 
-    <!-- script Add InputField -->
-    <script>
-		function addRows() {
-			var div = document.createElement("div");
-            // var uniqueId = Date.now(); // Generate a unique ID for each row
-			div.innerHTML = '<div class="row">' +
-                                '<div class="col-md-5 mt-2">' +
-                                    '<input type="text" class="form-control" name="selectSite[]" id="selectSite" list="selectSite2" required>' +
-                                '</div>' +
-                                '<div class="col-md-3 mt-2">' +
-                                    '<input type="number" class="form-control" name="inputPercent[]" id="inputPercent" required>' +
-                                '</div>' +
-                                '<div class="col-md-3 mt-2">' +
-                                    '<input type="number" class="form-control" name="disperseSum[]" id="disperseSum" required readonly style="background-color: rgb(235, 235, 235);">' +
-                                '</div>' +
-                                '<div class="col-md-1 mt-2">' +
-                                    '<button type="button" class="btn btn-danger" onclick="removeItem(this)" tabindex="-1"><i class="fas fa-trash"></i></button>' +
-                                '</div>';
-			document.getElementById("item_fields").appendChild(div);
-		}
-		
-        function removeItem(button) {
-            var row = button.parentNode.parentNode;
-            row.parentNode.removeChild(row);
-        }
-	</script>
 
   
     <!-- สคริป ค้นหาเดือน -->
@@ -360,7 +363,51 @@ echo $_SESSION["Month"];
         });
     </script>
 
+   <!-- สคริป ค้นหาสำนักงานใหญ่ -->
+   <script>
+        var select_box_element_head_office = document.querySelector('#selectHO');
+        dselect(select_box_element_head_office, {
+            search: true
+        });
+    </script>
 
+    
+<script>
+        function calDisperse() {
+            var total = document.getElementById("monthSum").value;;
+            var percent = document.getElementById("CalPercent").value;
+            var disperse =  total * percent/100;
+            document.getElementById("SiteSum").value = disperse.toFixed(2);
+           
+        }
+    </script>
+
+<script>
+        function calPercent() {
+            var total = document.getElementById("monthSum").value;;
+            var siteSum = document.getElementById("SiteSum").value;
+            var percent =  siteSum/total * 100;
+            document.getElementById("CalPercent").value = percent
+           
+        }
+    </script>
+    
+
+    <script language="javascript">
+function fncSubmit()
+{
+	for(i=1;i<=document.form1.hdnLine.value;i  )
+	{
+		if(eval("document.form1.txtName" i ".value.length") <5)
+		{
+			alert("incorrect format in box " i " Thank.");
+			eval("document.form1.txtName" i ".focus();")
+			return false;
+		}
+	}
+	document.form1.submit();
+}
+</script>
 </body>
 </html>
 
