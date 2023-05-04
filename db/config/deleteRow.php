@@ -45,19 +45,17 @@
     }
 
 
-    // ลบรายการ bill_line
+    // ลบ bill_line
     else if (isset($_GET['delete_BillLine'])) {
         $delete_id = $_GET['delete_BillLine'];
         $deleteStmt = $conn->query("DELETE FROM bill_line WHERE id = $delete_id");
         $deleteStmt->execute();
-    }
-
-
-    // ลบ bill_line ทั้งหมด
-    else if (isset($_GET['delete_Bill'])) {
-        $delete_billReceipt = $_GET['delete_Bill'];
-        $deleteStmt = $conn->query("DELETE FROM bill_line WHERE receipt_no = '$delete_billReceipt'");
-        $deleteStmt->execute();
+        $receiptNo = $_SESSION['receiptNo_billLine'];
+          // query ยอดเงิน line
+          $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
+          $stl->execute();
+         $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+      $_SESSION['lineTotal'] = $totalLine->lineTotal;
     }
 
 
@@ -81,17 +79,8 @@
         $deleteStmt->execute();
 
         // Alert Success
-        // $_SESSION['deleteSales_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
+        $_SESSION['deleteSales_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
      //   header("../page/sellerManagement.php");
-    }
-
-
-
-    // ลบสถานประกอบการ
-    else if (isset($_GET['deleteCompany'])) {
-        $delete_id = $_GET['deleteCompany'];
-        $deleteStmt = $conn->query("DELETE FROM company_info WHERE id = $delete_id");
-        $deleteStmt->execute();
     }
 
 
@@ -103,7 +92,7 @@
         $deleteStmt->execute();
 
         // Alert Success
-        // $_SESSION['deleteIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
+        $_SESSION['deleteIncomeHead_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
       //  header("../page/incomeRecord_Total.php");
     }
 
@@ -117,6 +106,15 @@
         // Alert Success
         $_SESSION['deleteIncomeLine_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
     //    header("../page/incomeRecord_Line.php");
+    }
+
+
+    // ลบ กระจายค่าใช้จ่าย
+    else if (isset($_GET['deleteDisperse'])) {
+        $delete_id = $_GET['deleteDisperse'];
+        $deleteStmt = $conn->query("DELETE FROM disperse_info WHERE id = $delete_id");
+        $deleteStmt->execute();
+
     }
 
 ?>
