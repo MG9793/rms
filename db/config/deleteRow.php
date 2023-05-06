@@ -115,6 +115,18 @@
         $deleteStmt = $conn->query("DELETE FROM disperse_info WHERE id = $delete_id");
         $deleteStmt->execute();
 
+        
+        $siteHO = $_SESSION['officeHO'];
+
+        $queryPercent = $conn->query("SELECT SUM(disperse_percent) AS Percent FROM disperse_info WHERE office_name = '$siteHO'");
+        $result = $queryPercent->fetch(PDO::FETCH_ASSOC);
+        $sumSpread = $result['Percent'];
+
+        $updatePercent = $conn->prepare("UPDATE bill_head SET spread_cost = :spread_cost WHERE site_name = :site_name");
+        $updatePercent->bindParam(":spread_cost", $sumSpread);
+        $updatePercent->bindParam(":site_name", $siteHO);
+        $updatePercent->execute();
+
     }
 
 ?>
