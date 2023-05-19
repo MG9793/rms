@@ -27,12 +27,6 @@
     <!-- Bootstrap CSS -->
     <script src="../resources/lib/dselect.js"></script>
 
-    <style>
-        /* .formSearch {
-            display: inline-block;
-            margin: 0;
-        } */
-    </style>
 </head>
 <body>
     
@@ -40,113 +34,82 @@
     <section class="container mt-2">
         <div class="container border border-3 border-light bg-secondary shadow-sm">
             <legend class="fw-bold text-dark text-center p-2">บันทึกรายจ่าย (รายละเอียด) </legend>
-
-            <?php
-                // Alert 
-                if(isset($_SESSION['add_billLine_error'])) {
-                    echo "<div class='alert alert-danger alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['add_billLine_error'];
-                    unset($_SESSION['add_billLine_error']);
-                    echo "</div>";
-                }
-
-
-                if(isset($_SESSION['add_billLine_success'])) {
-                    echo "<div class='alert alert-success alert-dismissible fade show' role='alert'>";
-                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
-                    echo $_SESSION['add_billLine_success'];
-                    unset($_SESSION['add_billLine_success']);
-                    echo "</div>";
-                }
-            ?>
-
+            <form action="../db/db_expense.php" method="POST">
                 <div class="row">
-                    <div class="col-md-4">
-                        <form method="POST">
-                            <label for="searchReceipt" class="form-label fw-bold">ค้นหาเลขที่ใบเสร็จ :</label>
-                            <select class="form-select" name="searchReceipt" id="searchReceipt" onChange="fetchTotal();" required>
-                            <?php if($_SESSION['receiptNo_billLine']=="") { ?>
+                    <div class="col-md-5">
+                        <label for="searchReceipt" class="form-label fw-bold">ค้นหาเลขที่ใบเสร็จ :</label>
+                        <select class="form-select" name="searchReceipt" id="searchReceipt" required>
+
+                        <?php 
+                            $sumDiff = $_SESSION['Total_billLine'] - $_SESSION['lineTotal'];
+                        ?>
+                                
+                        <?php
+
+                            $receiptBill = $conn->prepare("SELECT receipt_no, total FROM bill_head");
+                            $receiptBill->execute();
+                            $receipt = $receiptBill->fetchAll();
+                            if($_SESSION['receiptNo_billLine']=="") { ?>
+
                                 <option value="">ค้นหาเลขที่ใบเสร็จ</option>
-                                <?php
 
-                                    $receiptBill = $conn->prepare("SELECT receipt_no, total FROM bill_head");
-                                    $receiptBill->execute();
-                                    $receipt = $receiptBill->fetchAll();
-
-                                    foreach($receipt as $serachReceipt) {
-                                        echo '<option value="'.$serachReceipt["receipt_no"]. ' ' .$serachReceipt["total"].'">'.$serachReceipt["receipt_no"].'</option>';
-                                    }
-                                    } else {
-                                    echo '<option value="' .$_SESSION["receiptNo_billLine"]. '">' .$_SESSION["receiptNo_billLine"]. '</option>';
-                                    
-
-
-                                    foreach($receipt as $serachReceipt) {
-                                        echo '<option value="'.$serachReceipt["receipt_no"]. ' ' .$serachReceipt["total"].'">'.$serachReceipt["receipt_no"].'</option>';
-                                    }
-                                    
+                            <?php
+                                foreach($receipt as $serachReceipt) {
+                                    echo '<option value="'.$serachReceipt["receipt_no"]. ' ">'.$serachReceipt["receipt_no"].'</option>';
                                 }
-                                // unset($_SESSION["receiptNo_billLine"]);
-
-                                ?>
-                            </select>
-
-                        </div>
-                        <div class="col-md-2" style="margin-top: 32px;">
-                            <button type="submit" class="btn btn-light w-100"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
-                        </div>
-                    </form>
-
-                    <?php
-
-                    if (isset($_POST['searchReceipt'])) {
-                        $getReceipt = $_POST['searchReceipt'];
-                        $data = explode(" ", $getReceipt);
-                        $selectedValue = $data[0];
-
-
-                        // query ยอดเงิน head
-                        $stmt = $conn->query("SELECT total FROM bill_head WHERE receipt_no = '$selectedValue'");
-                        $totalHead = $stmt->fetch(PDO::FETCH_ASSOC);
-
-
-                        // query ยอดเงิน line
-                        $stmt = $conn->query("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$selectedValue'");
-                        $totalLine = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                    ?>
-
-                    
+                                } else {
+                                echo '<option value="' .$_SESSION["receiptNo_billLine"]. '">' .$_SESSION["receiptNo_billLine"]. '</option>';
+                                    
+                                foreach($receipt as $serachReceipt) {
+                                    echo '<option value="'.$serachReceipt["receipt_no"]. ' ">'.$serachReceipt["receipt_no"].'</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>  
+                    <div class="col-md-1" style="margin-top: 32px;">
+                        <button type="submit" class="btn btn-light w-100"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
+                    </div>
                     <div class="col-md-2">
-                    <form action="../db/db_expense.php" method="POST">
-                        <input type="hidden" name="searchReceipt" value="<?php echo $selectedValue;?>">
                         <label for="receiptTotal" class="form-label fw-bold">ยอดเงินตามใบเสร็จ :</label>
-                        <input type="number" class="form-control" name="receiptTotal" id="receiptTotal" value="<?php echo $totalHead['total']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
+                        <input type="number" class="form-control" name="receiptTotal" id="receiptTotal" value="<?php echo $_SESSION['Total_billLine']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
                     </div>
                     <div class="col-md-2">
                         <label for="lineTotal" class="form-label fw-bold">ยอดเงินที่บันทึก :</label>
-                        <input type="number" class="form-control" name="lineTotal" id="lineTotal" value="<?php echo $totalLine['lineTotal']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
+                        <input type="number" class="form-control" name="lineTotal" id="lineTotal" value="<?php echo $_SESSION['lineTotal']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
                     </div>
                     <div class="col-md-2">
-
-                        <?php
-
-                            $sumDiff = $totalHead['total'] - $totalLine['lineTotal'];
-
-                        ?>
-
-                        <input type="hidden">
-                        <label for="sumDiff" class="form-label fw-bold">Diff :</label>
+                        <label for="sumDiff" class="form-label fw-bold">ส่วนต่าง :</label>
                         <input type="number" class="form-control text-danger" name="sumDiff" id="sumDiff" value="<?php echo $sumDiff; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
                     </div>
                 </div>
+            </form>
 
 
+            <form action="../db/db_expense.php" method="POST">
                 <div class="row">
-                    <div class="col-md-6">
-                        <label for="itemName" class="col-form-label fw-bold"><i class="fa-solid fa-plus"></i> รายการ (เลขที่ใบเสร็จ <i><?php echo $selectedValue; ?></i>) :</label>
-                        <input type="text" class="form-control" name="itemName" id="itemName" list="addItems" required>
+                    <div class="col-md-5">
+                        <label for="itemName" class="col-form-label fw-bold">รายการ :</label>
+                        <select class="form-select" name="itemName" id="itemName" required>
+                            
+                            <?php
+                                $itemInfo = $conn->prepare("SELECT item_name FROM item_info");
+                                $itemInfo->execute();
+                                $item = $itemInfo->fetchAll();
+                            ?>
+
+                            <option value="">เลือกรายการสินค้า</option>
+                            <?php
+
+                                foreach($item as $itemName) {
+                                    echo '<option value="'.$itemName["item_name"]. ' ">'.$itemName["item_name"].'</option>';
+                                }
+
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-1" style="margin-top: 42px;">
+                        <button type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#addItemsModal"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
                     </div>
                     <div class="col-md-2">
                         <label for="itemQty" class="col-form-label fw-bold">จำนวน :</label>
@@ -161,15 +124,14 @@
                         <input type="number" class="form-control" name="itemTotal" id="itemTotal" step=".01" tabindex="-1" readonly required>
                     </div>
                 </div>
-                <div>หมายเหตุ : หากไม่พบรายการค่าใช้จ่ายให้ไปที่เมนูตั้งค่า และเพิ่มรายการบันทึก</div>
+                <!-- <div>หมายเหตุ : หากไม่พบรายการสินค้าให้ไปที่เมนูตั้งค่า</div> -->
 
                 <div class="row">
-                    <div class="col-md my-3">
+                    <div class="col-md mt-3">
                         <button type="submit" name="add_billLine" class="btn btn-success text-light w-100"><i class="fa-solid fa-floppy-disk"></i> บันทึก</button>
                     </div>
                 </div>
-                </form>
-                <?php } ?>
+            </form>
         </div>
     </section>
 
@@ -189,6 +151,8 @@
                     </tr>
                 </thead>
                 <tbody>
+
+
 
                 <?php
                 
@@ -278,9 +242,8 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <h6 class="text-center"><?php echo $fetch_bill['receipt_no']; ?></h6>
-                                    <hr>
-                                    <h6 class="text-center"><?php echo $fetch_bill['item_name']; ?></h6>
+                                    
+                                    <h6 class="text-center">รายการ :<?php echo $fetch_bill['item_name']; ?></h6>
                                     <p class="text-center">ยอดรวม : <?php echo number_format(($fetch_bill['total']), 2); ?> บาท</p>
                                 </div>
                                 <div class="modal-footer">
@@ -297,22 +260,36 @@
     </section>
 
 
-    <!-- Autocomplete -->
-    <datalist id="addItems">
-        <?php
-            $stmt = $conn->query("SELECT item_name FROM item_info");
-            $stmt->execute();
-            $item = $stmt->fetchAll();
-
-            if (!$item) {            
-            
-            } else {
-                foreach ($item as $fetch_item) {
-        ?>
-
-        <option value="<?php echo $fetch_item['item_name']; ?>"></option>
-        <?php } } ?>
-    </datalist>
+    <!-- Modal เพิ่มรายการสินค้า -->
+    <div class="modal fade" id="addItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-plus"></i> เพิ่มรายการสินค้า</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="../db/db_listItemsManagement.php" method="POST">
+                        <div class="mb-0">
+                            <label for="itemName" class="col-form-label">ชื่อรายการ :</label>
+                            <input type="text" class="form-control" name="itemName" id="itemName" placeholder="กรุณากรอกชื่อรายการ..." required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="itemType" class="col-form-label">เพิ่มประเภทรายการ :</label>
+                            <select class="form-select" aria-label="itemType" name="itemType" required>
+                                <option>ค่าแรง</option>
+                                <option>ค่าวัสดุ</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" name="addItemsExpenseLine"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- สคริป ค้นหาเลขที่ใบเสร็จ -->
@@ -324,18 +301,12 @@
     </script>
 
 
-    <!-- Auto-Fill ยอดเงิน -->
     <script>
-    function fetchTotal() {
-        var selectElement = document.getElementById("searchReceipt");
-        var selectedOption = selectElement.options[selectElement.selectedIndex].value;
-        var optionValues = selectedOption.split(" ");
-        var total = optionValues[1]; // get the second substring as the total value
-        var receiptTotalElement = document.getElementById("receiptTotal");
-        receiptTotalElement.value = total; // set the value attribute of the input element to the total value
-    }
+        var select_box_element_site2 = document.querySelector('#itemName');
+        dselect(select_box_element_site2, {
+            search: true
+        });
     </script>
-
 
 
     <!-- สคริป ยอดรวม -->
