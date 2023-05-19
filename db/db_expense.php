@@ -16,7 +16,7 @@
         $expenseSUM = $_POST['expenseSUM'];
         $expenseVAT = $_POST['expenseVAT'];
         $expenseTotal = $_POST['expenseTotal'];
-
+        $_SESSION['site'] = $siteName;
         $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total)
                                 VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total)");
         
@@ -34,6 +34,30 @@
         header("location: ../page/expense.php");
 
     }
+
+     // แก้ไขข้อมูล search bill_head
+     else if (isset($_POST['searchReceipt'])) {
+        $receipt_no = $_POST['searchReceipt'];
+        // query ยอดเงิน head
+            $sth = $conn->prepare("SELECT total FROM bill_head WHERE receipt_no = '$receipt_no'");
+            $sth->execute();
+           $totalHead = $sth->fetch(PDO::FETCH_OBJ);
+        $_SESSION['receiptNo_billLine'] = $receipt_no;
+        $_SESSION['Total_billLine'] = $totalHead->total;
+
+
+
+        // query ยอดเงิน line
+        $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receipt_no'");
+            $stl->execute();
+           $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+        $_SESSION['lineTotal'] = $totalLine->lineTotal;
+
+        header("location: ../page/expenseLine.php");
+         }
+     
+ 
+
 
 
     // แก้ไขข้อมูล bill_head
@@ -62,61 +86,61 @@
     // เพิ่มข้อมูล bill_line
     else if (isset($_POST['add_billLine'])) {
 
-        $receiptNo = $_POST['searchReceipt'];
-        $receiptTotal = $_POST['receiptTotal'];
-        $itemName = $_POST['itemName'];
-        $qty = $_POST['itemQty'];
-        $amount = $_POST['unitPrice'];
-        $total = $_POST['itemTotal'];
+        // $receiptTotal = $_POST['receiptTotal'];     // ยอดเงินตามใบเสร็จ
+        // $itemSum = $_POST['itemSum'];
 
         // check ยอดกรอกต้องตรงกับยอดใบเสร็จ
-        if ($receiptTotal >= $total) {
+        // if ($receiptTotal === $itemSum) {
+
+            $receiptNo = $_SESSION['receiptNo_billLine'];
+            $item_name = $_POST["itemName"];
+            $qty = $_POST["itemQty"];
+            $amount = $_POST['unitPrice'];
+            $total = $_POST['itemTotal'];
 
             $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
                                     VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
 
             $stmt->bindParam(':receipt_no', $receiptNo);
-            $stmt->bindParam(':item_name', $itemName);
+            $stmt->bindParam(':item_name', $item_name);
             $stmt->bindParam(':qty', $qty);
             $stmt->bindParam(':amount', $amount);
             $stmt->bindParam(':total', $total);
             $stmt->execute();
+            
 
-            $_SESSION['receiptNo_billLine'] = $receiptNo;
-            $_SESSION['add_billLine_success'] = '<i class="fa-solid fa-triangle-exclamation"></i> Success! บันทึกรายการสำเร็จ';
+            // query ยอดเงิน line
+            $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
+            $stl->execute();
+            $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+            $_SESSION['lineTotal'] = $totalLine->lineTotal;
+
             header("location: ../page/expenseLine.php");
 
-        } else {
 
-            $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกเกินยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
-            header("location: ../page/expenseLine.php");
+        // } else {
+
+            // $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
+            // echo "<script>setTimeout(function(){history.back();});</script>";
+            // header("location: ../page/expenseLine.php");
         }
-    }
+    // }
 
 
-    // แก้ไข bill_line
+    // แก้ไขข้อมูล bill_line
     else if (isset($_POST['edit_billLine'])) {
 
         $id = $_POST['id'];
-        $itemName = $_POST['editItems'];
-        $qty = $_POST['editQty'];
-        $amount = $_POST['editAmount'];
-        $total = $_POST['editTotal'];
+        $editItems = $_POST['editItems'];
+        $editQty = $_POST['editQty'];
 
-        $stmt = $conn->prepare("UPDATE bill_line
-                                SET item_name = :item_name, qty = :qty, amount = :amount, total = :total
-                                WHERE id = :id");
-
+        $stmt = $conn->prepare("UPDATE bill_line SET item_name = :item_name, qty = :qty WHERE id = :id");
         $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":item_name", $itemName);
-        $stmt->bindParam(":qty", $qty);
-        $stmt->bindParam(":amount", $amount);
-        $stmt->bindParam(":total", $total);
+        $stmt->bindParam(":item_name", $editItems);
+        $stmt->bindParam(":qty", $editQty);
         $stmt->execute();
 
         header("location: ../page/expenseLine.php");
-
     }
-
 
 ?>
