@@ -72,11 +72,25 @@
                     </div>
                     <div class="col-md-2">
                         <label for="receiptTotal" class="form-label fw-bold">ยอดเงินตามใบเสร็จ :</label>
-                        <input type="number" class="form-control" name="receiptTotal" id="receiptTotal" value="<?php echo $_SESSION['Total_billLine']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
+                        <?php
+                            if(empty($_SESSION['Total_billLine'])) {
+                                echo '<input type="number" class="form-control" name="receiptTotal" id="receiptTotal" value="0" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">';
+                            } else {
+                                echo '<input type="number" class="form-control" name="receiptTotal" id="receiptTotal" value="' .$_SESSION['Total_billLine']. '" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">';
+                            }
+                        ?>
+                        <!-- <input type="number" class="form-control" name="receiptTotal" id="receiptTotal" value="<?php //echo $_SESSION['Total_billLine']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);"> -->
                     </div>
                     <div class="col-md-2">
                         <label for="lineTotal" class="form-label fw-bold">ยอดเงินที่บันทึก :</label>
-                        <input type="number" class="form-control" name="lineTotal" id="lineTotal" value="<?php echo $_SESSION['lineTotal']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">
+                        <?php
+                            if(empty($_SESSION['lineTotal'])) {
+                                echo '<input type="number" class="form-control" name="lineTotal" id="lineTotal" value="0" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">';
+                            } else {
+                                echo '<input type="number" class="form-control" name="lineTotal" id="lineTotal" value="' .$_SESSION['lineTotal']. '" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);">';
+                            }
+                        ?>
+                        <!-- <input type="number" class="form-control" name="lineTotal" id="lineTotal" value="<?php //echo $_SESSION['lineTotal']; ?>" tabindex="-1" readonly required style="background-color: rgb(235, 235, 235);"> -->
                     </div>
                     <div class="col-md-2">
                         <label for="sumDiff" class="form-label fw-bold">ส่วนต่าง :</label>
@@ -109,7 +123,7 @@
                         </select>
                     </div>
                     <div class="col-md-1" style="margin-top: 42px;">
-                        <button type="button" class="btn btn-light w-100" data-bs-toggle="modal" data-bs-target="#addItemsModal"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
+                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#addItemsModal"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
                     </div>
                     <div class="col-md-2">
                         <label for="itemQty" class="col-form-label fw-bold">จำนวน :</label>
@@ -274,7 +288,7 @@
                             <label for="itemName" class="col-form-label">ชื่อรายการ :</label>
                             <input type="text" class="form-control" name="itemName" id="itemName" placeholder="กรุณากรอกชื่อรายการ..." required>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label for="itemType" class="col-form-label">เพิ่มประเภทรายการ :</label>
                             <select class="form-select" aria-label="itemType" name="itemType" required>
                                 <option>ค่าแรง</option>

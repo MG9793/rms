@@ -130,16 +130,37 @@
 
                     <div class="col-md-2">
                         <label for="headSum" class="form-label fw-bold">รวมกระจายค่าใช้จ่าย(%) :</label>
-                        <input type="number" class="form-control" name="headSum" id="headSum" value="<?php echo $_SESSION['Percent']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
+                        <?php
+                            if(empty($_SESSION['Percent'])) {
+                                echo '<input type="number" class="form-control" name="headSum" id="headSum" value="0" readonly required style="background-color: rgb(235, 235, 235);">';
+                            } else {
+                                echo '<input type="number" class="form-control" name="headSum" id="headSum" value="' .$_SESSION['Percent']. '" readonly required style="background-color: rgb(235, 235, 235);">';
+                            }
+                        ?>
+                        <!-- <input type="number" class="form-control" name="headSum" id="headSum" value="<?php //echo $_SESSION['Percent']; ?>" readonly required style="background-color: rgb(235, 235, 235);"> -->
                     </div>
                     <div class="col-md-2">
                         <label for="headSum" class="form-label fw-bold">ยอดกระจายค่าใช้จ่าย :</label>
-                        <input type="number" class="form-control" name="headSum" id="headSum" value="<?php echo $_SESSION['Sum']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
+                        <?php
+                            if(empty($_SESSION['Sum'])) {
+                                echo '<input type="number" class="form-control" name="headSum" id="headSum" value="0" readonly required style="background-color: rgb(235, 235, 235);">';
+                            } else {
+                                echo '<input type="number" class="form-control" name="headSum" id="headSum" value="' .$_SESSION['Sum']. '" readonly required style="background-color: rgb(235, 235, 235);">';
+                            }
+                        ?>
+                        <!-- <input type="number" class="form-control" name="headSum" id="headSum" value="<?php //echo $_SESSION['Sum']; ?>" readonly required style="background-color: rgb(235, 235, 235);"> -->
                     </div>
 
                     <div class="col-md-2">
                         <label for="monthSum" class="form-label fw-bold">ยอดรวม :</label>
-                        <input type="number" class="form-control" name="monthSum" id="monthSum" value="<?php echo $_SESSION['Total']; ?>" readonly required style="background-color: rgb(235, 235, 235);">
+                        <?php
+                            if(empty($_SESSION['Total'])) {
+                                echo '<input type="number" class="form-control" name="monthSum" id="monthSum" value="0" readonly required style="background-color: rgb(235, 235, 235);">';
+                            } else {
+                                echo '<input type="number" class="form-control" name="monthSum" id="monthSum" value="' .$_SESSION['Total']. '" readonly required style="background-color: rgb(235, 235, 235);">';
+                            }
+                        ?>
+                        <!-- <input type="number" class="form-control" name="monthSum" id="monthSum" value="<?php //echo $_SESSION['Total']; ?>" readonly required style="background-color: rgb(235, 235, 235);"> -->
                     </div>
                 </div>
 
@@ -204,7 +225,14 @@
                     <!-- แถว 3 -->
                     <div class="row mt-2">
                         <div class="col">
-                            <input type="hidden" name="sumPercent" value="<?php echo $_SESSION['Percent']; ?>">
+                            <?php
+                                if(empty($_SESSION['Percent'])) {
+                                    echo '<input type="hidden" name="sumPercent" value="0">';
+                                } else {
+                                    echo '<input type="hidden" name="sumPercent" value="' .$_SESSION['Percent']. '">';
+                                }
+                            ?>
+                            <!-- <input type="hidden" name="sumPercent" value="<?php //echo $_SESSION['Percent']; ?>"> -->
                             <button type="submit" name="saveDisperse" class="btn btn-success mt-2 w-100">บันทึก</button>
                         </div>
                     </div>
@@ -234,12 +262,12 @@
                 </thead>
                 <tbody>
 
-                
-                <?php // query ตาราง
-                    if($_SESSION['headOffice']==null){
-                    
+                <!-- query ตาราง -->
+                <?php
+                    // if($_SESSION['headOffice']==null){
+                    if(empty($_SESSION['headOffice'])) {
                         $stmt = $conn->query("SELECT * FROM disperse_info ");
-                     
+                    
                     }else{
                         $Month = $_SESSION['Month'];
                         $headOffice = $_SESSION['headOffice'];
@@ -247,8 +275,8 @@
 
                     }
                     $stmt->execute();
-                     $disperse = $stmt->fetchAll();
-                     foreach ($disperse as $fetch_disperse) {
+                    $disperse = $stmt->fetchAll();
+                    foreach ($disperse as $fetch_disperse) {
                                 
                 ?>
 
