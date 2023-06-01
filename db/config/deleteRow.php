@@ -50,6 +50,7 @@
         $delete_id = $_GET['delete_BillLine'];
         $deleteStmt = $conn->query("DELETE FROM bill_line WHERE id = $delete_id");
         $deleteStmt->execute();
+
         $receiptNo = $_SESSION['receiptNo_billLine'];
           // query ยอดเงิน line
           $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
@@ -106,6 +107,35 @@
         // Alert Success
         $_SESSION['deleteIncomeLine_success'] = '<i class="fa-solid fa-circle-check"></i> Success! ดำเนินการสำเร็จ! ลบรายการเรียบร้อยแล้ว';
     //    header("../page/incomeRecord_Line.php");
+    }
+
+
+    // ลบ กระจายค่าใช้จ่าย
+    else if (isset($_GET['deleteDisperse'])) {
+        $delete_id = $_GET['deleteDisperse'];
+        $deleteStmt = $conn->query("DELETE FROM disperse_info WHERE id = $delete_id");
+        $deleteStmt->execute();
+
+        $Month = $_SESSION["Month"];
+        $siteHO = $_SESSION['officeHO'];
+
+        $queryPercent = $conn->query("SELECT SUM(disperse_percent) AS Percent FROM disperse_info WHERE office_name = '$siteHO'");
+        $result = $queryPercent->fetch(PDO::FETCH_ASSOC);
+        $sumSpread = $result['Percent'];
+
+
+        $updatePercent = $conn->prepare("UPDATE bill_head SET spread_cost = :spread_cost WHERE site_name = :site_name");
+        $updatePercent->bindParam(":spread_cost", $sumSpread);
+        $updatePercent->bindParam(":site_name", $siteHO);
+        $updatePercent->execute();
+
+
+        $std = $conn->prepare("SELECT SUM(disperse_sum) AS Sum ,SUM(disperse_percent) AS Percent FROM disperse_info WHERE month = '$Month' AND office_name = '$siteHO' ");
+        $std->execute();
+        $total = $std->fetch(PDO::FETCH_OBJ);
+        $_SESSION['Sum'] = $total->Sum;
+        $_SESSION['Percent'] = $total->Percent;
+
     }
 
 ?>

@@ -4,7 +4,7 @@
     require_once 'config/conn.php';
 
 
-    // เพิ่มข้อมูล bill_head
+    // เพิ่มข้อมูล กระจายค่าใช้จ่าย
     if (isset($_POST['saveDisperse'])) {
 
         $selectSite = $_POST['selectSite'];
@@ -13,7 +13,7 @@
         $headOffice = $_SESSION["headOffice"];
         $Month = $_SESSION["Month"];
 
-        $stmt = $conn->prepare("INSERT INTO disperse_info(	disperse_site , disperse_percent, disperse_sum, office_name , month)
+        $stmt = $conn->prepare("INSERT INTO disperse_info(disperse_site , disperse_percent, disperse_sum, office_name , month)
                                 VALUES(:disperse_site ,:disperse_percent, :disperse_sum, :office_name, :month)");
         
         $stmt->bindParam(":disperse_site", $selectSite);
@@ -21,20 +21,68 @@
         $stmt->bindParam(":disperse_sum", $SiteSum);
         $stmt->bindParam(":office_name", $headOffice);
         $stmt->bindParam(":month", $Month);
-
-
         $stmt->execute();
+
 
         $std = $conn->prepare("SELECT SUM(disperse_sum) AS Sum ,SUM(disperse_percent) AS Percent FROM disperse_info WHERE month = '$Month' AND office_name = '$headOffice' ");
         $std->execute();
         $total = $std->fetch(PDO::FETCH_OBJ);
         $_SESSION['Sum'] = $total->Sum;
         $_SESSION['Percent'] = $total->Percent;
-        header("location: ../page/disperseCost.php");
 
+        if ($_SESSION['Percent'] > 100) {
+            $_SESSION['overDisperse'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดกระจายค่าใช้จ่ายเกิน กรุณาตรวจสอบอีกครั้ง';
+
+            // record ล่าสุดที่เกิน 100% ให้ลบออก
+            $stmt = $conn->prepare("DELETE FROM disperse_info ORDER BY id DESC LIMIT 1");
+            $stmt->execute();
+
+            header("location: ../page/disperseCost.php");
+
+        } else {
+
+
+        // update ตัวเลขเปอร์เซ็นต์ใน spread_cost ของ bill_head
+        $sumSpread = $_SESSION['Percent'];
+
+        if ($Month == 'มกราคม') {
+            $_SESSION['selMonth'] = 1;
+        } else if ($Month == 'กุมภาพันธ์') {
+            $_SESSION['selMonth'] = 2;
+        } else if ($Month == 'มีนาคม') {
+            $_SESSION['selMonth'] = 3;
+        } else if ($Month == 'เมษายน') {
+            $_SESSION['selMonth'] = 4;
+        } else if ($Month == 'พฤษภาคม') {
+            $_SESSION['selMonth'] = 5;
+        } else if ($Month == 'มิถุนายน') {
+            $_SESSION['selMonth'] = 6;
+        } else if ($Month == 'กรกฎาคม') {
+            $_SESSION['selMonth'] = 7;
+        } else if ($Month == 'สิงหาคม') {
+            $_SESSION['selMonth'] = 8;
+        } else if ($Month == 'กันยายน') {
+            $_SESSION['selMonth'] = 9;
+        } else if ($Month == 'ตุลาคม') {
+            $_SESSION['selMonth'] = 10;
+        } else if ($Month == 'พฤศจิกายน') {
+            $_SESSION['selMonth'] = 11;
+        } else if ($Month == 'ธันวาคม') {
+            $_SESSION['selMonth'] = 12;
+        }
+
+        $month = $_SESSION['selMonth'];
+        $updatePercent = $conn->prepare("UPDATE bill_head SET spread_cost = :spread_cost WHERE site_name = :site_name AND MONTH(buy_date) = '$month'");
+        $updatePercent->bindParam(":spread_cost", $sumSpread);
+        $updatePercent->bindParam(":site_name", $headOffice);
+        $updatePercent->execute();
+
+        header("location: ../page/disperseCost.php");
+    }
     }
 
-     // search bill_head ตามเดือน
+    
+     // search กระจายค่าใช้จ่าย ตามเดือน
      else if (isset($_POST['selectMonth'])) {
         $getMonth = $_POST['selectMonth'];
         $getHO = $_POST['selectHO'];
@@ -81,110 +129,97 @@
         $_SESSION['Total'] = $totalMonth->headSum;
 
         header("location: ../page/disperseCost.php");
-         }
+        
+    }
      
  
 
 
 
-    // แก้ไขข้อมูล bill_head
-    else if (isset($_POST['edit_billHead'])) {
+    // // แก้ไขข้อมูล bill_head
+    // else if (isset($_POST['edit_billHead'])) {
 
-        $id = $_POST['id'];
-        $siteName = $_POST['editSiteName'];
-        $receiptNo = $_POST['editReceiptNo'];
-        $buyDate = $_POST['editBuyDate'];
-        $type = $_POST['editType'];
+    //     $id = $_POST['id'];
+    //     $siteName = $_POST['editSiteName'];
+    //     $receiptNo = $_POST['editReceiptNo'];
+    //     $buyDate = $_POST['editBuyDate'];
+    //     $type = $_POST['editType'];
 
-        $stmt = $conn->prepare("UPDATE bill_head SET site_name = :site_name, receipt_no = :receipt_no, buy_date = :buy_date, type = :type
-                                WHERE id = :id");
+    //     $stmt = $conn->prepare("UPDATE bill_head SET site_name = :site_name, receipt_no = :receipt_no, buy_date = :buy_date, type = :type
+    //                             WHERE id = :id");
 
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":site_name", $siteName);
-        $stmt->bindParam(":receipt_no", $receiptNo);
-        $stmt->bindParam(":buy_date", $buyDate);
-        $stmt->bindParam(":type", $type);
+    //     $stmt->bindParam(":id", $id);
+    //     $stmt->bindParam(":site_name", $siteName);
+    //     $stmt->bindParam(":receipt_no", $receiptNo);
+    //     $stmt->bindParam(":buy_date", $buyDate);
+    //     $stmt->bindParam(":type", $type);
 
-        $stmt->execute();
-        header("location: ../page/expense.php");
-    }
+    //     $stmt->execute();
+    //     header("location: ../page/expense.php");
+    // }
 
 
-    // เพิ่มข้อมูล bill_line
-    else if (isset($_POST['add_billLine'])) {
+    // // เพิ่มข้อมูล bill_line
+    // else if (isset($_POST['add_billLine'])) {
 
-        $receiptTotal = $_POST['receiptTotal'];
-        $itemSum = $_POST['itemSum'];
+    //     $receiptTotal = $_POST['receiptTotal'];
+    //     $itemSum = $_POST['itemSum'];
 
-        // check ยอดกรอกต้องตรงกับยอดใบเสร็จ
-        if ($receiptTotal === $itemSum) {
+    //     // check ยอดกรอกต้องตรงกับยอดใบเสร็จ
+    //     if ($receiptTotal === $itemSum) {
 
-            $receiptNo = $_SESSION['receiptNo_billLine'];
+    //         $receiptNo = $_SESSION['receiptNo_billLine'];
 
-            $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
-                                    VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
+    //         $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
+    //                                 VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
 
-            $stmt->bindParam(':receipt_no', $receiptNo);
-            $stmt->bindParam(':item_name', $item_name);
-            $stmt->bindParam(':qty', $qty);
-            $stmt->bindParam(':amount', $amount);
-            $stmt->bindParam(':total', $total);
+    //         $stmt->bindParam(':receipt_no', $receiptNo);
+    //         $stmt->bindParam(':item_name', $item_name);
+    //         $stmt->bindParam(':qty', $qty);
+    //         $stmt->bindParam(':amount', $amount);
+    //         $stmt->bindParam(':total', $total);
 
-            // loop array
-            $item_name = $_POST["itemName"];
-            $qty = $_POST["itemQty"];
-            $amount = $_POST['unitPrice'];
-            $total = $_POST['itemTotal'];
-            $stmt->execute();
+    //         // loop array
+    //         $item_name = $_POST["itemName"];
+    //         $qty = $_POST["itemQty"];
+    //         $amount = $_POST['unitPrice'];
+    //         $total = $_POST['itemTotal'];
+    //         $stmt->execute();
             
 
 
-        // query ยอดเงิน line
-        $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
-            $stl->execute();
-           $totalLine = $stl->fetch(PDO::FETCH_OBJ);
-        $_SESSION['lineTotal'] = $totalLine->lineTotal;
+    //     // query ยอดเงิน line
+    //     $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
+    //         $stl->execute();
+    //        $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+    //     $_SESSION['lineTotal'] = $totalLine->lineTotal;
 
-            header("location: ../page/expenseLine.php");
-
-
-        } else {
-
-            $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
-            echo "<script>setTimeout(function(){history.back();});</script>";
-            // header("location: ../page/expenseLine.php");
-        }
-    }
+    //         header("location: ../page/expenseLine.php");
 
 
-    // แก้ไขข้อมูล bill_line
-    else if (isset($_POST['edit_billLine'])) {
+    //     } else {
 
-        $id = $_POST['id'];
-        $editItems = $_POST['editItems'];
-        $editQty = $_POST['editQty'];
-
-        $stmt = $conn->prepare("UPDATE bill_line SET item_name = :item_name, qty = :qty WHERE id = :id");
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":item_name", $editItems);
-        $stmt->bindParam(":qty", $editQty);
-        $stmt->execute();
-
-        header("location: ../page/expenseLine.php");
-    }
-
-
-
-
-
-
-
-    
-    // check มีการส่ง selectSite_Line จาก incomeRecord.php หรือไม่
-    // else if (isset($_POST['selectSite_Line'])) {
-    //     $siteName = $_POST['siteName'];
-
-    //     $_SESSION['siteName_incomeLine'] = $siteName;
-    //     header("location: ../page/incomeRecord_Line.php");
+    //         $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
+    //         echo "<script>setTimeout(function(){history.back();});</script>";
+    //         // header("location: ../page/expenseLine.php");
+    //     }
     // }
+
+
+    // // แก้ไขข้อมูล bill_line
+    // else if (isset($_POST['edit_billLine'])) {
+
+    //     $id = $_POST['id'];
+    //     $editItems = $_POST['editItems'];
+    //     $editQty = $_POST['editQty'];
+
+    //     $stmt = $conn->prepare("UPDATE bill_line SET item_name = :item_name, qty = :qty WHERE id = :id");
+    //     $stmt->bindParam(":id", $id);
+    //     $stmt->bindParam(":item_name", $editItems);
+    //     $stmt->bindParam(":qty", $editQty);
+    //     $stmt->execute();
+
+    //     header("location: ../page/expenseLine.php");
+    // }
+
 ?>

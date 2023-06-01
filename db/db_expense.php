@@ -86,13 +86,17 @@
     // เพิ่มข้อมูล bill_line
     else if (isset($_POST['add_billLine'])) {
 
-        $receiptTotal = $_POST['receiptTotal'];
-        $itemSum = $_POST['itemSum'];
+        // $receiptTotal = $_POST['receiptTotal'];     // ยอดเงินตามใบเสร็จ
+        // $itemSum = $_POST['itemSum'];
 
         // check ยอดกรอกต้องตรงกับยอดใบเสร็จ
-        if ($receiptTotal === $itemSum) {
+        // if ($receiptTotal === $itemSum) {
 
             $receiptNo = $_SESSION['receiptNo_billLine'];
+            $item_name = $_POST["itemName"];
+            $qty = $_POST["itemQty"];
+            $amount = $_POST['unitPrice'];
+            $total = $_POST['itemTotal'];
 
             $stmt = $conn->prepare("INSERT INTO bill_line (receipt_no, item_name, qty, amount, total)
                                     VALUES (:receipt_no, :item_name, :qty, :amount, :total)");
@@ -102,32 +106,25 @@
             $stmt->bindParam(':qty', $qty);
             $stmt->bindParam(':amount', $amount);
             $stmt->bindParam(':total', $total);
-
-            // loop array
-            $item_name = $_POST["itemName"];
-            $qty = $_POST["itemQty"];
-            $amount = $_POST['unitPrice'];
-            $total = $_POST['itemTotal'];
             $stmt->execute();
             
 
-
-        // query ยอดเงิน line
-        $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
+            // query ยอดเงิน line
+            $stl = $conn->prepare("SELECT SUM(total) AS lineTotal FROM bill_line WHERE receipt_no = '$receiptNo'");
             $stl->execute();
-           $totalLine = $stl->fetch(PDO::FETCH_OBJ);
-        $_SESSION['lineTotal'] = $totalLine->lineTotal;
+            $totalLine = $stl->fetch(PDO::FETCH_OBJ);
+            $_SESSION['lineTotal'] = $totalLine->lineTotal;
 
             header("location: ../page/expenseLine.php");
 
 
-        } else {
+        // } else {
 
-            $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
-            echo "<script>setTimeout(function(){history.back();});</script>";
+            // $_SESSION['add_billLine_error'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! ยอดที่กรอกไม่ตรงกับยอดตามใบเสร็จ กรุณาตรวจสอบอีกครั้ง';
+            // echo "<script>setTimeout(function(){history.back();});</script>";
             // header("location: ../page/expenseLine.php");
         }
-    }
+    // }
 
 
     // แก้ไขข้อมูล bill_line
@@ -146,18 +143,4 @@
         header("location: ../page/expenseLine.php");
     }
 
-
-
-
-
-
-
-    
-    // check มีการส่ง selectSite_Line จาก incomeRecord.php หรือไม่
-    // else if (isset($_POST['selectSite_Line'])) {
-    //     $siteName = $_POST['siteName'];
-
-    //     $_SESSION['siteName_incomeLine'] = $siteName;
-    //     header("location: ../page/incomeRecord_Line.php");
-    // }
 ?>
