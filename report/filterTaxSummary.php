@@ -53,7 +53,7 @@
                                 
                                     if ($_SESSION['selectCompany']=="") { ?>
 
-                                <option value="">ค้นหาสถานประกอบการ</option>
+                                <option value="">สถานประกอบการ</option>
                                 <?php
                                     foreach($company as $searchCompany) {
                                         echo '<option value="'.$searchCompany["company_name"].'">'.$searchCompany["company_name"].'</option>';
@@ -132,7 +132,7 @@
                             <td style="text-align:center;"><?php echo $filterTax['receipt_no']; ?></td>
                             <td><?php echo $filterTax['sales_name']; ?></td>
                             <td style="text-align:center;"><?php echo $filterTax['tax_no']; ?></td>
-                            <td></td>
+                            <td style="text-align:center;"><?php echo $filterTax['sales_branch']; ?></td>
                             <td style="text-align:right;"><?php echo $filterTax['sum']; ?></td>
                             <td style="text-align:right;"><?php echo $filterTax['vat']; ?></td>
                             <td style="text-align:center;">
