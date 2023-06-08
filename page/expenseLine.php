@@ -13,7 +13,27 @@
       $receiptNo = $_SESSION['receiptNo_billLine'];
       }
 ?>
-
+<style>
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 2px 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+.button4 {border-radius: 12px;
+    background-color: white; 
+    color: green; 
+    border: 2px solid #4CAF50;
+}
+</style>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,7 +122,7 @@
 
             <form action="../db/db_expense.php" method="POST">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <label for="itemName" class="col-form-label fw-bold">รายการ :</label>
                         <select class="form-select" name="itemName" id="itemName" required>
                             
@@ -121,10 +141,9 @@
 
                             ?>
                         </select>
+                        <p><button type="button" class="button button4" data-bs-toggle="modal" data-bs-target="#addItemsModal"><i class="fa-solid fa-plus"></i> เพิ่มรายการสินค้า</button></p>
                     </div>
-                    <div class="col-md-1" style="margin-top: 42px;">
-                        <button type="button" class="btn btn-success w-100" data-bs-toggle="modal" data-bs-target="#addItemsModal"><i class="fa-solid fa-plus"></i> เพิ่ม</button>
-                    </div>
+                    
                     <div class="col-md-2">
                         <label for="itemQty" class="col-form-label fw-bold">จำนวน :</label>
                         <input type="number" class="form-control" name="itemQty" id="itemQty" oninput="calculateSum()" required>
