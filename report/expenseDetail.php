@@ -16,7 +16,7 @@
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$sql = "SELECT * FROM item_info";
+	$sql = "SELECT SUM(total) as t1,item_name FROM bill_line GROUP BY item_name";
 	
 	$result = mysqli_query($conn, $sql);
 	$content = "";
@@ -36,7 +36,7 @@
         <td style="border-right:1px solid #000;padding:3px;"  ></td>
         <td style="border-right:1px solid #000;padding:3px;"  ></td>
         <td style="border-right:1px solid #000;padding:3px;"  ></td>
-        <td style="border-right:1px solid #000;padding:3px;"  ></td>
+        <td style="border-right:1px solid #000;padding:3px;"  >'.$row['t1'].'</td>
         
 			</tr>
       

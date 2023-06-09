@@ -89,7 +89,7 @@
     // ลบ income_head
     else if (isset($_GET['deleteIncome_head'])) {
         $delete_id = $_GET['deleteIncome_head'];
-        $deleteStmt = $conn->query("DELETE FROM site_info WHERE id = $delete_id");
+        $deleteStmt = $conn->query("DELETE FROM income WHERE id = $delete_id");
         $deleteStmt->execute();
 
         // Alert Success

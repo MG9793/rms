@@ -1,0 +1,19 @@
+
+body{
+    font-family: "Garuda";
+}
+
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+
+.text-center {
+    text-align: center;
+}
+
+.text-end {
+    text-align: right;
+}

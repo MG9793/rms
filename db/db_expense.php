@@ -16,9 +16,16 @@
         $expenseSUM = $_POST['expenseSUM'];
         $expenseVAT = $_POST['expenseVAT'];
         $expenseTotal = $_POST['expenseTotal'];
+           // query sales_branch
+           $stl = $conn->prepare("SELECT sales_branch FROM sales_info WHERE sales_name = '$sellerName'");
+           $stl->execute();
+           $sales = $stl->fetch(PDO::FETCH_OBJ);
+           $salesBranch = $sales->sales_branch;
+
+        
         $_SESSION['site'] = $siteName;
-        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total)
-                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total)");
+        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total , sales_branch)
+                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total , :sales_branch)");
         
         $stmt->bindParam(":site_name", $siteName);
         $stmt->bindParam(":receipt_no", $receiptNo);
@@ -29,6 +36,7 @@
         $stmt->bindParam(":sum", $expenseSUM);
         $stmt->bindParam(":vat", $expenseVAT);
         $stmt->bindParam(":total", $expenseTotal);
+        $stmt->bindParam(":sales_branch", $salesBranch);
 
         $stmt->execute();
         header("location: ../page/expense.php");
