@@ -1,6 +1,6 @@
 
 <?php
-
+session_start();
 require_once "../include/header.php";
 require_once "../include/dependency.php";
 require_once "../db/config/deleteRow.php";
@@ -39,7 +39,8 @@ require_once "../db/config/deleteRow.php";
                         <label for="userPermission" class="form-label">สิทธิการใช้งาน :</label>
                         <select class="form-select" aria-label="userPermission" name="userPermission" required>
                             <option>Admin</option>
-                            <option>User</option>
+                            <option>Procurement</option>
+                            <option>Account</option>
                         </select>
                     </div>
                 </div>

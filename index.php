@@ -24,6 +24,7 @@
             if ($username == $row['username']) {
                 if (password_verify($password, $row['password'])) {
                     $_SESSION['admin_login'] = $row['id'];
+                    $_SESSION['permission'] = $row['permission'];
                     header("location: page/dashboard.php");
 
                 } else {
