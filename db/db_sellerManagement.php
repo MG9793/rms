@@ -4,14 +4,14 @@
     require_once 'config/conn.php';
 
 
-    // เพิ่มข้อมูล item_info
+    // เพิ่มข้อมูลจากหน้าตั้งค่า
     if (isset($_POST['addSales'])) {
         $salesName = $_POST['salesName'];
         $salesBranch = $_POST['salesBranch'];
         $taxNo = $_POST['taxNo'];
 
         if ($salesBranch == "") {
-            $salesBranch = "สำนักงานใหญ่";
+            $salesBranch = $salesName . " (สำนักงานใหญ่)";
 
             $stmt = $conn->prepare("INSERT INTO sales_info(sales_name, sales_branch, tax_no) VALUES(:sales_name, :sales_branch, :tax_no)");
             $stmt->bindParam(":sales_name", $salesName);
@@ -23,6 +23,7 @@
             header("location: ../page/sellerManagement.php");
 
         } else {
+            $salesBranch = $salesName . " ($salesBranch)";
 
             $stmt = $conn->prepare("INSERT INTO sales_info(sales_name, sales_branch, tax_no) VALUES(:sales_name, :sales_branch, :tax_no)");
             $stmt->bindParam(":sales_name", $salesName);
@@ -37,7 +38,7 @@
     }
 
 
-    // แก้ไขข้อมูล item_info
+    // แก้ไขข้อมูลจากหน้าตั้งค่า
     else if (isset($_POST['editSales'])) {
         $id = $_POST['id'];
         $salesName = $_POST['editSalesName'];
@@ -54,6 +55,42 @@
         $_SESSION['editSales_success'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขผู้ขายสำเร็จ';
         header("location: ../page/sellerManagement.php");
 
+    }
+
+
+    // เพิ่มข้อมูลจากหน้าบันทึกรายจ่าย
+    else if (isset($_POST['add_QuickSeller'])) {
+        $salesName = $_POST['addSalesName'];
+        $salesBranch = $_POST['addSalesBranch'];
+        $taxNo = $_POST['addtaxNo'];
+
+        if ($salesBranch == "") {
+            $salesBranch = $salesName . " (สำนักงานใหญ่)";
+
+            $stmt = $conn->prepare("INSERT INTO sales_info(sales_name, sales_branch, tax_no) VALUES(:sales_name, :sales_branch, :tax_no)");
+            $stmt->bindParam(":sales_name", $salesName);
+            $stmt->bindParam(":sales_branch", $salesBranch);
+            $stmt->bindParam(":tax_no", $taxNo);
+            $stmt->execute();
+
+            $_SESSION['addSuccess'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกข้อมูลสำเร็จ';
+            header("location: ../page/expense.php");
+
+
+        } else {
+            $salesBranch = $salesName . " ($salesBranch)";
+
+            $stmt = $conn->prepare("INSERT INTO sales_info(sales_name, sales_branch, tax_no) VALUES(:sales_name, :sales_branch, :tax_no)");
+            $stmt->bindParam(":sales_name", $salesName);
+            $stmt->bindParam(":sales_branch", $salesBranch);
+            $stmt->bindParam(":tax_no", $taxNo);
+            $stmt->execute();
+
+            $_SESSION['addSuccess'] = '<i class="fa-solid fa-circle-check"></i> Success! บันทึกข้อมูลสำเร็จ';
+            header("location: ../page/expense.php");
+
+
+        }
     }
 
 ?>
