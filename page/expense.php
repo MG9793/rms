@@ -16,22 +16,38 @@
     $sales_name->execute();
     $rs_sales = $sales_name->fetchAll();
 
-      
+    if (!isset($_SESSION['site'])) {
+        //  header("location: incomeRecord.php");
+        $site="";
+      } else {
+
+      // ดึง sitename จาก session
+      $site = $_SESSION['site'];
+      }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <!-- script Datables ห้ามลบจ้า -->
- <script>
+    <!-- script Datables ห้ามลบจ้า -->
+    <script>
         $(document).ready( function () {
             $('#myTable').DataTable();
         } );
     </script>
 
-            <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS -->
+    <script src="../resources/lib/dselect.js"></script>
 
-        <script src="../resources/lib/dselect.js"></script>
+    <style>
+        .quickAdd {
+            text-decoration: none;
+            font-weight: 500;
+            color: #f86624;
+        }
+    </style>
+
+
 </head>
 <body>
     
@@ -39,20 +55,54 @@
     <section class="container mt-2">
         <div class="container border border-3 border-light bg-secondary shadow-sm">
             <legend class="fw-bold text-dark text-center p-2">บันทึกรายจ่าย </legend>
+
+
+            <?php
+                // Alert รายการซ้ำ
+                if(isset($_SESSION['duplicateData'])) {
+                    echo "<div class='alert alert-danger alert-dismissible fade show mt-2' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['duplicateData'];
+                    unset($_SESSION['duplicateData']);
+                    echo "</div>";
+                }
+
+                // Alert บันทึกสำเร็จ
+                else if(isset($_SESSION['addSuccess'])) {
+                    echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['addSuccess'];
+                    unset($_SESSION['addSuccess']);
+                    echo "</div>";
+                }
+            ?>
+
             <form action="../db/db_expense.php" method="POST">
 
                 <div class="row mb-2">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold" for="siteName">ไซต์งาน :</label>
+                        <label class="form-label fw-bold" for="siteName">ไซต์งาน : <a href="" class="quickAdd" data-bs-toggle="modal" data-bs-target="#addSiteModal"> + เพิ่มไซต์งาน</a></label>
                         <select name="siteName" class="form-select" id="siteName">
-                            <option value="">กรุณาเลือกไซต์งาน</option>
+                            
                             <?php 
-                                foreach($rs_site as $row_site)
-                                {
-                                    echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
-                                }
+                                    if($_SESSION['site']=="") { ?>
+
+                                        <option value="">กรุณาเลือกไซต์งาน</option>
+                                        <?php
+                                    foreach($rs_site as $row_site) {
+                                        echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
+                                    }
+                                    } else {
+                                    echo '<option value="' .$_SESSION["site"]. '">' .$_SESSION["site"]. '</option>';
+
+                                    foreach($rs_site as $row_site) {
+                                        echo '<option value="'.$row_site["site_name"].'">'.$row_site["site_name"].'</option>';
+                                    }
+
+                                    }
                             ?>  
                         </select>
+                        <!-- <p><button type="button" class="button button4" data-bs-toggle="modal" data-bs-target="#addSiteModal"><i class="fa-solid fa-plus"></i> เพิ่มไซต์งาน</button></p> -->
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
@@ -66,7 +116,7 @@
 
                 <div class="row mb-2">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold" for="salesName">ชื่อผู้ขาย :</label>
+                        <label class="form-label fw-bold" for="salesName">ชื่อผู้ขาย : <a href="" class="quickAdd" data-bs-toggle="modal" data-bs-target="#addSellerModal"> + เพิ่มผู้ขาย</a></label>
                         <select class="form-select" name="salesName" id="salesName" onChange="taxID();">
                             <option value="">กรุณาเลือกผู้ขาย</option>
                             <?php 
@@ -103,15 +153,15 @@
                 <div class="row mb-3"> 
                     <div class="col-md-4">
                         <label class="form-label fw-bold">รวมเงินค่าสินค้าและค่าขนส่ง :</label>
-                        <input type="text" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM">
+                        <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
-                        <input type="text" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT">
+                        <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: lightgrey;">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
-                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" oninput="calculateVAT()" required>
+                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: lightgrey;" required>
                     </div>
                 </div>
 
@@ -126,7 +176,7 @@
 
     <!-- input ห้ามลบ -->
     <section class="container mb-2">
-        <fieldset class="p-3 shadow-sm mt-2">
+        <fieldset class="p-3 shadow-sm mt-3">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
 
@@ -143,12 +193,19 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                <!-- query ตาราง ห้ามลบ -->
                 <?php
+                 
+                        if($site!="") { 
+                            $site=$_SESSION['site'];
+                            $stmt = $conn->query("SELECT * FROM bill_head WHERE site_name = '$site' ORDER BY id DESC");
+                        $stmt->execute();
+                        $bill = $stmt->fetchAll();
+                        }else{
                         $stmt = $conn->query("SELECT * FROM bill_head ORDER BY id DESC");
                         $stmt->execute();
                         $bill = $stmt->fetchAll();
-
+                    }
                         if (!$bill) {
                            
                         } else {
@@ -255,7 +312,87 @@
                 </tbody>
             </table>
         </fieldset>
-    </section>  
+    </section>
+
+
+    <!-- Modal เพิ่มไซต์งาน -->
+    <div class="modal fade" id="addSiteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-plus"></i> เพิ่มไซต์งาน</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="../db/db_siteManagement.php" method="POST">
+                        <div class="mb-0">
+                            <label for="siteName" class="col-form-label">ชื่อไซต์งาน :</label>
+                            <input type="text" class="form-control" name="siteName" id="siteName" placeholder="กรุณากรอก..." required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="siteAbbre" class="col-form-label">อักษรย่อไซต์งาน :</label>
+                            <input type="text" class="form-control" name="siteAbbre" id="siteAbbre" placeholder="กรุณากรอก..." required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="startDate" class="col-form-label">วันที่เริ่ม :</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="finishDate" class="col-form-label">วันที่สิ้นสุด :</label>
+                            <input type="date" class="form-control" name="finishDate" id="finishDate" required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="addInstallment" class="col-form-label">จำนวนงวด :</label>
+                            <input type="number" class="form-control" name="addInstallment" id="addInstallment" placeholder="กรุณากรอก..." required>
+                        </div>
+                        <div class="mb-2">
+                            <label for="addTotal" class="col-form-label">จำนวนเงินทั้งสิ้น :</label>
+                            <input type="number" class="form-control" name="addTotal" id="addTotal" step="any" placeholder="กรุณากรอก..." required>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-warning" name="add_QuickSite"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal เพิ่มผู้ขาย -->
+    <div class="modal fade" id="addSellerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-plus"></i> เพิ่มผู้ขาย</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="../db/db_sellerManagement.php" method="POST">
+                        <div class="mb-0">
+                            <label for="addSalesName" class="col-form-label">ชื่อผู้ขาย :</label>
+                            <input type="text" class="form-control" name="addSalesName" id="addSalesName" placeholder="กรุณากรอก..." required>
+                        </div>
+                        <div class="mb-0">
+                            <label for="addSalesBranch" class="col-form-label">ชื่อสาขา (กรอกเฉพาะกรณีไม่ใช่สำนักงานใหญ่) :</label>
+                            <input type="text" class="form-control" name="addSalesBranch" id="addSalesBranch" placeholder="สาขา...">
+                        </div>
+                        <div class="mb-2">
+                            <label for="addtaxNo" class="col-form-label">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
+                            <input type="text" class="form-control" name="addtaxNo" id="addtaxNo" placeholder="กรุณากรอก..." minlength="13" maxlength="13" required>
+                        </div>
+                        <div class="text-end mt-3">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-warning" name="add_QuickSeller"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
     <!-- Autocomplete -->
@@ -372,10 +509,15 @@
 
     <script>
         function calculateVAT() {
-            var price = document.getElementById("expenseTotal").value;
+            // var price = document.getElementById("expenseTotal").value;
+            // var vat = price * $vatC;
+            // document.getElementById("expenseVAT").value = vat.toFixed(2);
+            // document.getElementById("expenseSUM").value = (parseFloat(price) - vat).toFixed(2);
+
+            var price = document.getElementById("expenseSUM").value;
             var vat = price * $vatC;
             document.getElementById("expenseVAT").value = vat.toFixed(2);
-            document.getElementById("expenseSUM").value = (parseFloat(price) - vat).toFixed(2);
+            document.getElementById("expenseTotal").value = (parseFloat(price) + vat).toFixed(2);
         }
     </script>
 
@@ -388,16 +530,8 @@
 
             document.getElementById("itemSum").value = parseFloat(sum).toFixed(2);
         }
-
-        // function calculateVAT() {
-        //     var price = document.getElementById("itemsQty").value;
-        //     var vat = price * 0.07;
-        //     document.getElementById("itemsPrice").value = vat.toFixed(2);
-        //     document.getElementById("itemsVAT").value = (parseFloat(price) + vat).toFixed(2);
-        // }
     </script>
 
 
 </body>
 </html>
-
