@@ -28,6 +28,24 @@
                 </div>
 
 
+                <form action="" method="POST">
+                    <div class="row mt-3">
+                        <div class="col-md">
+                            <label for="selectTime" class="form-label fw-bold">กรุณาเลือก เดือน/ปี สำหรับออกรายงานภาษีซื้อ :</label>
+                            <input type="month" class="form-control" name="selectTime" id="selectTime" required>
+                        </div>
+                        <div class="col-md">
+                            <label for="selectedSum" class="form-label fw-bold text-primary">ยอดออกใบกำกับภาษีที่เลือก :</label>
+                            <input type="number" class="form-control text-primary" name="selectedSum" id="selectedSum" required>
+                        </div>
+                        <div class="col-md" style="margin-top: 32px;">
+                            <button type="submit" class="btn btn-primary" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;ออกรายงานภาษีซื้อ</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+
+
                 <table class="table table-sm table-hover mt-2 css-serial">
                     <thead>
                         <tr>
