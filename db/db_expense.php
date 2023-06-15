@@ -16,9 +16,16 @@
         $expenseSUM = $_POST['expenseSUM'];
         $expenseVAT = $_POST['expenseVAT'];
         $expenseTotal = $_POST['expenseTotal'];
+           // query sales_branch
+           $stl = $conn->prepare("SELECT sales_branch FROM sales_info WHERE sales_name = '$sellerName'");
+           $stl->execute();
+           $sales = $stl->fetch(PDO::FETCH_OBJ);
+           $salesBranch = $sales->sales_branch;
+
+        
         $_SESSION['site'] = $siteName;
-        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total)
-                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total)");
+        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total , sales_branch)
+                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total , :sales_branch)");
         
         $stmt->bindParam(":site_name", $siteName);
         $stmt->bindParam(":receipt_no", $receiptNo);
@@ -29,6 +36,7 @@
         $stmt->bindParam(":sum", $expenseSUM);
         $stmt->bindParam(":vat", $expenseVAT);
         $stmt->bindParam(":total", $expenseTotal);
+        $stmt->bindParam(":sales_branch", $salesBranch);
 
         $stmt->execute();
         header("location: ../page/expense.php");
@@ -67,18 +75,39 @@
         $siteName = $_POST['editSiteName'];
         $receiptNo = $_POST['editReceiptNo'];
         $buyDate = $_POST['editBuyDate'];
+        $salesName = $_POST['editSalesName'];
+        $taxNO = $_POST['editTaxNO'];
         $type = $_POST['editType'];
+        $expense = $_POST['editExpense'];
+        $vat = $_POST['editVAT'];
+        $editExpenseTotal = $_POST['editExpenseTotal'];
 
-        $stmt = $conn->prepare("UPDATE bill_head SET site_name = :site_name, receipt_no = :receipt_no, buy_date = :buy_date, type = :type
+        $stmt = $conn->prepare("UPDATE bill_head
+                                SET site_name = :site_name,
+                                    receipt_no = :receipt_no,
+                                    buy_date = :buy_date,
+                                    sales_name = :sales_name,
+                                    tax_no = :tax_no,
+                                    type = :type,
+                                    sum = :sum,
+                                    vat = :vat,
+                                    total = :total
                                 WHERE id = :id");
 
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":site_name", $siteName);
         $stmt->bindParam(":receipt_no", $receiptNo);
         $stmt->bindParam(":buy_date", $buyDate);
+        $stmt->bindParam(":sales_name", $salesName);
+        $stmt->bindParam(":tax_no", $taxNO);
         $stmt->bindParam(":type", $type);
+        $stmt->bindParam(":sum", $expense);
+        $stmt->bindParam(":vat", $vat);
+        $stmt->bindParam(":total", $editExpenseTotal);
 
         $stmt->execute();
+
+        $_SESSION['editSuccess'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขรายการสำเร็จ';
         header("location: ../page/expense.php");
     }
 

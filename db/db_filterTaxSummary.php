@@ -32,6 +32,14 @@
             }
         }
 
+        header("location: ../report/taxReport.php");
+    }
+
+
+    else if(isset($_POST['this_billVAT'])) {
+        $thisMonth = $_POST['thisMonth'];
+        $_SESSION['thisMonth'] = $thisMonth;
+
         header("location: ../report/filterTaxSummary.php");
     }
 ?>
