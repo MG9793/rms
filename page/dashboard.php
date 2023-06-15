@@ -32,16 +32,12 @@
 
             <div class="col-xl-4 col-md-12 mt-3">
                 <div class="card">
+                    <div class="card-header bg-dark text-center text-light">
+                        <h5 class="fw-bold"><?php echo $siteName; ?></h5>
+                        <h5 class="fw-bold"><?php echo $siteAbbre; ?></h5>
+                    </div>
                     <div class="card-body">
-                        <div class="d-flex">
-                            <img src="../image/icon/folders.png" alt="" style="width: 100px;">
-                            <div class="container text-center mt-3">
-                                <h5 class="fw-bold"><?php echo $siteName; ?></h5>
-                                <h5 class="fw-bold"><?php echo $siteAbbre; ?></h5>
-                            </div>
-                        </div>
-                        
-                        <div class="d-flex flex-row justify-content-between mt-3">
+                        <div class="d-flex flex-row justify-content-between">
                             <h5><i class="fa-solid fa-landmark"></i> Total</h5>
                             <h5><?php echo number_format($site['total'], 2); ?></h5>
                         </div>

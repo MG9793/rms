@@ -75,6 +75,15 @@
                     unset($_SESSION['addSuccess']);
                     echo "</div>";
                 }
+
+                // Alert แก้ไขสำเร็จ
+                else if(isset($_SESSION['editSuccess'])) {
+                    echo "<div class='alert alert-success alert-dismissible fade show mt-2' role='alert'>";
+                    echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                    echo $_SESSION['editSuccess'];
+                    unset($_SESSION['editSuccess']);
+                    echo "</div>";
+                }
             ?>
 
             <form action="../db/db_expense.php" method="POST">
@@ -152,16 +161,16 @@
 
                 <div class="row mb-3"> 
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">รวมเงินค่าสินค้าและค่าขนส่ง :</label>
+                        <label class="form-label fw-bold">ค่าสินค้าและค่าขนส่ง :</label>
                         <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
-                        <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: lightgrey;">
+                        <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: #e9ecef;">
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
-                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: lightgrey;" required>
+                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: #e9ecef;" required>
                     </div>
                 </div>
 
@@ -234,13 +243,13 @@
                     <div class="modal fade" id="modalEditBill<?php echo $fetch_bill['id']; ?>" tabindex="-1" aria-labelledby="modalEditBill" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header" style="background-color: #dee2e6;">
                                     <h5 class="modal-title" id="modalEditBill"><i class="fa-solid fa-pen-to-square"></i> แก้ไขรายการรายจ่าย</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
 
                                 <div class="modal-body">
-                                    <form action="../db/db_expense.php" method="POST">
+                                    <form action="../db/db_expense.php" method="POST" style="margin-top: -25px;">
                                         <div class="mb-0">
                                             <input type="hidden" class="form-control" name="id" value="<?php echo $fetch_bill['id']; ?>" readonly required>
                                             <label for="editSiteName" class="col-form-label">ไซต์งาน :</label>
@@ -256,11 +265,11 @@
                                         </div>
                                         <div class="mb-0">
                                             <label for="editSalesName" class="col-form-label">ชื่อผู้ขาย :</label>
-                                            <input type="text" class="form-control" name="editSalesName" id="editSalesName" list="edit_SalesName" value="<?php echo $fetch_bill['sales_name']; ?>" required readonly style="background-color: rgb(235, 235, 235);">
+                                            <input type="text" class="form-control" name="editSalesName" id="editSalesName" list="edit_SalesName" value="<?php echo $fetch_bill['sales_name']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editTaxNO" class="col-form-label">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
-                                            <input type="text" class="form-control" name="editTaxNO" id="editTaxNO" minlength="13" maxlength="13" value="<?php echo $fetch_bill['tax_no']; ?>" required readonly style="background-color: rgb(235, 235, 235);">
+                                            <input type="text" class="form-control" name="editTaxNO" id="editTaxNO" minlength="13" maxlength="13" value="<?php echo $fetch_bill['tax_no']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editType" class="col-form-label">ประเภท :</label>
@@ -269,11 +278,18 @@
                                                 <option>ค่าแรง</option>
                                             </select>
                                         </div>
+                                        <div class="mb-0">
+                                            <label for="editExpense" class="col-form-label">ค่าสินค้าและค่าขนส่ง :</label>
+                                            <input type="number" class="form-control" name="editExpense" id="editExpense" value="<?php echo $fetch_bill['sum']; ?>" required>
+                                        </div>
+                                        <div class="mb-0">
+                                            <label for="editVAT" class="col-form-label">ภาษีมูลค่าเพิ่ม :</label>
+                                            <input type="number" class="form-control" name="editVAT" id="editVAT" value="<?php echo $fetch_bill['vat']; ?>" required>
+                                        </div>
                                         <div class="mb-2">
                                             <label for="editExpenseTotal" class="col-form-label">จำนวนเงินทั้งสิ้น :</label>
-                                            <input type="number" class="form-control" name="editExpenseTotal" id="editExpenseTotal" value="<?php echo $fetch_bill['total']; ?>" required readonly style="background-color: rgb(235, 235, 235);">
+                                            <input type="number" class="form-control" name="editExpenseTotal" id="editExpenseTotal" value="<?php echo $fetch_bill['total']; ?>" required>
                                         </div>
-                                        <p>* หากต้องการแก้ไขชื่อผู้ขาย, จำนวนเงิน ให้ลบรายการแล้วบันทึกใหม่</p>
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
