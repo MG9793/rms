@@ -30,16 +30,20 @@
 
                 <form action="" method="POST">
                     <div class="row mt-3">
-                        <div class="col-md">
-                            <label for="selectTime" class="form-label fw-bold">กรุณาเลือก เดือน/ปี สำหรับออกรายงานภาษีซื้อ :</label>
+                        <div class="col-md-3">
+                            <label for="selectTime" class="form-label fw-bold">เดือน/ปี สำหรับออกรายงานภาษีซื้อ :</label>
                             <input type="month" class="form-control" name="selectTime" id="selectTime" required>
                         </div>
-                        <div class="col-md">
-                            <label for="selectedSum" class="form-label fw-bold text-primary">ยอดออกใบกำกับภาษีที่เลือก :</label>
-                            <input type="number" class="form-control text-primary" name="selectedSum" id="selectedSum" required>
+                        <div class="col-md-3">
+                            <label for="selectedPrice" class="form-label fw-bold text-primary">รวมยอดซื้อ :</label>
+                            <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" required readonly>
                         </div>
-                        <div class="col-md" style="margin-top: 32px;">
-                            <button type="submit" class="btn btn-primary" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;ออกรายงานภาษีซื้อ</button>
+                        <div class="col-md-3">
+                            <label for="selectedVAT" class="form-label fw-bold text-primary">รวมยอด VAT :</label>
+                            <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly>
+                        </div>
+                        <div class="col-md-3" style="margin-top: 32px;">
+                            <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;ออกรายงานภาษีซื้อ</button>
                         </div>
                     </div>
                 </form>
@@ -84,7 +88,7 @@
                             <td style="text-align:right;"><?php echo $filterTax['sum']; ?></td>
                             <td style="text-align:right;"><?php echo $filterTax['vat']; ?></td>
                             <td style="text-align:center;">
-                                <input class="form-check-input" type="checkbox" value="Y" id="selectReport<?php echo $filterTax['receipt_no']; ?>" name="report[<?php echo $filterTax['receipt_no']; ?>]">
+                                <input class="form-check-input check" type="checkbox" value="Y" data-price="<?php echo $filterTax['vat']; ?>" id="selectReport<?php echo $filterTax['receipt_no']; ?>" name="report[<?php echo $filterTax['receipt_no']; ?>]">
                                 <input type="hidden" name="receipt_no[]" value="<?php echo $filterTax['receipt_no']; ?>">
                             </td>
                         </tr>
@@ -100,10 +104,38 @@
     
     <!-- สคริป ค้นหาสถานประกอบการ -->
     <script>
-        var select_box_element_site = document.querySelector('#selectCompany');
-        dselect(select_box_element_site, {
-            search: true
-        });
+        // var select_box_element_site = document.querySelector('#selectCompany');
+        // dselect(select_box_element_site, {
+        //     search: true
+        // });
+    </script>
+
+
+    <!-- สคริป รวมเงิน checkboxes -->
+    <script>
+        const checkboxes = document.getElementsByClassName('check');
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].addEventListener('change', calculateSum);
+        }
+
+        function calculateSum() {
+            let priceSum = 0;
+            let vatSum = 0;
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    const price = parseInt(checkboxes[i].parentNode.parentNode.children[6].textContent);
+                    const vat = parseInt(checkboxes[i].getAttribute('data-price'));
+
+                    priceSum += price;
+                    vatSum += vat;
+                }
+            }
+
+            document.getElementById('selectedPrice').value = priceSum;
+            document.getElementById('selectedVAT').value = vatSum;
+        }
     </script>
 
 
