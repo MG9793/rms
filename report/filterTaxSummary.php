@@ -27,8 +27,18 @@
                     <h5 class="fw-bold p-2 text-center">กรุณาเลือกข้อมูล | รายงานภาษีซื้อ <?php echo $_SESSION['thisMonth']; ?></h5>
                 </div>
 
+                <?php
+                    // Alert ไม่ได้เลือกรายการออกใบกำกับภาษี
+                    if(isset($_SESSION['reportFailure'])) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show mt-2' role='alert'>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                        echo $_SESSION['reportFailure'];
+                        unset($_SESSION['reportFailure']);
+                        echo "</div>";
+                    }
+                ?>
 
-                <form action="" method="POST">
+                <form action="../db/db_filterTaxSummary.php" method="POST">
                     <div class="row mt-3">
                         <div class="col-md-3">
                             <label for="selectTime" class="form-label fw-bold">เดือน/ปี สำหรับออกรายงานภาษีซื้อ :</label>
@@ -46,7 +56,7 @@
                             <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;ออกรายงานภาษีซื้อ</button>
                         </div>
                     </div>
-                </form>
+                
                 <hr>
 
 
@@ -69,7 +79,7 @@
                         <?php
 
                             $thisMonth = $_SESSION['thisMonth'];
-                            $stmt = $conn->query("SELECT * FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth'");
+                            $stmt = $conn->query("SELECT * FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
 
                             $stmt->execute();
                             $tax = $stmt->fetchAll();
@@ -95,7 +105,7 @@
                         <?php } ?>
                     </tbody>
                 </table>
-
+                </form>
 
             </div>
         </div>
