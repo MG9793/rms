@@ -75,39 +75,18 @@
         $siteName = $_POST['editSiteName'];
         $receiptNo = $_POST['editReceiptNo'];
         $buyDate = $_POST['editBuyDate'];
-        $salesName = $_POST['editSalesName'];
-        $taxNO = $_POST['editTaxNO'];
         $type = $_POST['editType'];
-        $expense = $_POST['editExpense'];
-        $vat = $_POST['editVAT'];
-        $editExpenseTotal = $_POST['editExpenseTotal'];
 
-        $stmt = $conn->prepare("UPDATE bill_head
-                                SET site_name = :site_name,
-                                    receipt_no = :receipt_no,
-                                    buy_date = :buy_date,
-                                    sales_name = :sales_name,
-                                    tax_no = :tax_no,
-                                    type = :type,
-                                    sum = :sum,
-                                    vat = :vat,
-                                    total = :total
+        $stmt = $conn->prepare("UPDATE bill_head SET site_name = :site_name, receipt_no = :receipt_no, buy_date = :buy_date, type = :type
                                 WHERE id = :id");
 
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":site_name", $siteName);
         $stmt->bindParam(":receipt_no", $receiptNo);
         $stmt->bindParam(":buy_date", $buyDate);
-        $stmt->bindParam(":sales_name", $salesName);
-        $stmt->bindParam(":tax_no", $taxNO);
         $stmt->bindParam(":type", $type);
-        $stmt->bindParam(":sum", $expense);
-        $stmt->bindParam(":vat", $vat);
-        $stmt->bindParam(":total", $editExpenseTotal);
 
         $stmt->execute();
-
-        $_SESSION['editSuccess'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขรายการสำเร็จ';
         header("location: ../page/expense.php");
     }
 
