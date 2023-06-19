@@ -1,8 +1,7 @@
 <?php
-    session_start();
+session_start();
     require_once "../include/dependency.php";
     require_once "../include/header.php";
-
 ?>
 
 <head>
@@ -26,75 +25,42 @@
         <div class="card px-4">
             <div class="card-body">                          
                 <div class="headReport">
-                    <h5 class="fw-bold p-2 text-center">กรุณาเลือกข้อมูล | รายงานภาษีซื้อ</h5>
+                    <h5 class="fw-bold p-2 text-center">กรุณาเลือกข้อมูล | รายงานภาษีซื้อ <?php echo $_SESSION['thisMonth']; ?></h5>
                 </div>
 
-                <form action="../db/db_filterTaxSummary.php" method="POST">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label for="selectTime" class="form-label fw-bold">กรุณาเลือก เดือน/ปี :</label>
-                            <?php
-                                if(empty($_SESSION['selectTime'])) {
-                                    echo '<input type="month" class="form-control" name="selectTime" id="selectTime" required>';
-                                } else {
-                                    echo '<input type="month" class="form-control" name="selectTime" id="selectTime" value="'.$_SESSION['selectTime'].'" required>';
-                                }
-                            ?>
-                            <!-- <input type="month" class="form-control" name="selectTime" id="selectTime" required> -->
-                        </div>
-                        <div class="col-md-7">
-                            <label for="selectCompany" class="form-label fw-bold">เลือกสถานประกอบการ :</label>
-                            <select class="form-select" name="selectCompany" id="selectCompany" required>
-
-                                <?php
-                                    $companyInfo = $conn->prepare("SELECT * FROM company_info");
-                                    $companyInfo->execute();
-                                    $company = $companyInfo->fetchAll();
-                                
-                                    if ($_SESSION['selectCompany']=="") { ?>
-
-                                <option value="">สถานประกอบการ</option>
-                                <?php
-                                    foreach($company as $searchCompany) {
-                                        echo '<option value="'.$searchCompany["company_name"].'">'.$searchCompany["company_name"].'</option>';
-                                    }
-
-                                    } else {
-                                        echo '<option value="'.$_SESSION['selectCompany'].'">'.$_SESSION['selectCompany'].'</option>';
-                                    
-                                        foreach($company as $searchCompany) {
-                                            echo '<option value="'.$searchCompany["company_name"].'">'.$searchCompany["company_name"].'</option>';
-                                        }
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="col-md-2" style="margin-top: 32px;">
-                            <button type="submit" class="btn btn-light w-100"><i class="fa-solid fa-magnifying-glass"></i> ค้นหา</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ตาราง -->
-    <section class="container mb-3">
-        <form action="../db/db_filterTaxSummary.php" method="POST">
-        <div class="card px-4">
-            <div class="card-body">
                 <?php
-                    if(empty($_SESSION['selectCompany'])) {
-                        echo '<div class="text-center text-primary fw-bold">กรุณาเลือกเดือน/ปี และสถานประกอบการ</div>';
-                    } else {
-                        echo '<div class="text-center text-primary fw-bold">'.$_SESSION['selectCompany'].' &emsp; เลขประจำตัวผู้เสียภาษี '.$_SESSION['companyTax'].' &emsp; ช่วงเวลา(ปี-เดือน) '.$_SESSION['selectTime'].'</div>';
-                        echo '<button type="submit" class="btn btn-sm btn-primary w-100 my-3" name="sendToReport"><i class="fa-solid fa-sheet-plastic"></i> ออกรายงานภาษีซื้อ</button>';
+                    // Alert ไม่ได้เลือกรายการออกใบกำกับภาษี
+                    if(isset($_SESSION['reportFailure'])) {
+                        echo "<div class='alert alert-danger alert-dismissible fade show mt-2' role='alert'>";
+                        echo "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+                        echo $_SESSION['reportFailure'];
+                        unset($_SESSION['reportFailure']);
+                        echo "</div>";
                     }
                 ?>
-                <!-- <div class="text-center text-primary fw-bold"><?php //echo $_SESSION['selectCompany']; ?> &emsp; เลขประจำตัวผู้เสียภาษี <?php //echo $_SESSION['companyTax']; ?> &emsp; ช่วงเวลา(ปี-เดือน) <?php //echo $_SESSION['selectTime']; ?></div> -->
-                <!-- <button type="submit" class="btn btn-sm btn-primary w-100 my-3" name="sendToReport"><i class="fa-solid fa-sheet-plastic"></i> ออกรายงานภาษีซื้อ</button> -->
-            
+
+                <form action="../db/db_filterTaxSummary.php" method="POST">
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <label for="selectTime" class="form-label fw-bold">เดือน/ปี สำหรับออกรายงานภาษีซื้อ :</label>
+                            <input type="month" class="form-control" name="selectTime" id="selectTime" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="selectedPrice" class="form-label fw-bold text-primary">รวมยอดซื้อ :</label>
+                            <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" required readonly>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="selectedVAT" class="form-label fw-bold text-primary">รวมยอด VAT :</label>
+                            <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly>
+                        </div>
+                        <div class="col-md-3" style="margin-top: 32px;">
+                            <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;ออกรายงานภาษีซื้อ</button>
+                        </div>
+                    </div>
+                
+                <hr>
+
+
                 <table class="table table-sm table-hover mt-2 css-serial">
                     <thead>
                         <tr>
@@ -112,14 +78,10 @@
                     <tbody>
 
                         <?php
-                            if(empty($_SESSION['selectCompany'])) {
-                                $stmt = $conn->query("SELECT * FROM bill_head WHERE report = 'N'");
 
-                            } else {
-                                $getTime = $_SESSION['selectTime'];
-                                $stmt = $conn->query("SELECT * FROM bill_head WHERE buy_date LIKE '$getTime%' AND report = 'N'");
+                            $thisMonth = $_SESSION['thisMonth'];
+                            $stmt = $conn->query("SELECT * FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
 
-                            }
                             $stmt->execute();
                             $tax = $stmt->fetchAll();
 
@@ -127,6 +89,7 @@
                         ?>
 
                         <tr>
+                            
                             <td style="text-align:center;"></td>
                             <td style="text-align:center;"><?php echo $filterTax['buy_date']; ?></td>
                             <td style="text-align:center;"><?php echo $filterTax['receipt_no']; ?></td>
@@ -136,65 +99,54 @@
                             <td style="text-align:right;"><?php echo $filterTax['sum']; ?></td>
                             <td style="text-align:right;"><?php echo $filterTax['vat']; ?></td>
                             <td style="text-align:center;">
-                                <input class="form-check-input" type="checkbox" value="Y" id="selectReport<?php echo $filterTax['receipt_no']; ?>" name="report[<?php echo $filterTax['receipt_no']; ?>]">
+                                <input class="form-check-input check" type="checkbox" value="Y" data-price="<?php echo $filterTax['vat']; ?>" id="selectReport<?php echo $filterTax['receipt_no']; ?>" name="report[<?php echo $filterTax['receipt_no']; ?>]">
                                 <input type="hidden" name="receipt_no[]" value="<?php echo $filterTax['receipt_no']; ?>">
                             </td>
                         </tr>
                         <?php } ?>
                     </tbody>
                 </table>
-            
+                </form>
+
             </div>
         </div>
-        </form>
     </section>
-
-    <?php //} ?>
-
-
-    <?php
-
-        // if (isset($_POST['selectCompany'])) {
-        //     $getCompany = $_POST['selectCompany'];
-        //     $getTime = $_POST['selectTime'];
-
-        //     $stmt = $conn->query("SELECT * FROM company_info WHERE company_name = '$getCompany'");
-        //     $companyInfo = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        //     $_SESSION['selectTime'] = $getTime;
-        //     $_SESSION['selectCompany'] = $getCompany;
-        //     $_SESSION['companyTax'] = $companyInfo['tax_no'];
-
-        //     header("location: filterTaxSummary.php");
-
-        // }
-
-        // else if (isset($_POST['sendToReport'])) {
-
-        //     $receipt_nos = $_POST['receipt_no'];
-        //     $reports = $_POST['report'];        // ดึงมาจาก form checkbox
-        
-        //     foreach ($receipt_nos as $receipt_no) {
-        //         if (isset($reports[$receipt_no]) && $reports[$receipt_no] === 'Y') {
-        //             $stmt = $conn->prepare("UPDATE bill_head SET report = 'Y' WHERE receipt_no = :receipt_no");
-        //             $stmt->execute(['receipt_no' => $receipt_no]);
-        //         }
-        //     }
-        // }
-
-
-    ?>
-
-
-
 
     
     <!-- สคริป ค้นหาสถานประกอบการ -->
     <script>
-        var select_box_element_site = document.querySelector('#selectCompany');
-        dselect(select_box_element_site, {
-            search: true
-        });
+        // var select_box_element_site = document.querySelector('#selectCompany');
+        // dselect(select_box_element_site, {
+        //     search: true
+        // });
+    </script>
+
+
+    <!-- สคริป รวมเงิน checkboxes -->
+    <script>
+        const checkboxes = document.getElementsByClassName('check');
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].addEventListener('change', calculateSum);
+        }
+
+        function calculateSum() {
+            let priceSum = 0;
+            let vatSum = 0;
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    const price = parseInt(checkboxes[i].parentNode.parentNode.children[6].textContent);
+                    const vat = parseInt(checkboxes[i].getAttribute('data-price'));
+
+                    priceSum += price;
+                    vatSum += vat;
+                }
+            }
+
+            document.getElementById('selectedPrice').value = priceSum;
+            document.getElementById('selectedVAT').value = vatSum;
+        }
     </script>
 
 
