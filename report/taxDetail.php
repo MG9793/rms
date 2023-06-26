@@ -1,4 +1,5 @@
 <?php
+session_start();
        require_once "../db/config/conn.php";
 ?>
 <head>
@@ -25,27 +26,29 @@
     $head = '
         <div class="container">
             <div class="text-center">
-                <h5>สรุปรายงานภาษีซื้อ</h5>
-                <h6>เดือนภาษี..........กันยายน..........ปี..........'.(date("Y")+543).'..........</h6>
+                <h2>สรุปรายงานภาษีซื้อ</h2>
+                <h4>เดือนภาษี..........กันยายน..........ปี..........'.(date("Y")+543).'..........</h4>
             </div>
 
             
             <div class="text-end">
                 <h6>เลขประจำตัวผู้เสียภาษีอากร<br>
-                ชื่อผู้ประกอบการ....................บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด......................&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;0105516008581<br>
-                ชื่อสถานประกอบการ............บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด.......................&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;สาขาที่ 0000</h6>
+                ชื่อผู้ประกอบการ....................บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด......................&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                <span style="border: 1px solid">0105516008581</span><br>
+                ชื่อสถานประกอบการ............บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด.......................&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                สาขาที่ <span style="border: 1px solid">0000</span></h6>
             </div>
         </div>
 
 
-        <table id="bg-table" width="100%" style="border-collapse: collapse; font-size:10pt;">
-            <tr style="border:1px solid #000; padding:4px;">
-                <td style="border-right:1px solid #000;padding:4px;text-align:center;" width="5%">ลำดับ</td>
-                <td style="border-right:1px solid #000;padding:4px;text-align:center;" width="25%">รายการ</td>
-                <td style="border-right:1px solid #000;padding:4px;text-align:center;" width="25%">หน่วยงาน</td>
-                <td style="border-right:1px solid #000;padding:4px;text-align:center;" width="25%">มูลค่าสินค้าหรือบริการ</td>
-                <td style="border-right:1px solid #000;padding:4px;text-align:center;" width="25%">จำนวนเงินภาษีมูลค่าเพิ่ม</td>
-                <td style="border-right:1px solid #000;padding:4px;text-align:center;" width="25%">TOTAL</td>
+        <table id="bg-table" width="100%" style="border-collapse: collapse; font-size:10pt; border-top: 3px double solid">
+            <tr style="border:1px solid; padding:4px; border-bottom: 3px double solid">
+                <td style="border-right:1px solid;padding:4px;text-align:center;" width="5%">ลำดับ</td>
+                <td style="border-right:1px solid;padding:4px;text-align:center;" width="25%">หน่วยงาน</td>
+                <td style="border-right:1px solid;padding:4px;text-align:center;" width="25%">มูลค่าสินค้าหรือบริการ</td>
+                <td style="border-right:1px solid;padding:4px;text-align:center;" width="25%">จำนวนเงินภาษีมูลค่าเพิ่ม</td>
+                <td style="border-right:1px solid;padding:4px;text-align:center;" width="25%">TOTAL</td>
+                <td style="border-right:1px solid;padding:4px;text-align:center;" width="12%">จำนวนแผ่น</td>
 
     ';
 
@@ -54,33 +57,33 @@
         while($row = mysqli_fetch_assoc($result)) {
             $head2 =       '
            
-            <tr style="border:1px solid #000;">
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%">1</td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:left;" width="25%">ทั่วไป</td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
+            <tr style="border:1px solid;">
+                <td style="border-right:1px solid; padding:4px; text-align:center;" width="5%">1</td>
+                <td style="border-right:1px solid; padding:4px; text-align:left;" width="25%">ทั่วไป</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%">'.number_format(141242412, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%">'.number_format(141242412, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%">'.number_format(141242412, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%"></td>
             </tr>
-            <tr style="border:1px solid #000;">
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%">2</td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:left;" width="25%">ทหารสระบุรี</td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
+            <tr style="border:1px solid;">
+                <td style="border-right:1px solid; padding:4px; text-align:center;" width="5%">2</td>
+                <td style="border-right:1px solid; padding:4px; text-align:left;" width="25%">ทหารสระบุรี</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%">'.number_format(141242412, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%">'.number_format(141242412, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%">'.number_format(141242412, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right;" width="5%"></td>
             </tr>
             ';
    
         }
 
         $head3 = '
-            <tr style="border:1px solid #000;">
-                <td colspan="2" style="border-right:1px solid #000; padding:4px; text-align:center;" width="25%">รวม</td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
-                <td style="border-right:1px solid #000; padding:4px; text-align:center;" width="5%"></td>
+            <tr>
+                <td colspan="2" style="border-right:1px solid; text-align:right;"><img src="../image/icon/total.png" width="25%"></td>
+                <td style="border-right:1px solid; padding:4px; text-align:right; border-bottom: 3px double solid" width="5%">'.number_format(141242412, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right; border-bottom: 3px double solid" width="5%">'.number_format(232312332, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:right; border-bottom: 3px double solid" width="5%">'.number_format(133233442, 2).'</td>
+                <td style="border-right:1px solid; padding:4px; text-align:center; border-bottom: 3px double solid" width="5%">0</td>
             </tr>
         </thead>
 	<tbody>';
