@@ -275,8 +275,23 @@
                                         <div class="mb-0">
                                             <label for="editType" class="col-form-label">ประเภท :</label>
                                             <select class="form-select" aria-label="editType" name="editType" required>
-                                                <option>ค่าวัสดุ</option>
-                                                <option>ค่าแรง</option>
+                                            <option value="<?php echo $fetch_bill['type']; ?>" ><?php echo $fetch_bill['type']; ?></option>
+                                            <?php
+                                            if($fetch_bill['type']=="ค่าวัสดุ"){
+                                            ?>
+                                            
+                                            <option value="ค่าแรง" >ค่าแรง</option>
+                                            <?php
+                                            }else{
+                                                ?>
+                                            <option value="ค่าวัสดุ" >ค่าวัสดุ</option>
+                                            <?php
+                                            }
+
+                                            ?>
+
+                                           
+                                            
                                             </select>
                                         </div>
                                         <div class="mb-0">
