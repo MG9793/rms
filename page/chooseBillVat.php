@@ -20,17 +20,17 @@ session_start();
                 <?php
 
                     // query เดือนปัจจุบัน
-                    $thisMonth = $conn->query("SELECT DISTINCT * FROM bill_head WHERE MONTH(buy_date) = MONTH(CURDATE()) AND YEAR(buy_date) = YEAR(CURDATE()) LIMIT 1");
+                    $thisMonth = $conn->query("SELECT DISTINCT * FROM bill_head WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURDATE()) AND YEAR(buy_date) = YEAR(CURDATE()) LIMIT 1 ");
                     $thisMonth->execute();
                     $amount = $thisMonth->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ เดือนปัจจุบัน
-                    $thisMonth_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head WHERE MONTH(buy_date) = MONTH(CURDATE()) AND YEAR(buy_date) = YEAR(CURDATE())");
+                    $thisMonth_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURDATE()) AND YEAR(buy_date) = YEAR(CURDATE())");
                     $thisMonth_buy->execute();
                     $monthBuy = $thisMonth_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT เดือนปัจจุบัน
-                    $thisMonth_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head WHERE MONTH(buy_date) = MONTH(CURDATE()) AND YEAR(buy_date) = YEAR(CURDATE())");
+                    $thisMonth_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURDATE()) AND YEAR(buy_date) = YEAR(CURDATE())");
                     $thisMonth_vat->execute();
                     $monthVAT = $thisMonth_vat->fetch(PDO::FETCH_ASSOC);
 
@@ -67,21 +67,21 @@ session_start();
 
                     // query Month-1 จากเดือนปัจจุบัน
                     $Month_1 = $conn->query("SELECT * FROM bill_head
-                                             WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH)
+                                             WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH)
                                              AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)");
                     $Month_1->execute();
                     $month1 = $Month_1->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ Month-1 จากเดือนปัจจุบัน
                     $Month_1_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head
-                                                 WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH)
+                                                 WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH)
                                                  AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)");
                     $Month_1_buy->execute();
                     $monthBuy1 = $Month_1_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT Month-1 จากเดือนปัจจุบัน
                     $Month_1_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head
-                                                 WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH)
+                                                 WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 1 MONTH)
                                                  AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 1 MONTH)");
                     $Month_1_vat->execute();
                     $monthVAT1 = $Month_1_vat->fetch(PDO::FETCH_ASSOC);
@@ -117,21 +117,21 @@ session_start();
 
                     // query Month-2 จากเดือนปัจจุบัน
                     $Month_2 = $conn->query("SELECT * FROM bill_head
-                                            WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 2 MONTH)
+                                            WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 2 MONTH)
                                             AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 2 MONTH)");
                     $Month_2->execute();
                     $month2 = $Month_2->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ Month-2 จากเดือนปัจจุบัน
                     $Month_2_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head
-                                                WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 2 MONTH)
+                                                WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 2 MONTH)
                                                 AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 2 MONTH)");
                     $Month_2_buy->execute();
                     $monthBuy2 = $Month_2_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT Month-2 จากเดือนปัจจุบัน
                     $Month_2_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head
-                                                WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 2 MONTH)
+                                                WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 2 MONTH)
                                                 AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 2 MONTH)");
                     $Month_2_vat->execute();
                     $monthVAT2 = $Month_2_vat->fetch(PDO::FETCH_ASSOC);
@@ -167,21 +167,21 @@ session_start();
 
                     // query Month-3 จากเดือนปัจจุบัน
                     $Month_3 = $conn->query("SELECT * FROM bill_head
-                                            WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 3 MONTH)
+                                            WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 3 MONTH)
                                             AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 3 MONTH)");
                     $Month_3->execute();
                     $month3 = $Month_3->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ Month-3 จากเดือนปัจจุบัน
                     $Month_3_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head
-                                                WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 3 MONTH)
+                                                WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 3 MONTH)
                                                 AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 3 MONTH)");
                     $Month_3_buy->execute();
                     $monthBuy3 = $Month_3_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT Month-3 จากเดือนปัจจุบัน
                     $Month_3_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head
-                                                WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 3 MONTH)
+                                                WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 3 MONTH)
                                                 AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 3 MONTH)");
                     $Month_3_vat->execute();
                     $monthVAT3 = $Month_3_vat->fetch(PDO::FETCH_ASSOC);
@@ -217,21 +217,21 @@ session_start();
 
                     // query Month-4 จากเดือนปัจจุบัน
                     $Month_4 = $conn->query("SELECT * FROM bill_head
-                                             WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 4 MONTH)
+                                             WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 4 MONTH)
                                              AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 4 MONTH)");
                     $Month_4->execute();
                     $month4 = $Month_4->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ Month-4 จากเดือนปัจจุบัน
                     $Month_4_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head
-                                                 WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 4 MONTH)
+                                                 WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 4 MONTH)
                                                  AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 4 MONTH)");
                     $Month_4_buy->execute();
                     $monthBuy4 = $Month_4_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT Month-4 จากเดือนปัจจุบัน
                     $Month_4_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head
-                                                 WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 4 MONTH)
+                                                 WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 4 MONTH)
                                                  AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 4 MONTH)");
                     $Month_4_vat->execute();
                     $monthVAT4 = $Month_4_vat->fetch(PDO::FETCH_ASSOC);
@@ -267,21 +267,21 @@ session_start();
 
                     // query Month-5 จากเดือนปัจจุบัน
                     $Month_5 = $conn->query("SELECT * FROM bill_head
-                                             WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 5 MONTH)
+                                             WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 5 MONTH)
                                              AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 5 MONTH)");
                     $Month_5->execute();
                     $month5 = $Month_5->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ Month-5 จากเดือนปัจจุบัน
                     $Month_5_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head
-                                                 WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 5 MONTH)
+                                                 WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 5 MONTH)
                                                  AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 5 MONTH)");
                     $Month_5_buy->execute();
                     $monthBuy5 = $Month_5_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT Month-5 จากเดือนปัจจุบัน
                     $Month_5_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head
-                                                 WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 5 MONTH)
+                                                 WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 5 MONTH)
                                                  AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 5 MONTH)");
                     $Month_5_vat->execute();
                     $monthVAT5 = $Month_5_vat->fetch(PDO::FETCH_ASSOC);
@@ -317,21 +317,21 @@ session_start();
 
                     // query Month-6 จากเดือนปัจจุบัน
                     $Month_6 = $conn->query("SELECT * FROM bill_head
-                                            WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 6 MONTH)
+                                            WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 6 MONTH)
                                             AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 6 MONTH)");
                     $Month_6->execute();
                     $month6 = $Month_6->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ Month-6 จากเดือนปัจจุบัน
                     $Month_6_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head
-                                                WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 6 MONTH)
+                                                WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 6 MONTH)
                                                 AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 6 MONTH)");
                     $Month_6_buy->execute();
                     $monthBuy6 = $Month_6_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT Month-6 จากเดือนปัจจุบัน
                     $Month_6_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head
-                                                WHERE MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 6 MONTH)
+                                                WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURRENT_DATE() - INTERVAL 6 MONTH)
                                                 AND YEAR(buy_date) = YEAR(CURRENT_DATE() - INTERVAL 6 MONTH)");
                     $Month_6_vat->execute();
                     $monthVAT6 = $Month_6_vat->fetch(PDO::FETCH_ASSOC);
