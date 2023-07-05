@@ -163,15 +163,15 @@
                 <div class="row mb-3"> 
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ค่าสินค้าและค่าขนส่ง :</label>
-                        <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()">
+                        <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()" min='0' value='0' step='any'>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
-                        <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: #e9ecef;">
+                        <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: #e9ecef;" min='0' value='0' step='any'>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
-                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: #e9ecef;" required>
+                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: #e9ecef;" required min='0' value='0' step='any'>
                     </div>
                 </div>
 
