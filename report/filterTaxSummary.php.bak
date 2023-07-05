@@ -17,15 +17,6 @@ session_start();
     <!-- Custom CSS ค้นหา -->
     <script src="../resources/lib/dselect.js"></script>
 
-    <script>
-        function toggleAll(source) {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        checkboxes.forEach(function(checkbox) {
-            checkbox.checked = source.checked;
-        });
-        }
-  </script>
-
 </head>
 <body>
 
@@ -46,22 +37,6 @@ session_start();
                         unset($_SESSION['reportFailure']);
                         echo "</div>";
                     }
-
-                    // query ตาราง
-                    $thisMonth = $_SESSION['thisMonth'];
-                    $stmt = $conn->query("SELECT * FROM bill_head WHERE vat <> 0 AND DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
-                    $stmt->execute();
-                    $tax = $stmt->fetchAll();
-
-                    // query รวมยอดซื้อ
-                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE vat <> 0 AND DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
-                    $sumBuy->execute();
-                    $query_sumBuy = $sumBuy->fetch(PDO::FETCH_ASSOC);
-
-                    // query รวมยอด VAT
-                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE vat <> 0 AND DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
-                    $sumVAT->execute();
-                    $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
                 ?>
 
                 <form action="../db/db_filterTaxSummary.php" method="POST">
@@ -72,26 +47,18 @@ session_start();
                         </div>
                         <div class="col-md-3">
                             <label for="selectedPrice" class="form-label fw-bold text-primary">รวมยอดซื้อ :</label>
-                            <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" value="<?php echo $query_sumBuy['sumbuy']; ?>" required readonly min="0" step="any">
+                            <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" required readonly min="0" value="0" step="any">
                         </div>
                         <div class="col-md-3">
                             <label for="selectedVAT" class="form-label fw-bold text-primary">รวมยอด VAT :</label>
-                            <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly value="<?php echo $query_sumVAT['sumvat']; ?>" min="0" step="any">
+                            <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly min="0" value="0" step="any">
                         </div>
                         <div class="col-md-3" style="margin-top: 32px;">
-                            <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;บันทึกภาษีซื้อ</button>
+                            <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;ออกรายงานภาษีซื้อ</button>
                         </div>
                     </div>
-                    <div class="row" style="margin-bottom: -30px;">
-                        <div class="col-md-12">
-                            <div class="form-check d-flex justify-content-end">
-                                    <input class="form-check-input" type="checkbox" id="select-all" onchange="toggleAll(this)" checked>
-                                    <label class="form-check-label" for="select-all">&nbsp;Select All</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
+                
+                <hr>
 
 
                 <table class="table table-sm table-hover mt-2 css-serial">
@@ -111,6 +78,13 @@ session_start();
                     <tbody>
 
                         <?php
+
+                            $thisMonth = $_SESSION['thisMonth'];
+                            $stmt = $conn->query("SELECT * FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
+
+                            $stmt->execute();
+                            $tax = $stmt->fetchAll();
+
                             foreach ($tax as $filterTax) {
                         ?>
 
@@ -125,7 +99,7 @@ session_start();
                             <td style="text-align:right;"><?php echo $filterTax['sum']; ?></td>
                             <td style="text-align:right;"><?php echo $filterTax['vat']; ?></td>
                             <td style="text-align:center;">
-                                <input class="form-check-input check" checked type="checkbox" value="Y" data-price="<?php echo $filterTax['vat']; ?>" id="selectReport<?php echo $filterTax['receipt_no']; ?>" name="report[<?php echo $filterTax['receipt_no']; ?>]">
+                                <input class="form-check-input check" type="checkbox" value="Y" data-price="<?php echo $filterTax['vat']; ?>" id="selectReport<?php echo $filterTax['receipt_no']; ?>" name="report[<?php echo $filterTax['receipt_no']; ?>]">
                                 <input type="hidden" name="receipt_no[]" value="<?php echo $filterTax['receipt_no']; ?>">
                             </td>
                         </tr>
@@ -137,6 +111,16 @@ session_start();
             </div>
         </div>
     </section>
+
+    
+    <!-- สคริป ค้นหาสถานประกอบการ -->
+    <script>
+        // var select_box_element_site = document.querySelector('#selectCompany');
+        // dselect(select_box_element_site, {
+        //     search: true
+        // });
+    </script>
+
 
     <!-- สคริป รวมเงิน checkboxes -->
     <script>

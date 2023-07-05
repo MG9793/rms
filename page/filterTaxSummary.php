@@ -82,7 +82,7 @@ session_start();
                             <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;บันทึกภาษีซื้อ</button>
                         </div>
                     </div>
-                    <!-- <div class="row" style="margin-bottom: -30px;">
+                    <div class="row" style="margin-bottom: -30px;">
                         <div class="col-md-12">
                             <div class="form-check d-flex justify-content-end">
                                     <input class="form-check-input" type="checkbox" id="select-all" onchange="toggleAll(this)" checked>
@@ -90,7 +90,7 @@ session_start();
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                     <hr>
 
 

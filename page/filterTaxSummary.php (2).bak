@@ -49,17 +49,17 @@ session_start();
 
                     // query ตาราง
                     $thisMonth = $_SESSION['thisMonth'];
-                    $stmt = $conn->query("SELECT * FROM bill_head WHERE vat <> 0 AND DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
+                    $stmt = $conn->query("SELECT * FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
                     $stmt->execute();
                     $tax = $stmt->fetchAll();
 
                     // query รวมยอดซื้อ
-                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE vat <> 0 AND DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
+                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
                     $sumBuy->execute();
                     $query_sumBuy = $sumBuy->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอด VAT
-                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE vat <> 0 AND DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
+                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND report = 'N'");
                     $sumVAT->execute();
                     $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
                 ?>
@@ -82,7 +82,7 @@ session_start();
                             <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;บันทึกภาษีซื้อ</button>
                         </div>
                     </div>
-                    <div class="row" style="margin-bottom: -30px;">
+                    <!-- <div class="row" style="margin-bottom: -30px;">
                         <div class="col-md-12">
                             <div class="form-check d-flex justify-content-end">
                                     <input class="form-check-input" type="checkbox" id="select-all" onchange="toggleAll(this)" checked>
@@ -90,7 +90,7 @@ session_start();
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <hr>
 
 
