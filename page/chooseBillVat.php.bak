@@ -58,28 +58,7 @@ session_start();
                     </div>
                     </form>
                 </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 bg-dark text-light rounded">--/----</div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar text-success"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                            <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
-                        </div>
-                    </div>
-                </div>
-
-                <?php } ?>
+                <?php } else {} ?>
             </div>
 
 
@@ -131,28 +110,7 @@ session_start();
                     </div>
                     </form>
                 </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 bg-dark text-light rounded">--/----</div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar text-success"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                            <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
-                        </div>
-                    </div>
-                </div>
-
-                <?php } ?>
+                <?php } else {} ?>
 
 
                 <?php
@@ -202,28 +160,7 @@ session_start();
                     </div>
                     </form>
                 </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 bg-dark text-light rounded">--/----</div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar text-success"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                            <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
-                        </div>
-                    </div>
-                </div>
-
-                <?php } ?>
+                <?php } else {} ?>
 
 
                 <?php
@@ -273,28 +210,7 @@ session_start();
                     </div>
                     </form>
                 </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 bg-dark text-light rounded">--/----</div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar text-success"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                            <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
-                        </div>
-                    </div>
-                </div>
-
-                <?php } ?>
+                <?php } else {} ?>
 
 
                 <?php
@@ -344,28 +260,7 @@ session_start();
                     </div>
                     </form>
                 </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 bg-dark text-light rounded">--/----</div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar text-success"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                            <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
-                        </div>
-                    </div>
-                </div>
-
-                <?php } ?>
+                <?php } else {} ?>
 
 
                 <?php
@@ -415,28 +310,7 @@ session_start();
                     </div>
                     </form>
                 </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 bg-dark text-light rounded">--/----</div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar text-success"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                            <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
-                        </div>
-                    </div>
-                </div>
-
-                <?php } ?>
+                <?php } else {} ?>
 
 
                 <?php
@@ -464,8 +338,6 @@ session_start();
 
                     if ($Month_6->rowCount() >= 1) {
 
-                        
-
                 ?>
 
                 <div class="col-xl-4 col-md-12 mb-3">
@@ -488,30 +360,7 @@ session_start();
                     </div>
                     </form>
                 </div>
-                <?php } else { ?>
-                    
-
-                    <div class="col-xl-4 col-md-12 mb-3">
-                        <div class="card" style="background-color: #f9f4f5">
-                            <div class="fw-bold text-center border p-2 bg-dark text-light rounded">--/----</div>
-                                <div class="card-body">
-                                    <div class="d-flex flex-row justify-content-between">
-                                        <h5 ><i class="fa-solid fa-sack-dollar text-success"></i>  ยอดซื้อ</h5>
-                                        <h3 class="mb-0 fw-bold">0</h3>
-                                    </div>
-                                <br>
-                                <div class="d-flex flex-row justify-content-between mb-3">
-                                    <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                                <input type="hidden" name="thisMonth" value="0">
-                                <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                <?php } ?>
+                <?php } else {} ?>
 
 
 
