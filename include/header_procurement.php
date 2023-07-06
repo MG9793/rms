@@ -99,7 +99,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> รายงาน</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item text-black" href="../report/filterTaxSummary.php"> ภาษีซื้อ</a></li>
+                        <li><a class="dropdown-item text-black" href="../report/TaxReport.php"> ภาษีซื้อ</a></li>
 
                             <li><a class="dropdown-item text-black" href="../report/incomeReport.php"> สรุปรายรับ</a></li>
 

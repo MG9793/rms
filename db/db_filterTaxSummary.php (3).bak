@@ -12,7 +12,7 @@
 
         if (empty($reports)) {
             $_SESSION['reportFailure'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! กรุณาเลือกรายการออกใบกำกับภาษี';
-            header("location: ../page/filterTaxSummary.php");
+            header("location: ../report/filterTaxSummary.php");
 
         } else {
     
@@ -35,15 +35,6 @@
         $thisMonth = $_POST['thisMonth'];
         $_SESSION['thisMonth'] = $thisMonth;
 
-        header("location: ../page/filterTaxSummary.php");
-    }
-
-
-    // รับค่ามาจาก page/selectVatReport.php
-    else if(isset($_POST['exportReport'])) {
-        $selectMonth = $_POST['selectMonth'];
-        $_SESSION['selectMonth'] = $selectMonth;
-
-        header("location: ../report/taxReport.php");
+        header("location: ../report/filterTaxSummary.php");
     }
 ?>
