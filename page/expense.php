@@ -145,7 +145,7 @@
                     <div class="col-md-2">
                         <label class="form-label fw-bold" for="type">ประเภท :</label>
                         <select name="type" id="type" class="form-control" required>
-                            <option value="" >--เลือกประเภท--</option>
+                            
                             <option value="ค่าวัสดุ" >ค่าวัสดุ</option>
                             <option value="ค่าแรง" >ค่าแรง</option>
                         </select>
@@ -153,7 +153,7 @@
                     <div class="col-md-2">
                         <label class="form-label fw-bold" for="calVat">คำนวนภาษี :</label>
                         <select name="calVat" id="calVat" class="form-control" onChange="changetextbox();" required>
-                            <option value="">--เลือกการคำนวนภาษี--</option>
+                            
                             <option value="VAT">VAT</option>
                             <option value="noVAT">noVAT</option>
                         </select>
