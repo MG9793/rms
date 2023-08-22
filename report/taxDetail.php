@@ -1,6 +1,7 @@
 <?php
     session_start();
     require_once "../db/config/conn.php";
+    
 ?>
 <head>
 
@@ -22,21 +23,74 @@
       $result = mysqli_query($conn, $sql);
 	
     $head = '
-        <div class="container">
-            <div class="text-center">
-                <h2>รายงานภาษีซื้อ</h2>
-                <h4>เดือนภาษี..........กันยายน..........ปี..........'.(date("Y")+543).'..........</h4>
-                <h4>ชื่อผู้ประกอบการ............บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด.......................</h4>
+        
+            <div class="text-center" >
+           
+            <table align="center">
+            <tr>
+                <td style=" padding-bottom: 7px;" align="center"><h1>รายงานภาษีซื้อ</h1></td>
+                </tr><tr>
+                <td style="font-size: 14pt; padding-bottom: 7px;" align="center">เดือนภาษี........กันยายน........ปี........'.(date("Y")+543).'........</td>
+                </tr>
+                <tr>
+                <td style="font-size: 14pt; padding-bottom: 7px;" align="center">ชื่อผู้ประกอบการ........บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด........</td>
+                </tr>
+            </table>
             </div>
 
-            
-            <div class="text-end">
-                <h6>เลขประจำตัวผู้เสียภาษีอากร<br>
-                <span style="border: 1px solid">0105516008581</span><br>
-                ชื่อสถานประกอบการ............บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด.......................&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                สาขาที่ <span style="border: 1px solid">0000</span></h6>
-            </div>
+
+<div class="text-end" style="border-collapse: collapse; font-size: 11pt; align = right; padding-bottom: 5px;">
+
+เลขประจำตัวผู้เสียภาษีอากร
+
+
+</div>        
+       <div style=" padding-bottom: 7px;">             
+                    <table style="border-collapse: collapse; font-size: 11pt; " align="right" >
+                    <tr >
+                   
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px; " align="center">0</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">1</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">2</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">3</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">4</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">5</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">6</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">7</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">8</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">9</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">0</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">1</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">2</td>
+                    </tr>
+                    </table> 
+        </div>  
+        <div style=" padding-bottom: 7px;">                        
+                    <table style="border-collapse: collapse; font-size: 11pt;">
+                    <tr>
+                        <td style="width: 509px; "> ชื่อสถานประกอบการ............<b>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</b>............ </td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 10px;"><img src="../image/icon/check.png" width="12px" ></td>
+                        <td>&nbsp;สำนักงานใหญ่&nbsp;</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;"></td>
+                        <td>&nbsp;สาขาที่</td>
+                       
+             
+                    </tr>
+                    </table>
         </div>
+        <div style=" padding-bottom: 15px;">              
+                    <table style="border-collapse: collapse; font-size: 11pt;" align="right">
+                    <tr>
+
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">0</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">1</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">2</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">3</td>
+             
+                    </tr>
+                    </table>
+        </div>
+                    
 
 
         <table id="bg-table" width="100%" style="border-collapse: collapse; font-size: 8pt; border-top: 3px double solid">
@@ -72,7 +126,7 @@
                 <td style="border-right:1px solid; padding:4px; text-align: center;">IV93728</td>
                 <td style="border-right:1px solid; padding:4px; text-align: left;">บริษัทแสงชัยไลท์ติ้ง สำนักงานใหญ่</td>
                 <td style="border-right:1px solid; padding:4px; text-align: center;">0105560072540</td>
-                <td style="border-right:1px solid; padding:4px; text-align: center;">/</td>
+                <td style="border-right:1px solid; padding:4px; text-align: center;"><img src="../image/icon/check.png" width="12px" ></td>
                 <td style="border-right:1px solid; padding:4px; text-align: center;"></td>
                 <td style="border-right:1px solid; padding:4px; text-align: right;">'.number_format(4740, 2).'</td>
                 <td style="border-right:1px solid; padding:4px; text-align: right;">'.number_format(331.8, 2).'</td>
