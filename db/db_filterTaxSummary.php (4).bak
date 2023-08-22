@@ -12,7 +12,7 @@
 
         if (empty($reports)) {
             $_SESSION['reportFailure'] = '<i class="fa-solid fa-triangle-exclamation"></i> Error! กรุณาเลือกรายการออกใบกำกับภาษี';
-            header("location: ../report/filterTaxSummary.php");
+            header("location: ../page/filterTaxSummary.php");
 
         } else {
     
@@ -26,6 +26,8 @@
                 }
             }
         }
+
+        //header("location: ../report/taxReport.php");
     }
 
 
@@ -33,16 +35,9 @@
         $thisMonth = $_POST['thisMonth'];
         $_SESSION['thisMonth'] = $thisMonth;
 
-        header("location: ../report/filterTaxSummary.php");
+        header("location: ../page/filterTaxSummary.php");
     }
 
-    // ดูบิลที่ออกรายการแล้ว
-    else if(isset($_POST['reported_billVAT'])) {
-        // $thisMonth = $_POST['thisMonth'];
-        // $_SESSION['reported_billVAT'] = $thisMonth;
-
-        header("location: ../page/viewReportedBill.php");
-    }
 
     // รับค่ามาจาก page/selectVatReport.php
     else if(isset($_POST['exportReport'])) {

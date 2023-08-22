@@ -14,67 +14,11 @@ session_start();
 
     <section class="container mt-3">
         <h5 class="fw-bold p-2 text-center">กรุณาเลือกข้อมูล | ออกบิล VAT</h5>
-            <!-- รายการที่ยังไม่ได้เลือก -->
+
             <div class="row">
+
                 <?php
-                    // query เดือนทั้งหมด
-                    $allMonth = $conn->query("SELECT DISTINCT * FROM bill_head WHERE report = 'N' AND vat <> 0");
-                    $allMonth->execute();
-                    $allAmount = $allMonth->fetch(PDO::FETCH_ASSOC);
 
-                    // query ยอดซื้อ เดือนทั้งหมด
-                    $allMonth_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head WHERE report = 'N' AND vat <> 0");
-                    $allMonth_buy->execute();
-                    $all_monthBuy = $allMonth_buy->fetch(PDO::FETCH_ASSOC);
-
-                    // query VAT เดือนทั้งหมด
-                    $allMonth_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head WHERE report = 'N' AND vat <> 0");
-                    $allMonth_vat->execute();
-                    $all_monthVAT = $allMonth_vat->fetch(PDO::FETCH_ASSOC);
-
-                    if ($allMonth->rowCount() >= 1) {
-                ?>
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <form action="../db/db_filterTaxSummary.php" method="POST">
-                    <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดทั้งหมดที่ <u>ยังไม่ได้ออกรายงาน</u></div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold text-danger"><?php echo number_format($all_monthBuy['monthTotal'], 2); ?></h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-5">
-                                <h5><i class="fa-solid fa-receipt"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold text-danger"><?php echo number_format($all_monthVAT['monthVAT'], 2); ?></h3>
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-5">
-                    <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดทั้งหมดที่ <u>ยังไม่ได้ออกรายงาน</u></div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <?php } ?>
-
-                <!-- กล่องกลาง -->
-                <?php
                     // query เดือนปัจจุบัน
                     $thisMonth = $conn->query("SELECT DISTINCT * FROM bill_head WHERE report = 'N' AND vat <> 0 AND MONTH(buy_date) = MONTH(CURDATE()) AND YEAR(buy_date) = YEAR(CURDATE()) LIMIT 1 ");
                     $thisMonth->execute();
@@ -91,9 +35,10 @@ session_start();
                     $monthVAT = $thisMonth_vat->fetch(PDO::FETCH_ASSOC);
 
                     if ($thisMonth->rowCount() >= 1) {
+
                 ?>
 
-                <div class="col-xl-4 col-md-12 mb-3">
+                <div class="col-md-4 mb-3 mx-auto">
                     <form action="../db/db_filterTaxSummary.php" method="POST">
                     <div class="card">
                         <div class="fw-bold text-center border p-2 text-light rounded" style="background-color: #2d6a4f;"><?php echo date("m/Y", strtotime($amount['buy_date'])); ?> (เดือนปัจจุบัน)</div>
@@ -133,74 +78,11 @@ session_start();
                         </div>
                     </div>
                 </div>
-                <?php } ?>
 
-
-                <!-- กล่องขวา -->
-                <?php
-                    // query เดือนปัจจุบัน
-                    $thisMonth = $conn->query("SELECT DISTINCT * FROM bill_head WHERE report = 'Y' AND vat <> 0");
-                    $thisMonth->execute();
-                    $amount = $thisMonth->fetch(PDO::FETCH_ASSOC);
-
-                    // query ยอดซื้อ เดือนปัจจุบัน
-                    $thisMonth_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head WHERE report = 'Y' AND vat <> 0");
-                    $thisMonth_buy->execute();
-                    $monthBuy = $thisMonth_buy->fetch(PDO::FETCH_ASSOC);
-
-                    // query VAT เดือนปัจจุบัน
-                    $thisMonth_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head WHERE report = 'Y' AND vat <> 0");
-                    $thisMonth_vat->execute();
-                    $monthVAT = $thisMonth_vat->fetch(PDO::FETCH_ASSOC);
-
-                    if ($thisMonth->rowCount() >= 1) {
-                ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <form action="../db/db_filterTaxSummary.php" method="POST">
-                    <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดทั้งหมดที่ <u>ออกรายงานแล้ว</u></div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold"><?php echo number_format($monthBuy['monthTotal'], 2); ?></h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5><i class="fa-solid fa-receipt"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT['monthVAT'], 2); ?></h3>
-                            </div>
-                            <!-- <input type="hidden" name="reportedMonth" value="<?php //echo date("Y-m", strtotime($amount['buy_date'])); ?>"> -->
-                            <button type="submit" name="reported_billVAT" class="btn btn-sm btn-primary w-100">เรียกดูรายการ</button>
-                        </div>
-                    </div>
-                    </form>
-                </div>
-                <?php } else { ?>
-
-                <div class="col-xl-4 col-md-12 mb-3">
-                    <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดทั้งหมดที่ <u>ออกรายงานแล้ว</u></div>
-                            <div class="card-body">
-                                <div class="d-flex flex-row justify-content-between">
-                                    <h5><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
-                                </div>
-                            <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt text-info"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
-                            </div>
-                            <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-primary w-100 disabled">ออกบิล VAT</button>
-                        </div>
-                    </div>
-                </div>
                 <?php } ?>
             </div>
 
 
-            <!-- แถว 2 -->
             <div class="row">
                 <?php
 
