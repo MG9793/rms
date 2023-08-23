@@ -68,8 +68,8 @@
         <div style=" padding-bottom: 7px;">                        
                     <table style="border-collapse: collapse; font-size: 11pt;">
                     <tr>
-                        <td style="width: 509px; "> ชื่อสถานประกอบการ............<b>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</b>............ </td>
-                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 10px;"><img src="../image/icon/check.png" width="12px" ></td>
+                        <td style="width: 500px; "> ชื่อสถานประกอบการ............<b>บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด</b>............ </td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 10px;"><img src="../image/icon/check2.jpg" width="12px" ></td>
                         <td>&nbsp;สำนักงานใหญ่&nbsp;</td>
                         <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;"></td>
                         <td>&nbsp;สาขาที่</td>
@@ -96,17 +96,17 @@
         <table id="bg-table" width="100%" style="border-collapse: collapse; font-size: 8pt; border-top: 3px double solid">
             <thead>
                 <tr style="border:1px solid;">
-                    <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="5%">ลำดับ</th>
+                    <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="8%">ลำดับที่</th>
                     <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">ใบกำกับภาษี</th>
-                    <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="25%">ชื่อผู้ขายสินค้า / ผู้ให้บริการ</th>
+                    <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="25%">ชื่อผู้ขายสินค้า/ผู้ให้บริการ</th>
                     <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">เลขประจำตัวผู้เสียภาษี</th>
                     <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">สถานประกอบการ</th>
                     <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">มูลค่าสินค้าหรือบริการ</th>
                     <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">จำนวนเงินภาษีมูลค่าเพิ่ม</th>
                 </tr>
                 <tr style="border:1px solid;">
-                    <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">วันเดือนปี</th>
-                    <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">เล่มที่ / เลขที่</th>
+                    <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">วัน เดือน ปี</th>
+                    <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">เล่มที่/เลขที่</th>
                     <th style="border-right:1px solid; padding:4px; text-align:center;" width="12%">สำนักงานใหญ่</th>
                     <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">สาขาที่</th>
                 </tr>
@@ -126,7 +126,7 @@
                 <td style="border-right:1px solid; padding:4px; text-align: center;">IV93728</td>
                 <td style="border-right:1px solid; padding:4px; text-align: left;">บริษัทแสงชัยไลท์ติ้ง สำนักงานใหญ่</td>
                 <td style="border-right:1px solid; padding:4px; text-align: center;">0105560072540</td>
-                <td style="border-right:1px solid; padding:4px; text-align: center;"><img src="../image/icon/check.png" width="12px" ></td>
+                <td style="border-right:1px solid; padding:4px; text-align: center;"><img src="../image/icon/check2.jpg" width="12px" ></td>
                 <td style="border-right:1px solid; padding:4px; text-align: center;"></td>
                 <td style="border-right:1px solid; padding:4px; text-align: right;">'.number_format(4740, 2).'</td>
                 <td style="border-right:1px solid; padding:4px; text-align: right;">'.number_format(331.8, 2).'</td>
