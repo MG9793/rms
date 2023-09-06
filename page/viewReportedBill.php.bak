@@ -40,7 +40,7 @@ session_start();
         <div class="card px-4">
             <div class="card-body">                          
                 <div class="headReport">
-                    <h5 class="fw-bold p-2 text-center">รายงานภาษีซื้อที่ออกรายงานแล้ว (include VAT)</h5>
+                    <h5 class="fw-bold p-2 text-center">รายงานภาษีซื้อที่ออกรายงานแล้ว</h5>
                 </div>
 
                 <?php
@@ -55,23 +55,28 @@ session_start();
 
                     // query ตาราง
                     // $thisMonth = $_SESSION['thisMonth'];
-                    $stmt = $conn->query("SELECT * FROM bill_head WHERE report = 'Y' AND vat <> 0 ORDER BY buy_date ASC");
+                    $stmt = $conn->query("SELECT * FROM bill_head WHERE report = 'Y' ORDER BY buy_date ASC");
+                    // $stmt->execute();
                     $tax = $stmt->fetchAll();
 
                     // query รวมยอดซื้อทั้งหมด ที่ยังไม่ออกรายงาน
-                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE report = 'N' AND vat <> 0");
+                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE report = 'N'");
+                    // $sumBuy->execute();
                     $query_sumBuy = $sumBuy->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอด VAT ทั้งหมด ที่ยังไม่ออกรายงาน
-                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE report = 'N' AND vat <> 0");
+                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE report = 'N'");
+                    // $sumVAT->execute();
                     $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอดซื้อที่ออกรายงานแล้ว
-                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report = 'Y' AND vat <> 0");
+                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report = 'Y'");
+                    // $sumBuy_reported->execute();
                     $query_sumBuy_reported = $sumBuy_reported->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอด VAT ที่ออกรายงานแล้ว
-                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report = 'Y' AND vat <> 0");
+                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report = 'Y'");
+                    // $sumVAT_reported->execute();
                     $query_sumVAT_reported = $sumVAT_reported->fetch(PDO::FETCH_ASSOC);
                 ?>
 
@@ -173,6 +178,30 @@ session_start();
 
     <!-- สคริป รวมเงิน checkboxes -->
     <script>
+        // const checkboxes = document.getElementsByClassName('check');
+
+        // for (let i = 0; i < checkboxes.length; i++) {
+        //     checkboxes[i].addEventListener('change', calculateSum);
+        // }
+
+        // function calculateSum() {
+        //     let priceSum = 0;
+        //     let vatSum = 0;
+
+        //     for (let i = 0; i < checkboxes.length; i++) {
+        //         if (checkboxes[i].checked) {
+        //             const price = parseFloat(checkboxes[i].parentNode.parentNode.children[6].textContent);
+        //             const vat = parseFloat(checkboxes[i].getAttribute('data-price'));
+
+        //             priceSum += price;
+        //             vatSum += vat;
+        //         }
+        //     }
+
+        //     document.getElementById('selectedPrice').value = priceSum.toFixed(2);
+        //     document.getElementById('selectedVAT').value = vatSum.toFixed(2);
+        // }
+
         const checkboxes = document.querySelectorAll('.form-check-input.check');
 
         for (let i = 0; i < checkboxes.length; i++) {

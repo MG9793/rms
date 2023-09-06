@@ -13,7 +13,7 @@ session_start();
 <body>
 
     <section class="container mt-3">
-        <h5 class="fw-bold p-2 text-center">กรุณาเลือกข้อมูล | ภาษีซื้อ</h5>
+        <h5 class="fw-bold p-2 text-center">กรุณาเลือกข้อมูล | ออกบิล VAT</h5>
             <!-- รายการที่ยังไม่ได้เลือก -->
             <div class="row">
                 <?php
@@ -37,7 +37,7 @@ session_start();
                 <div class="col-xl-4 col-md-12 mb-3">
                     <form action="../db/db_filterTaxSummary.php" method="POST">
                     <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดรวมที่ไม่ได้เลือก</div>
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดทั้งหมดที่ <u>ยังไม่ได้ออกรายงาน</u></div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
                                     <h5><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
@@ -56,7 +56,7 @@ session_start();
 
                 <div class="col-xl-4 col-md-12 mb-5">
                     <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดรวมที่ไม่ได้เลือก</div>
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดทั้งหมดที่ <u>ยังไม่ได้ออกรายงาน</u></div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
                                     <h5 ><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
@@ -108,7 +108,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT['monthVAT'], 2); ?></h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="<?php echo date("Y-m", strtotime($amount['buy_date'])); ?>">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">เลือก</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-success w-100">ออกบิล VAT</button>
                         </div>
                     </div>
                     </form>
@@ -129,7 +129,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
                         </div>
                     </div>
                 </div>
@@ -140,17 +140,14 @@ session_start();
                 <?php
                     // query เดือนปัจจุบัน
                     $thisMonth = $conn->query("SELECT DISTINCT * FROM bill_head WHERE report = 'Y' AND vat <> 0");
-                    $thisMonth->execute();
                     $amount = $thisMonth->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอดซื้อ เดือนปัจจุบัน
                     $thisMonth_buy = $conn->query("SELECT SUM(sum) AS monthTotal FROM bill_head WHERE report = 'Y' AND vat <> 0");
-                    $thisMonth_buy->execute();
                     $monthBuy = $thisMonth_buy->fetch(PDO::FETCH_ASSOC);
 
                     // query VAT เดือนปัจจุบัน
                     $thisMonth_vat = $conn->query("SELECT SUM(vat) AS monthVAT FROM bill_head WHERE report = 'Y' AND vat <> 0");
-                    $thisMonth_vat->execute();
                     $monthVAT = $thisMonth_vat->fetch(PDO::FETCH_ASSOC);
 
                     if ($thisMonth->rowCount() >= 1) {
@@ -159,7 +156,7 @@ session_start();
                 <div class="col-xl-4 col-md-12 mb-3">
                     <form action="../db/db_filterTaxSummary.php" method="POST">
                     <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ</div>
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดทั้งหมดที่ <u>ออกรายงานแล้ว</u></div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
                                     <h5 ><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
@@ -171,7 +168,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT['monthVAT'], 2); ?></h3>
                             </div>
                             <!-- <input type="hidden" name="reportedMonth" value="<?php //echo date("Y-m", strtotime($amount['buy_date'])); ?>"> -->
-                            <button type="submit" name="reported_billVAT" class="btn btn-sm btn-outline-primary w-100">ดูรายละเอียด</button>
+                            <button type="submit" name="reported_billVAT" class="btn btn-sm btn-primary w-100">เรียกดูรายการ</button>
                         </div>
                     </div>
                     </form>
@@ -180,7 +177,7 @@ session_start();
 
                 <div class="col-xl-4 col-md-12 mb-3">
                     <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ</div>
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดทั้งหมดที่ <u>ออกรายงานแล้ว</u></div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
                                     <h5><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h5>
@@ -192,7 +189,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-primary w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-primary w-100 disabled">ออกบิล VAT</button>
                         </div>
                     </div>
                 </div>
@@ -244,7 +241,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT1['monthVAT'], 2); ?></h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="<?php echo date("Y-m", strtotime($month1['buy_date'])); ?>">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">เลือก</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">ออกบิล VAT</button>
                         </div>
                     </div>
                     </form>
@@ -265,7 +262,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
                         </div>
                     </div>
                 </div>
@@ -315,7 +312,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT2['monthVAT'], 2); ?></h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="<?php echo date("Y-m", strtotime($month2['buy_date'])); ?>">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">เลือก</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">ออกบิล VAT</button>
                         </div>
                     </div>
                     </form>
@@ -336,7 +333,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
                         </div>
                     </div>
                 </div>
@@ -386,7 +383,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT3['monthVAT'], 2); ?></h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="<?php echo date("Y-m", strtotime($month3['buy_date'])); ?>">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">เลือก</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">ออกบิล VAT</button>
                         </div>
                     </div>
                     </form>
@@ -407,7 +404,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
                         </div>
                     </div>
                 </div>
@@ -457,7 +454,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT4['monthVAT'], 2); ?></h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="<?php echo date("Y-m", strtotime($month4['buy_date'])); ?>">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">เลือก</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">ออกบิล VAT</button>
                         </div>
                     </div>
                     </form>
@@ -478,7 +475,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
                         </div>
                     </div>
                 </div>
@@ -528,7 +525,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT5['monthVAT'], 2); ?></h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="<?php echo date("Y-m", strtotime($month5['buy_date'])); ?>">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">เลือก</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">ออกบิล VAT</button>
                         </div>
                     </div>
                     </form>
@@ -549,7 +546,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
                         </div>
                     </div>
                 </div>
@@ -601,7 +598,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold"><?php echo number_format($monthVAT6['monthVAT'], 2); ?></h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="<?php echo date("Y-m", strtotime($month6['buy_date'])); ?>">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">เลือก</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100">ออกบิล VAT</button>
                         </div>
                     </div>
                     </form>
@@ -623,7 +620,7 @@ session_start();
                                     <h3 class="mb-0 fw-bold">0</h3>
                                 </div>
                                 <input type="hidden" name="thisMonth" value="0">
-                                <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ไม่พบรายการซื้อ</button>
+                                <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-success w-100 disabled">ออกบิล VAT</button>
                             </div>
                         </div>
                     </div>

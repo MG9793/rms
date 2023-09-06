@@ -3,9 +3,14 @@
             require_once "../include/header_admin.php";
     
         } 
-        elseif ($_SESSION['permission']=='Procurement') 
+        elseif ($_SESSION['permission']=='Procurement_Vat') 
         {
-            require_once "../include/header_procurement.php";
+            require_once "../include/header_procurement_vat.php";
+    
+        }
+        elseif ($_SESSION['permission']=='Procurement_noVat') 
+        {
+            require_once "../include/header_procurement_novat.php";
     
         }
         elseif ($_SESSION['permission']=='Account') 
