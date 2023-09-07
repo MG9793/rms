@@ -39,7 +39,8 @@ require_once "../db/config/deleteRow.php";
                         <label for="userPermission" class="form-label">สิทธิการใช้งาน :</label>
                         <select class="form-select" aria-label="userPermission" name="userPermission" required>
                             <option>Admin</option>
-                            <option>Procurement</option>
+                            <option>Procurement_Vat</option>
+                            <option>Procurement_noVat</option>
                             <option>Account</option>
                         </select>
                     </div>
@@ -143,18 +144,14 @@ require_once "../db/config/deleteRow.php";
                                         <div class="mb-0">
                                             <label for="editPermission" class="col-form-label">สิทธิการใช้งาน :</label>
                                             <select class="form-select" aria-label="editPermission" name="editPermission" required>
-                                                <option>Admin</option>
-                                                <option>User</option>
+                                            <option>Admin</option>
+                            <option>Procurement_Vat</option>
+                            <option>Procurement_noVat</option>
+                            <option>Account</option>
+                        </select>
                                             </select>
                                         </div>
-                                        <div class="mb-0">
-                                            <label for="editPassword" class="col-form-label">Password (อย่างน้อย 8 ตัวอักษร) :</label>
-                                            <input type="password" class="form-control" name="editPassword" id="editPassword" placeholder="xxxxxxxx" minlength="8" required>
-                                        </div>
-                                        <div class="mb-2">
-                                            <label for="editConfirmPassword" class="col-form-label">Confirm Password :</label>
-                                            <input type="password" class="form-control" name="editConfirmPassword" id="editConfirmPassword" placeholder="xxxxxxxx" minlength="8" required>
-                                        </div>
+                                        
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

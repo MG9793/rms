@@ -155,7 +155,6 @@
                         <select name="calVat" id="calVat" class="form-control" onChange="changetextbox();" required>
                             
                             <option value="VAT">VAT</option>
-                            <option value="noVAT">noVAT</option>
                         </select>
                     </div>
                 </div>
@@ -495,48 +494,6 @@
     </script>
 
 
-    <script>
-        function changetextbox() {
-
-            if(document.getElementById("calVat").value === "VAT"){
-                document.getElementById("expenseSUM").value = "";;
-                document.getElementById("expenseVAT").value = "";;
-                document.getElementById("expenseTotal").value = "";
-
-                $vatC = 0.07;
-
-            }
-            else if (document.getElementById("calVat").value === "noVAT"){
-                document.getElementById("expenseSUM").value = "";;
-                document.getElementById("expenseVAT").value = "";;
-                document.getElementById("expenseTotal").value = "";;
-
-                $vatC = 0;
-            }
-        }
-    </script>
-
-
-    <script>
-        function changetax() {
-
-            if(document.getElementById("calVat").value === "VAT"){
-                document.getElementById("expenseSUM").value = "";;
-                document.getElementById("expenseVAT").value = "";;
-                document.getElementById("expenseTotal").value = "";
-
-                $vatC = 0.07;
-
-            }
-            else if (document.getElementById("calVat").value === "noVAT"){
-                document.getElementById("expenseSUM").value = "";;
-                document.getElementById("expenseVAT").value = "";;
-                document.getElementById("expenseTotal").value = "";;
-
-                $vatC = 0;
-            }
-        }
-    </script>
 
 
     <script>
@@ -547,7 +504,7 @@
             // document.getElementById("expenseSUM").value = (parseFloat(price) - vat).toFixed(2);
 
             var price = document.getElementById("expenseSUM").value;
-            var vat = price * $vatC;
+            var vat = price * 0.07;
             document.getElementById("expenseVAT").value = vat.toFixed(2);
             document.getElementById("expenseTotal").value = (parseFloat(price) + vat).toFixed(2);
         }

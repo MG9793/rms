@@ -35,12 +35,11 @@ session_start();
 </head>
 <body>
 
-
     <section class="container-fluid my-3">
         <div class="card px-4">
             <div class="card-body">                          
                 <div class="headReport">
-                    <h5 class="fw-bold p-2 text-center">รายงานภาษีซื้อที่ออกรายงานแล้ว (include VAT)</h5>
+                    <h5 class="fw-bold p-2 text-center">กรุณาเลือกข้อมูล | รายงานซื้อประจำเดือน (NO VAT) <?php echo $_SESSION['thisMonth']; ?></h5>
                 </div>
 
                 <?php
@@ -54,55 +53,38 @@ session_start();
                     }
 
                     // query ตาราง
-                    // $thisMonth = $_SESSION['thisMonth'];
-                    $stmt = $conn->query("SELECT * FROM bill_head WHERE report = 'Y' AND vat <> 0 ORDER BY buy_date ASC");
+                    $thisMonth = $_SESSION['thisMonth'];
+                    $stmt = $conn->query("SELECT * FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat = 0 AND report = 'N' ORDER BY buy_date ASC");
                     $tax = $stmt->fetchAll();
 
-                    // query รวมยอดซื้อทั้งหมด ที่ยังไม่ออกรายงาน
-                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE report = 'N' AND vat <> 0");
+                    // query รวมยอดซื้อ
+                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat = 0 AND report = 'N'");
                     $query_sumBuy = $sumBuy->fetch(PDO::FETCH_ASSOC);
 
-                    // query รวมยอด VAT ทั้งหมด ที่ยังไม่ออกรายงาน
-                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE report = 'N' AND vat <> 0");
-                    $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
-
                     // query รวมยอดซื้อที่ออกรายงานแล้ว
-                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report = 'Y' AND vat <> 0");
+                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat = 0 AND report = 'Y'");
                     $query_sumBuy_reported = $sumBuy_reported->fetch(PDO::FETCH_ASSOC);
-
-                    // query ยอด VAT ที่ออกรายงานแล้ว
-                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report = 'Y' AND vat <> 0");
-                    $query_sumVAT_reported = $sumVAT_reported->fetch(PDO::FETCH_ASSOC);
                 ?>
 
-                <form action="../db/db_filterTaxSummary.php" method="POST">
+                <form action="../db/db_filterTaxSummary_novat.php" method="POST">
                     <div class="row mt-3">
                         <div class="col-md-3 text-center">
-                            <label for="selectedPrice" class="form-label fw-bold">รวมยอดซื้อที่ยังไม่ออกรายงาน :</label>
+                            <label for="selectedPrice" class="form-label fw-bold">รวมยอดซื้อที่เลือก :</label>
                             <h4 class="text-primary fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
                             <!-- <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" value="<?php //echo $query_sumBuy['sumbuy']; ?>" required readonly min="0" step="any"> -->
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <label for="selectedVAT" class="form-label fw-bold">รวมยอด VAT ที่ยังไม่ออกรายงาน :</label>
-                            <h4 class="text-primary fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
-                            <!-- <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly value="<?php //echo $query_sumVAT['sumvat']; ?>" min="0" step="any"> -->
                         </div>
                         <div class="col-md-3 text-center">
                             <label for="reportedPrice" class="form-label fw-bold">รวมยอดซื้อ (ออกรายงานแล้ว) :</label>
                             <h4 class="text-danger fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported'], 2); ?></h4>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <label for="reportedVAT" class="form-label fw-bold">รวมยอด VAT (ออกรายงานแล้ว) :</label>
-                            <h4 class="text-danger fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported'], 2); ?></h4>
-                        </div>
-                        <!-- <div class="col-md-2">
-                            <label for="selectTime" class="form-label fw-bold">เดือน/ปี ที่ออกรายงานภาษีซื้อ :</label>
+                        <div class="col-md-3">
+                            <label for="selectTime" class="form-label fw-bold">เดือน/ปี ที่ออกรายงาน (NO VAT) :</label>
                             <input type="month" class="form-control" name="selectTime" id="selectTime" required onchange="dateThaiFormat()">
                             <p class="text-primary fw-bold" id="sendReportDate" style="margin-bottom: -30px;"></p>
                         </div>
-                        <div class="col-md-2" style="margin-top: 32px;">
-                            <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;บันทึกภาษีซื้อ</button>
-                        </div> -->
+                        <div class="col-md-3" style="margin-top: 32px;">
+                            <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;บันทึกรายการซื้อ (NO VAT)</button>
+                        </div>
                     </div>
                     <div class="row" style="margin-bottom: -30px;">
                         <div class="col-md-12">
@@ -113,17 +95,21 @@ session_start();
                             </div>
                         </div>
                     </div>
-                    <!-- <hr> -->
+                    <div class="row px-4 my-2">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id="searchData" placeholder="ค้นหาข้อมูล...">
+                        </div>
+                    </div>
 
-                    <div class="table-responsive mb-2">
-                        <table class="table table-sm table-hover mt-2 css-serial" id="myTable">
+                    <div class="table-responsive px-4 mb-2">
+                        <table class="table table-sm table-hover mt-2 css-serial" id="searchTable">
                             <thead>
                                 <tr>
                                     <th scope="col" class="fw-bold" style="text-align:center;">#</th>
                                     <th scope="col" class="fw-bold" style="text-align:center;">วันที่ซื้อ</th>
                                     <th scope="col" class="fw-bold" style="text-align:center;">ไซต์งาน</th>
                                     <th scope="col" class="fw-bold" style="text-align:center;">เลขที่ใบเสร็จ</th>
-                                    <th scope="col" class="fw-bold">รายการซื้อสินค้า</th>
+                                    <th scope="col" class="fw-bold">ชื่อผู้ขาย</th>
                                     <th scope="col" class="fw-bold" style="text-align:center;">เลขประจำตัวผู้เสียภาษี</th>
                                     <th scope="col" class="fw-bold" style="text-align:center;">สาขา</th>
                                     <th scope="col" class="fw-bold" style="text-align:right;">มูลค่าสินค้าหรือบริการ</th>
@@ -159,16 +145,16 @@ session_start();
 
     <!-- ปรับ format datetime -->
     <script>
-        // function dateThaiFormat() {
-        //     var input = document.getElementById("selectTime");
-        //     var selectedDateTime = new Date(input.value);
+        function dateThaiFormat() {
+            var input = document.getElementById("selectTime");
+            var selectedDateTime = new Date(input.value);
 
-        //     var options = { year: 'numeric', month: 'long' };
-        //     var selectedDate = selectedDateTime.toLocaleDateString('th-TH', options);
+            var options = { year: 'numeric', month: 'long' };
+            var selectedDate = selectedDateTime.toLocaleDateString('th-TH', options);
 
-        //     var pTag = document.getElementById("sendReportDate");
-        //     pTag.textContent = selectedDate;
-        // }
+            var pTag = document.getElementById("sendReportDate");
+            pTag.textContent = selectedDate;
+        }
     </script>
 
     <!-- สคริป รวมเงิน checkboxes -->
@@ -193,9 +179,39 @@ session_start();
                 }
             }
 
-            document.getElementById('reportedPrice').textContent = priceSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById('reportedVAT').textContent = vatSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('selectedPrice').textContent = priceSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('selectedVAT').textContent = vatSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
+    </script>
+
+    <!-- สคริป ค้นหาข้อมูลในตาราง -->
+    <script>
+        var input = document.getElementById('searchData');
+        var table = document.getElementById('searchTable');
+        var rows = table.getElementsByTagName('tr');
+
+        input.addEventListener('keyup', function() {
+            var filter = input.value.toLowerCase();
+
+            // Loop through all table rows
+            for (var i = 1; i < rows.length; i++) { // Start at 1 to skip the header row
+                var row = rows[i];
+                var cells = row.getElementsByTagName('td');
+                var rowText = '';
+
+                // Concatenate the text content of all cells in the row
+                for (var j = 0; j < cells.length; j++) {
+                    rowText += cells[j].textContent.toLowerCase() + ' ';
+                }
+
+                // Check if the row text contains the filter text
+                if (rowText.indexOf(filter) > -1) {
+                    row.style.display = ''; // Show the row
+                } else {
+                    row.style.display = 'none'; // Hide the row
+                }
+            }
+        });
     </script>
 
 
