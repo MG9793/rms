@@ -75,7 +75,7 @@
                             $stmt->execute();
                             $monthSelect = $stmt->fetchAll();
                             
-                            
+                  
                                 echo '<option value="">เลือกเดือน</option>';
                                 foreach ($monthSelect as $month) {
                                     echo '<option value="'. $month['report_month'] .'">'. $month['report_month'] .'</option>';
@@ -85,7 +85,15 @@
                             ?> 
                             </select>
                         </div>
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-success w-100" name="showReport"><i class="fa-solid fa-eye"></i> &nbsp;View Report</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
                         <?php 
+                        if(empty($_POST['selectMonth'])){
+                        }else{
                         $monthTax=substr($_POST['selectMonth'],-2);
                         $yearTax=substr($_POST['selectMonth'],0,4);
                         if($monthTax=='01'){
@@ -113,17 +121,13 @@
                         }else if($monthTax=='12'){
                             $_SESSION['monthTax'] = 'ธันวาคม';
                         }
-                       
+                   
                         $_SESSION['searchTax'] = $_POST['selectMonth'];
                         $_SESSION['yearTax'] = $yearTax+543; 
+                    
                         ?>
                         
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-success w-100" name="showReport"><i class="fa-solid fa-eye"></i> &nbsp;View Report</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                        
 
 
             <table style="background: #FFA500;" width="100%" height="35">
@@ -140,7 +144,9 @@
         </div>
     </div>
 </section>
-
+<?php
+                        }
+                        ?>
 <script>
     var select_box_element_site = document.querySelector('#selectMonth');
 
