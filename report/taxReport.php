@@ -75,24 +75,51 @@
                             $stmt->execute();
                             $monthSelect = $stmt->fetchAll();
                             
-                            if($_SESSION['selectMonth']=="") {
-                                echo '<option value="">Filter เดือน</option>';
+                            
+                                echo '<option value="">เลือกเดือน</option>';
                                 foreach ($monthSelect as $month) {
                                     echo '<option value="'. $month['report_month'] .'">'. $month['report_month'] .'</option>';
                                     }
 
-                                } else {
-                                    echo '<option value="'. $_SESSION['selectMonth'] .'">'. $_SESSION['selectMonth'] .'</option>';
-
-                                    foreach ($monthSelect as $month) {
-                                        echo '<option value="'. $month['report_month'] .'">'. $month['report_month'] .'</option>';
-                                    }
-                                }
+                                
                             ?> 
                             </select>
                         </div>
+                        <?php 
+                        $monthTax=substr($_POST['selectMonth'],-2);
+                        $yearTax=substr($_POST['selectMonth'],0,4);
+                        if($monthTax=='01'){
+                            $_SESSION['monthTax'] = 'มกราคม';
+                        }else if($monthTax=='02'){
+                            $_SESSION['monthTax'] = 'กุมภาพันธ์';
+                        }else if($monthTax=='03'){
+                            $_SESSION['monthTax'] = 'มีนาคม';
+                        }else if($monthTax=='04'){
+                            $_SESSION['monthTax'] = 'เมษายน';
+                        }else if($monthTax=='05'){
+                            $_SESSION['monthTax'] = 'พฤษภาคม';
+                        }else if($monthTax=='06'){
+                            $_SESSION['monthTax'] = 'มิถุนายน';
+                        }else if($monthTax=='07'){
+                            $_SESSION['monthTax'] = 'กรกฎาคม';
+                        }else if($monthTax=='08'){
+                            $_SESSION['monthTax'] = 'สิงหาคม';
+                        }else if($monthTax=='09'){
+                            $_SESSION['monthTax'] = 'กันยายน';
+                        }else if($monthTax=='10'){
+                            $_SESSION['monthTax'] = 'ตุลาคม';
+                        }else if($monthTax=='11'){
+                            $_SESSION['monthTax'] = 'พฤศจิกายน';
+                        }else if($monthTax=='12'){
+                            $_SESSION['monthTax'] = 'ธันวาคม';
+                        }
+                       
+                        $_SESSION['searchTax'] = $_POST['selectMonth'];
+                        $_SESSION['yearTax'] = $yearTax+543; 
+                        ?>
+                        
                         <div class="col-md-4">
-                            <button type="submit" class="btn btn-warning w-100" name="showReport"><i class="fa-solid fa-eye"></i> &nbsp;View Report</button>
+                            <button type="submit" class="btn btn-success w-100" name="showReport"><i class="fa-solid fa-eye"></i> &nbsp;View Report</button>
                         </div>
                     </div>
                 </form>
@@ -103,7 +130,7 @@
                 <tbody>
                     <tr>
                         <td style="text-align: center;">
-                              <a href="../page/chooseBillVat.php" class="menu"><img src="../image/icon/undo.png" width="auto" height="16">กลับไปหน้าออกบิล VAT</a>
+                              
                               <a href="" class="menu"><img src="../image/icon/excel.png" width="auto" height="16">Export to Excel </a>
                         </td>
                     </tr>
