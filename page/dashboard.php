@@ -30,6 +30,10 @@
                     $stmt_income->execute();
                     $amount = $stmt_income->fetch(PDO::FETCH_ASSOC);
 
+                    $stmt_bill = $conn->query("SELECT SUM(total) AS totalBuy FROM bill_head WHERE site_name = '$siteName' ");
+                    $stmt_bill->execute();
+                    $bill = $stmt_bill->fetch(PDO::FETCH_ASSOC);
+
             ?>
                 <div class="col-xl-4 col-md-12 mb-3 p-2">
                    
@@ -47,7 +51,7 @@
                         </div>
                         <div class="d-flex flex-row justify-content-between">
                             <h5><i class="fa-solid fa-sack-dollar text-danger"></i> ยอดจ่าย</h5>
-                            <h3 class="text-danger fw-bold"><?php echo number_format(000, 2); ?></h3>
+                            <h3 class="text-danger fw-bold"><?php echo number_format($bill['totalBuy'], 2); ?></h3>
                         </div>
                         </div>
                     </div>

@@ -55,17 +55,17 @@ session_start();
                 <?php } else { ?>
 
                 <div class="col-xl-4 col-md-12 mb-5">
-                    <div class="card">
+                <div class="card">
                         <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดรวมที่ไม่ได้เลือก</div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
-                                    <h5 ><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
-                                    <h3 class="mb-0 fw-bold">0</h3>
+                                    <h5><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
+                                    <h3 class="mb-0 fw-bold text-danger">0</h3>
                                 </div>
                             <br>
-                            <div class="d-flex flex-row justify-content-between mb-3">
-                                <h5 ><i class="fa-solid fa-receipt"></i> VAT</h5>
-                                <h3 class="mb-0 fw-bold">0</h3>
+                            <div class="d-flex flex-row justify-content-between mb-5">
+                                <h5><i class="fa-solid fa-receipt"></i> VAT</h5>
+                                <h3 class="mb-0 fw-bold text-danger">0</h3>
                             </div>
                         </div>
                     </div>

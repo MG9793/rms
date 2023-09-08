@@ -35,13 +35,11 @@ session_start();
 </head>
 <body>
 
-
-    <section class="container-fluid my-3">
-        <div class="card px-4">
-            <div class="card-body">                          
-                <div class="headReport">
-                    <h5 class="fw-bold p-2 text-center">รายงานภาษีซื้อที่ออกรายงานแล้ว (include VAT)</h5>
-                </div>
+<center>
+                            <section class="mb-2 " style="width:70% ">
+                            <fieldset class="p-3 shadow-sm mt-3"> 
+                            <legend class="fw-bold text-dark text-center  p-1"> รายการที่เลือก </legend>                          
+                
 
                 <?php
                     // Alert ไม่ได้เลือกรายการออกใบกำกับภาษี
@@ -104,15 +102,10 @@ session_start();
                             <button type="submit" class="btn btn-primary w-100" name="sendReport"><i class="fa-solid fa-sheet-plastic"></i> &nbsp;บันทึกภาษีซื้อ</button>
                         </div> -->
                     </div>
-                    <div class="row" style="margin-bottom: -30px;">
-                        <div class="col-md-12">
-                            <div class="form-check d-flex justify-content-end">
-                                    <input class="form-check-input" type="checkbox" id="select-all" onchange="toggleAll(this)" checked>
-                                    <label class="form-check-label" for="select-all">&nbsp;Select All</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </fieldset>
+                </section>
+                <section class="mb-2 " style="width:70% ">
+                            <fieldset class="p-3 shadow-sm mt-3"> 
                     <!-- <hr> -->
 
                     <div class="table-responsive mb-2">
@@ -128,7 +121,9 @@ session_start();
                                     <th scope="col" class="fw-bold" style="text-align:center;">สาขา</th>
                                     <th scope="col" class="fw-bold" style="text-align:right;">มูลค่าสินค้าหรือบริการ</th>
                                     <th scope="col" class="fw-bold" style="text-align:right;">จำนวนเงินภาษีมูลค่าเพิ่ม</th>
-                                    <th scope="col" class="fw-bold" style="text-align:center;">ออกใบกำกับภาษี</th>
+                                    <th scope="col" class="fw-bold" style="text-align:center;">ออกใบกำกับภาษี<br>
+                                    <input class="form-check-input" type="checkbox" id="select-all" onchange="toggleAll(this)" checked>
+                                    <label class="form-check-label" for="select-all">ทั้งหมด</label></th>
                                 </tr>
                             </thead>
                             <tbody>

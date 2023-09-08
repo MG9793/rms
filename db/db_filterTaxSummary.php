@@ -21,7 +21,7 @@
                     $stmt = $conn->prepare("UPDATE bill_head SET report = 'Y', report_month = '$selectTime' WHERE receipt_no = :receipt_no");
                     $stmt->execute(['receipt_no' => $receipt_no]);
 
-                    header("location: ../report/taxReport.php");
+                    header("location: ../page/chooseBillVat.php");
 
                 }
             }
@@ -49,6 +49,6 @@
         $selectMonth = $_POST['selectMonth'];
         $_SESSION['selectMonth'] = $selectMonth;
 
-        header("location: ../report/taxReport.php");
+        header("location: ../page/chooseBillVat.php");
     }
 ?>

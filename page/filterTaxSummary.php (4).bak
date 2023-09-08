@@ -22,33 +22,24 @@ session_start();
             $('#myTable').DataTable();
         } );
     </script>
+    
 
-    <script>
-        function toggleAll(source) {
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(function(checkbox) {
-                checkbox.checked = source.checked;
-                if(checkbox.checked = source.checked){
-                   
-                    
-        
-                }else{
-               document.getElementById('selectedPrice').textContent = '0.00';
-               document.getElementById('selectedVAT').textContent = '0.00';
-                    }
-            });
-        }
-  </script>
+   
 
 </head>
 <body>
+
+
 <center>
                         <section class="mb-2 " style="width:70% ">
                             <fieldset class="p-3 shadow-sm mt-3"> 
-
-    
-                            
-            <legend class="fw-bold text-dark text-center  p-1"> เลือกข้อมูล | รายงานภาษีซื้อ </legend>
+                    
+        <legend class="fw-bold text-dark text-center  p-1"> เลือกข้อมูล | รายงานภาษีซื้อ </legend>
+                    
+                    
+           
+                
+                
 
                 <?php
                     // Alert ไม่ได้เลือกรายการออกใบกำกับภาษี
@@ -99,8 +90,13 @@ session_start();
                             </div>
                             <div class="col-md-3 p-3 ">
                     </div>
-                    <div class="row mt-3 p-3">
-                    <div class="col-md-3 text-center">
+                   
+
+                    
+                </div>
+                    <div class="row mt-3">
+                    
+                        <div class="col-md-3 text-center">
                             <label for="selectedPrice" class="form-label fw-bold">ยอดรวมรายการซื้อ(ที่เลือก) :</label>
                             <h4 class="text-primary fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
                             <!-- <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" value="<?php //echo $query_sumBuy['sumbuy']; ?>" required readonly min="0" step="any"> -->
@@ -118,23 +114,18 @@ session_start();
                             <label for="reportedVAT" class="form-label fw-bold">ยอดรวม VAT :</label>
                             <h4 class="text-black fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported'], 2); ?></h4>
                         </div>
+                        </section>  </fieldset>     
+               
+                              
                         
-                        
-                    </div>
-                </fieldset>
-                </section>
-                <section class="mb-2 " style="width:70% ">
+                       
+                        <section class="mb-2 " style="width:70% ">
                             <fieldset class="p-3 shadow-sm mt-3"> 
 
-                    <div class="row px-4 my-2">
-                    
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="searchData" placeholder="ค้นหาข้อมูล...">
-                        </div>
-                    </div>
-
                     <div class="table-responsive px-4 mb-2">
-                        <table class="table table-sm table-hover mt-2 css-serial" id="searchTable">
+                        
+                    
+                    <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                             <thead>
                                 <tr>
                                     <th scope="col" class="fw-bold" style="text-align:center;">#</th>
@@ -176,20 +167,10 @@ session_start();
             </div>
         </div>
     </section>
-
-    <!-- ปรับ format datetime -->
-    <script>
-        function dateThaiFormat() {
-            var input = document.getElementById("selectTime");
-            var selectedDateTime = new Date(input.value);
-
-            var options = { year: 'numeric', month: 'long' };
-            var selectedDate = selectedDateTime.toLocaleDateString('th-TH', options);
-
-            var pTag = document.getElementById("sendReportDate");
-            pTag.textContent = selectedDate;
-        }
-    </script>
+    </table>
+        </fieldset>
+        </center>
+    
 
     <!-- สคริป รวมเงิน checkboxes -->
     <script>
@@ -215,8 +196,30 @@ session_start();
 
             document.getElementById('selectedPrice').textContent = priceSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('selectedVAT').textContent = vatSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
         }
     </script>
+
+<script>
+        function toggleAll(source) {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = source.checked;
+                if(checkbox.checked = source.checked){
+                   
+                    
+        
+             }else{
+            document.getElementById('selectedPrice').textContent = '0.00';
+            document.getElementById('selectedVAT').textContent = '0.00';
+                 }
+               
+                
+            });
+           
+
+        }
+  </script>
 
     <!-- สคริป ค้นหาข้อมูลในตาราง -->
     <script>
