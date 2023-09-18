@@ -3,6 +3,7 @@
     require_once "../include/dependency.php";
     require_once "../include/header.php";
     require_once "../db/config/deleteRow.php";
+    require_once "../include/calendar.php";
     
 
     $bill = $conn->prepare("SELECT* FROM bill_head");
@@ -120,7 +121,7 @@
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
-                        <input type="date" class="form-control" name="buyDate" id="buyDate" required>
+                        <input autocomplete="off" name="buyDate" class="form-control" type="text" id="buyDate" value="" />
                     </div>
                 </div>
 
@@ -162,15 +163,15 @@
                 <div class="row mb-3"> 
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ค่าสินค้าและค่าขนส่ง :</label>
-                        <input type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()" min='0' value='0' step='any'>
+                        <input autocomplete="off" type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()" OnChange="JavaScript:chkNum(this)" >
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
-                        <input type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: #e9ecef;" min='0' value='0' step='any'>
+                        <input autocomplete="off" type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: #e9ecef;" min='0' value='0' step='any'>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
-                        <input type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: #e9ecef;" required min='0' value='0' step='any'>
+                        <input autocomplete="off" type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: #e9ecef;" required min='0' value='0' step='any'>
                     </div>
                 </div>
 
@@ -261,7 +262,7 @@
                                         </div>
                                         <div class="mb-0">
                                             <label for="editBuyDate" class="col-form-label">วันที่ซื้อ :</label>
-                                            <input type="date" class="form-control" name="editBuyDate" id="editBuyDate" value="<?php echo $fetch_bill['buy_date']; ?>" required>
+                                            <input autocomplete="off" type="text" class="form-control" name="editBuyDate" id="editBuyDate" value="<?php echo $fetch_bill['buy_date']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editSalesName" class="col-form-label">ชื่อผู้ขาย :</label>

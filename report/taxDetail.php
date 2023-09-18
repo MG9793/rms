@@ -59,7 +59,7 @@
                         <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">5</td>
                         <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">1</td>
                         <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">6</td>
-                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">07</td>
+                        <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">0</td>
                         <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">0</td>
                         <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">8</td>
                         <td style="border: 1px solid black; border-collapse: collapse; width: 15px; height: 15px;" align="center">5</td>
@@ -98,7 +98,7 @@
 
         <table id="bg-table" width="100%" style="border-collapse: collapse; font-size: 8pt; ">
             <thead>
-                <tr style="border:1px solid; border-top: 3px double solid ">
+                <tr style="border:1px solid; border-top: 3px double solid">
                     <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center; " width="8%">ลำดับที่</th>
                     <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">ใบกำกับภาษี</th>
                     <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="25%">ชื่อผู้ขายสินค้า/ผู้ให้บริการ</th>

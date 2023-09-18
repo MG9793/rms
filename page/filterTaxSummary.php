@@ -29,8 +29,12 @@ session_start();
             checkboxes.forEach(function(checkbox) {
                 checkbox.checked = source.checked;
                 if(checkbox.checked = source.checked){
-                   
-                    
+                    var query_sumBuy = document.getElementById('hiddenPrice').textContent
+                    var query_sumVAT = document.getElementById('hiddenVAT').textContent
+
+                    document.getElementById('selectedPrice').textContent = query_sumBuy;
+                    document.getElementById('selectedVAT').textContent = query_sumVAT;
+                 
         
                 }else{
                document.getElementById('selectedPrice').textContent = '0.00';
@@ -103,19 +107,21 @@ session_start();
                     <div class="col-md-3 text-center">
                             <label for="selectedPrice" class="form-label fw-bold">ยอดรวมรายการซื้อ(ที่เลือก) :</label>
                             <h4 class="text-primary fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
+                            <h4 class="text-primary fw-bold" hidden id="hiddenPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
                             <!-- <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" value="<?php //echo $query_sumBuy['sumbuy']; ?>" required readonly min="0" step="any"> -->
                         </div>
                         <div class="col-md-3 text-center">
                             <label for="selectedVAT" class="form-label fw-bold">ยอดรวม VAT(ที่เลือก) :</label>
                             <h4 class="text-primary fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
+                            <h4 class="text-primary fw-bold" hidden id="hiddenVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
                             <!-- <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly value="<?php //echo $query_sumVAT['sumvat']; ?>" min="0" step="any"> -->
                         </div>
                         <div class="col-md-3 text-center">
-                            <label for="reportedPrice" class="form-label fw-bold">ยอดรวมรายการซื้อ :</label>
+                            <label for="reportedPrice" class="form-label fw-bold">ยอดรวมภาษีซื้อ(สะสม) :</label>
                             <h4 class="text-black fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported'], 2); ?></h4>
                         </div>
                         <div class="col-md-3 text-center">
-                            <label for="reportedVAT" class="form-label fw-bold">ยอดรวม VAT :</label>
+                            <label for="reportedVAT" class="form-label fw-bold">ยอดรวม VAT(สะสม) :</label>
                             <h4 class="text-black fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported'], 2); ?></h4>
                         </div>
                         

@@ -5,8 +5,9 @@
 
     
     if (isset($_POST['sendReport'])) {
-
+        
         $selectTime = $_POST['selectTime'];
+       
         $receipt_nos = $_POST['receipt_no'];
         $reports = $_POST['report'];        // ดึงมาจาก form checkbox
 
