@@ -3,11 +3,21 @@
     session_start();
     require_once 'config/conn.php';
 
+   
     
     if (isset($_POST['sendReport'])) {
         
-        $selectTime = $_POST['selectTime'];
+            $_SESSION["selectTime"] = substr($_POST['selectMonth'],2)." ".$_POST['selectYear']; 
+            $_SESSION["selectTime2"] = $_POST['selectYear']."".substr($_POST['selectMonth'],0,2); 
+            $_SESSION["selectMonth"] = substr($_POST['selectMonth'],0,2);
+            $_SESSION["selectMonthFull"] = substr($_POST['selectMonth'],2);
+            $_SESSION["selectMonthOld"] = $_POST['selectMonth'];
+            $_SESSION["selectYear"] = $_POST['selectYear'];
+            
        
+        
+        $selectTime = $_SESSION["selectTime"];
+        $selectTime2 = $_SESSION["selectTime2"]; 
         $receipt_nos = $_POST['receipt_no'];
         $reports = $_POST['report'];        // ดึงมาจาก form checkbox
 
@@ -19,7 +29,7 @@
     
             foreach ($receipt_nos as $receipt_no) {
                 if (isset($reports[$receipt_no]) && $reports[$receipt_no] === 'Y') {
-                    $stmt = $conn->prepare("UPDATE bill_head SET report = 'Y', report_month = '$selectTime' WHERE receipt_no = :receipt_no");
+                    $stmt = $conn->prepare("UPDATE bill_head SET report = 'Y', report_month = '$selectTime' , report_month2 = '$selectTime2' WHERE receipt_no = :receipt_no");
                     $stmt->execute(['receipt_no' => $receipt_no]);
 
                     header("location: ../page/chooseBillVat.php");

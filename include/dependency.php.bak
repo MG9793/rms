@@ -7,9 +7,7 @@
 <link rel="stylesheet" href="../resources/css/customUI.css">
 
 <!-- jQuey 3.6.1 -->
-<!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script> -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
 
 <!-- DataTables CDN -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>

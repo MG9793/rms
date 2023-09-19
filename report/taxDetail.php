@@ -22,7 +22,7 @@
 
     $reportMonth = intval($_SESSION['searchTax']);
 
-    
+  
   
     $head = '
         
@@ -119,7 +119,7 @@
 
     ';
     
-    $sql = "SELECT *  FROM bill_head where report_month = $reportMonth";
+    $sql = "SELECT *  FROM bill_head where report_month2 = $reportMonth";
     $result = mysqli_query($conn, $sql);
     $content = "";
     $i=1;

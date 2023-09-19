@@ -75,14 +75,14 @@
                             <select name="selectMonth" class="form-select" id="selectMonth">
                             <?php
                             
-                            $stmt = $conn->query("SELECT DISTINCT report_month FROM bill_head WHERE report = 'Y'");
+                            $stmt = $conn->query("SELECT DISTINCT report_month ,report_month2 FROM bill_head WHERE report = 'Y'");
                             $stmt->execute();
                             $monthSelect = $stmt->fetchAll();
                             
                   
                                 echo '<option value="">เลือกเดือน</option>';
                                 foreach ($monthSelect as $month) {
-                                    echo '<option value="'. $month['report_month'] .'">'. $month['report_month'] .'</option>';
+                                    echo '<option value="'. $month['report_month2'].'">'. $month['report_month'] .'</option>';
                                     }
 
                                 
@@ -99,8 +99,9 @@
                         <?php 
                         if(empty($_POST['selectMonth'])){
                         }else{
+                      //  $_SESSION['monthTax']=substr($_POST['selectMonth'],0,-4);
+                        $_SESSION['yearTax']=substr($_POST['selectMonth'],0,-2);
                         $monthTax=substr($_POST['selectMonth'],-2);
-                        $yearTax=substr($_POST['selectMonth'],0,4);
                         if($monthTax=='01'){
                             $_SESSION['monthTax'] = 'มกราคม';
                         }else if($monthTax=='02'){
@@ -126,9 +127,10 @@
                         }else if($monthTax=='12'){
                             $_SESSION['monthTax'] = 'ธันวาคม';
                         }
-                   
-                        $_SESSION['searchTax'] = $_POST['selectMonth'];
-                        $_SESSION['yearTax'] = $yearTax+543; 
+                
+                        $_SESSION['searchTax'] = substr($_POST['selectMonth'],-6);
+              
+
                     
                         ?>
                         

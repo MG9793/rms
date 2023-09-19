@@ -44,6 +44,12 @@ session_start();
         }
   </script>
 
+<?php
+ $month = $conn->prepare("SELECT * FROM month_info");
+ $month->execute();
+ $rs_month = $month->fetchAll();
+ ?>
+
 </head>
 <body>
 <center>
@@ -53,7 +59,7 @@ session_start();
     
                             
             <legend class="fw-bold text-dark text-center  p-1"> เลือกข้อมูล | รายงานภาษีซื้อ </legend>
-
+            
                 <?php
                     // Alert ไม่ได้เลือกรายการออกใบกำกับภาษี
                     if(isset($_SESSION['reportFailure'])) {
@@ -65,40 +71,81 @@ session_start();
                     }
 
                     // query ตาราง
-                    $thisMonth = $_SESSION['thisMonth'];
-                    $stmt = $conn->query("SELECT * FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat <> 0 AND report = 'N' ORDER BY buy_date ASC");
+                    $thisMonth = $_SESSION['thisMonth']; 
+                    $stmt = $conn->query("SELECT * FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'N' ORDER BY buy_date ASC");
                     $tax = $stmt->fetchAll();
 
                     // query รวมยอดซื้อ
-                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat <> 0 AND report = 'N'");
+                    $sumBuy = $conn->query("SELECT SUM(sum) AS sumbuy FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'N'");
                     $query_sumBuy = $sumBuy->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอด VAT
-                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat <> 0 AND report = 'N'");
+                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'N'");
                     $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอดซื้อที่ออกรายงานแล้ว
-                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat <> 0 AND report = 'Y'");
+                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'Y'");
                     $query_sumBuy_reported = $sumBuy_reported->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอด VAT ที่ออกรายงานแล้ว
-                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE DATE_FORMAT(buy_date, '%Y-%m') = '$thisMonth' AND vat <> 0 AND report = 'Y'");
+                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'Y'");
                     $query_sumVAT_reported = $sumVAT_reported->fetch(PDO::FETCH_ASSOC);
-                ?>
 
+                    $curYear1 = date("Y")+543;
+                    $curYear2 = date("Y")+543-1;
+                    $curYear3 = date("Y")+543-2;
+                ?>
                 <form action="../db/db_filterTaxSummary.php" method="POST">
                 <div class="row mb-2">
-                    <div class="col-md-3 p-3 ">
-                    </div>
-                    <div class="col-md-3 p-3 ">
-                    <label for="selectTime" class="form-label fw-bold">เลือกเดือน/ปี ที่ออกภาษีซื้อ :</label>
-                    <input type="month" class="form-control" name="selectTime" id="selectTime" required onchange="dateThaiFormat()">
                     
+                    <label for="selectTime" class="form-label fw-bold">เลือกเดือน/ปี ที่ออกภาษีซื้อ :</label>
+                    <div class="col-md-3 p-3 ">
                     </div>
-                        
-                        
+                    <div class="col-md-2 p-3 ">
+                    <select name="selectMonth" class="form-select" id="selectMonth" required>
+                    
+                        <?php
+                    if($_SESSION["selectMonth"]==""){
+                        ?>
+                        <option value="">กรุณาเลือกเดือน</option>
+                        <?php
+                        foreach($rs_month as $row_month)
+                        {
+                            echo '<option value="'.$row_month["value"].$row_month["month_name"].'">'.$row_month["month_name"].'</option>';
+                        }
+                   
+                    }else{
+                        echo '<option value="' .$_SESSION["selectMonthOld"]. '">' .$_SESSION["selectMonthFull"]. '</option>'; 
+                        foreach($rs_month as $row_month)
+                        {
+                            echo '<option value="'.$row_month["value"].$row_month["month_name"].'">'.$row_month["month_name"].'</option>';
+                        }
+                    }
+                            ?>
+                </select>
+                </div>
+                <div class="col-md-2 p-3 ">
+                    <select name="selectYear" class="form-select" id="selectYear" required>
+                       
+                    <?php    
+                    if($_SESSION["selectYear"]==""){
+                        echo '<option value="">กรุณาเลือกปี</option>'; 
+                        echo '<option value="' .$curYear1. '">' .$curYear1. '</option>'; 
+                        echo '<option value="' .$curYear2. '">' .$curYear2. '</option>'; 
+                        echo '<option value="' .$curYear3. '">' .$curYear3. '</option>'; 
+                    }  else{
+                        echo '<option value="' .$_SESSION["selectYear"]. '">' .$_SESSION["selectYear"]. '</option>'; 
+                        echo '<option value="' .$curYear1. '">' .$curYear1. '</option>'; 
+                        echo '<option value="' .$curYear2. '">' .$curYear2. '</option>'; 
+                        echo '<option value="' .$curYear3. '">' .$curYear3. '</option>'; 
+                    }
+                        ?>
+                </select>
+
+                    </div>
+
                             <div class="col-md-3 p-3 ">
-                            <label for="selectTime" class="form-label fw-bold">&nbsp;</label>
+                            
                             <button type="submit" class="btn btn-success w-100" name="sendReport"></i> &nbsp;บันทึก</button>
                             </div>
                             <div class="col-md-3 p-3 ">

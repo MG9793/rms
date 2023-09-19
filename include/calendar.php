@@ -53,12 +53,12 @@ $jquery_ui_theme=$theme[8];
 }
 </style>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> -->
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(function(){
     var dateBefore=null;
-    $("#editPaidtDate").datepicker({
+    $(".editPaidtDate").datepicker({
         dateFormat: 'dd.mm.yy',
        // showOn: 'button',
       //buttonImage: 'http://jqueryui.com/demos/datepicker/images/calendar.gif',
@@ -158,7 +158,7 @@ $(function(){
 <script type="text/javascript">
 $(function(){
     var dateBefore=null;
-    $("#editBuyDate").datepicker({
+    $(".editBuyDate").datepicker({
         dateFormat: 'dd.mm.yy',
        // showOn: 'button',
       //buttonImage: 'http://jqueryui.com/demos/datepicker/images/calendar.gif',

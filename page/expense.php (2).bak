@@ -1,5 +1,5 @@
 <?php
-    session_start();
+  session_start();
     require_once "../include/dependency.php";
     require_once "../include/header.php";
     require_once "../db/config/deleteRow.php";
@@ -189,6 +189,7 @@
         <fieldset class="p-3 shadow-sm mt-3">
             <table class="table table-striped table-hover shadow-sm css-serial" id="myTable">
                 <thead>
+
                     <tr >
                         <th scope="col" style="text-align:center;">#</th>
                         <th scope="col" style="text-align:center;">ไซต์งาน</th>
@@ -261,7 +262,8 @@
                                         </div>
                                         <div class="mb-0">
                                             <label for="editBuyDate" class="col-form-label">วันที่ซื้อ :</label>
-                                            <input autocomplete="off" type="text" class="form-control editBuyDate" name="editBuyDate" value="<?php echo $fetch_bill['buy_date']; ?>" required>                                        </div>
+                                            <input autocomplete="off" type="text" class="form-control" name="editBuyDate" id="editBuyDate" value="<?php echo $fetch_bill['buy_date']; ?>" required>
+                                        </div>
                                         <div class="mb-0">
                                             <label for="editSalesName" class="col-form-label">ชื่อผู้ขาย :</label>
                                             <input type="text" class="form-control" name="editSalesName" id="editSalesName" list="edit_SalesName" value="<?php echo $fetch_bill['sales_name']; ?>" required>
@@ -333,8 +335,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                         
+                    </div>
+
                     <?php } } ?>        <!-- endforeach -->
+                
+                         
+                    </tr>
                 </tbody>
             </table>
         </fieldset>
