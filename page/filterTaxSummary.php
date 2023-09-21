@@ -29,16 +29,27 @@ session_start();
             checkboxes.forEach(function(checkbox) {
                 checkbox.checked = source.checked;
                 if(checkbox.checked = source.checked){
-                    var query_sumBuy = document.getElementById('hiddenPrice').textContent
-                    var query_sumVAT = document.getElementById('hiddenVAT').textContent
+                    var query_sumBuy = parseFloat(document.getElementById('hiddenPrice').textContent)
+                    var query_sumVAT = parseFloat(document.getElementById('hiddenVAT').textContent)
+                    var query_reportSumPrice = document.getElementById('hiddenReportedPrice').textContent
+                    var query_reportSumVAT = document.getElementById('hiddenReportedVAT').textContent
+                    var sumreportPrice = parseFloat(query_reportSumPrice)+parseFloat(query_sumBuy)
+                    var sumreportVAT = parseFloat(query_reportSumVAT)+parseFloat(query_sumVAT)
 
-                    document.getElementById('selectedPrice').textContent = query_sumBuy;
-                    document.getElementById('selectedVAT').textContent = query_sumVAT;
+                    document.getElementById('selectedPrice').textContent = query_sumBuy.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('selectedVAT').textContent = query_sumVAT.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('reportedPrice').textContent = sumreportPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('reportedVAT').textContent = sumreportVAT.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
                  
         
                 }else{
-               document.getElementById('selectedPrice').textContent = '0.00';
-               document.getElementById('selectedVAT').textContent = '0.00';
+                    var query_reportSumPrice2 = parseFloat(document.getElementById('hiddenReportedPrice').textContent)
+                    var query_reportSumVAT2 = parseFloat(document.getElementById('hiddenReportedVAT').textContent)
+                    document.getElementById('selectedPrice').textContent = '0.00';
+                    document.getElementById('selectedVAT').textContent = '0.00';
+                    document.getElementById('reportedPrice').textContent = query_reportSumPrice2.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    document.getElementById('reportedVAT').textContent = query_reportSumVAT2.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+               
                     }
             });
         }
@@ -70,6 +81,15 @@ session_start();
                         echo "</div>";
                     }
 
+                    $thisMonth_last = $conn->query("SELECT MAX(report_month2) as Month_last FROM bill_head WHERE report = 'Y' AND vat <> 0 LIMIT 1");
+                    $thisMonth_last->execute();
+                    $Month_last = $thisMonth_last->fetch(PDO::FETCH_ASSOC);
+                    if($Month_last['Month_last']==""){
+                        $MonthLast = 0;
+                    }else{
+                    $MonthLast= $Month_last['Month_last'];
+                }
+
                     // query ตาราง
                     $thisMonth = $_SESSION['thisMonth']; 
                     $stmt = $conn->query("SELECT * FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'N' ORDER BY buy_date ASC");
@@ -84,11 +104,11 @@ session_start();
                     $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอดซื้อที่ออกรายงานแล้ว
-                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'Y'");
+                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report_month2 = $MonthLast AND vat <> 0 AND report = 'Y'");
                     $query_sumBuy_reported = $sumBuy_reported->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอด VAT ที่ออกรายงานแล้ว
-                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE buy_date like '%$thisMonth' AND vat <> 0 AND report = 'Y'");
+                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report_month2 = $MonthLast AND vat <> 0 AND report = 'Y'");
                     $query_sumVAT_reported = $sumVAT_reported->fetch(PDO::FETCH_ASSOC);
 
                     $curYear1 = date("Y")+543;
@@ -98,9 +118,11 @@ session_start();
                 <form action="../db/db_filterTaxSummary.php" method="POST">
                 <div class="row mb-2">
                     
-                    <label for="selectTime" class="form-label fw-bold">เลือกเดือน/ปี ที่ออกภาษีซื้อ :</label>
-                    <div class="col-md-3 p-3 ">
-                    </div>
+                   
+                <div class="col-md-2 p-3 "> </div>
+                    <div class="col-md-1 p-3 "> 
+                       </div>
+                    
                     <div class="col-md-2 p-3 ">
                     <select name="selectMonth" class="form-select" id="selectMonth" required>
                     
@@ -143,37 +165,82 @@ session_start();
                 </select>
 
                     </div>
-
-                            <div class="col-md-3 p-3 ">
+                    
+                            <div class="col-md-2 p-3 ">
                             
                             <button type="submit" class="btn btn-success w-100" name="sendReport"></i> &nbsp;บันทึก</button>
                             </div>
-                            <div class="col-md-3 p-3 ">
-                    </div>
-                    <div class="row mt-3 p-3">
-                    <div class="col-md-3 text-center">
-                            <label for="selectedPrice" class="form-label fw-bold">ยอดรวมรายการซื้อ(ที่เลือก) :</label>
-                            <h4 class="text-primary fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
-                            <h4 class="text-primary fw-bold" hidden id="hiddenPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
-                            <!-- <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" value="<?php //echo $query_sumBuy['sumbuy']; ?>" required readonly min="0" step="any"> -->
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <label for="selectedVAT" class="form-label fw-bold">ยอดรวม VAT(ที่เลือก) :</label>
-                            <h4 class="text-primary fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
-                            <h4 class="text-primary fw-bold" hidden id="hiddenVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
-                            <!-- <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly value="<?php //echo $query_sumVAT['sumvat']; ?>" min="0" step="any"> -->
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <label for="reportedPrice" class="form-label fw-bold">ยอดรวมภาษีซื้อ(สะสม) :</label>
-                            <h4 class="text-black fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported'], 2); ?></h4>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <label for="reportedVAT" class="form-label fw-bold">ยอดรวม VAT(สะสม) :</label>
-                            <h4 class="text-black fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported'], 2); ?></h4>
+                           
+                </div>
+                    <div class="row mb-2">
+                    <div class="col-md-2 p-3 "></div>
+                    <div class="col-md-2 p-3">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-warning">ยอดรวมรายการซื้อ(ที่เลือก) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
+                                     <h4 class="text-black fw-bold" hidden id="hiddenPrice"><?php echo $query_sumBuy['sumbuy']; ?></h4>
+                                </div>
                         </div>
                         
+                    </div>
+                </div>
+
+                <div class="col-md-2 p-3 ">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-warning">ยอดรวม VAT(ที่เลือก) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
+                            <h4 class="text-black fw-bold" hidden id="hiddenVAT"><?php echo $query_sumVAT['sumvat']; ?></h4>
+                                </div>
+                        </div>
                         
                     </div>
+
+                    
+                </div>
+
+                <div class="col-md-2 p-3">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ(สะสม) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported']+$query_sumBuy['sumbuy'], 2); ?></h4>
+                                <h4 class="text-black fw-bold" hidden id="hiddenReportedPrice"><?php 
+                                if($Month_last['Month_last']==""){
+                                    echo '0.00';
+                                }else{
+                                echo $query_sumBuy_reported['sumbuy_reported']; }?></h4>
+                                </div>
+                        </div>
+                        
+                    </div>
+
+                    
+                </div>
+
+                <div class="col-md-2 p-3">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวม VAT(สะสม) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported']+$query_sumVAT['sumvat'], 2); ?></h4>
+                                <h4 class="text-black fw-bold" hidden id="hiddenReportedVAT"><?php 
+                                if($Month_last['Month_last']==""){
+                                    echo '0.00';
+                                }else{
+                                echo $query_sumVAT_reported['sumvat_reported']; }?></h4>
+                                
+                                </div>
+                        </div>
+                        
+                    </div>
+
+                    
+                </div>
+                </div>
                 </fieldset>
                 </section>
                 <section class="mb-2 " style="width:70% ">
@@ -255,6 +322,8 @@ session_start();
         function calculateSum() {
             let priceSum = 0;
             let vatSum = 0;
+            var query_reportPriceSum = parseFloat(document.getElementById('hiddenReportedPrice').textContent)
+            var query_reportVATSum = parseFloat(document.getElementById('hiddenReportedVAT').textContent)
 
             for (let i = 0; i < checkboxes.length; i++) {
                 if (checkboxes[i].checked) {
@@ -263,11 +332,15 @@ session_start();
 
                 priceSum += price;
                 vatSum += vat;
+                query_reportPriceTotal = priceSum +query_reportPriceSum;
+                query_reportVATTotal = vatSum +query_reportVATSum;
                 }
             }
-
+               
             document.getElementById('selectedPrice').textContent = priceSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('selectedVAT').textContent = vatSum.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('reportedPrice').textContent = query_reportPriceTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('reportedVAT').textContent = query_reportVATTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         }
     </script>
 

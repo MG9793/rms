@@ -144,7 +144,11 @@ session_start();
                     $thisMonth_last = $conn->query("SELECT MAX(report_month2) as Month_last FROM bill_head WHERE report = 'Y' AND vat <> 0 LIMIT 1");
                     $thisMonth_last->execute();
                     $Month_last = $thisMonth_last->fetch(PDO::FETCH_ASSOC);
+                    if($Month_last['Month_last']==""){
+                        $MonthLast = 0;
+                    }else{
                     $MonthLast= $Month_last['Month_last'];
+                }
                     // query เดือนปัจจุบัน
                     $thisMonth = $conn->query("SELECT DISTINCT * FROM bill_head WHERE report = 'Y' AND vat <> 0 AND report_month2 = $MonthLast");
                     $thisMonth->execute();
@@ -199,7 +203,7 @@ session_start();
                                 <h3 class="mb-0 fw-bold">0</h3>
                             </div>
                             <input type="hidden" name="thisMonth" value="0">
-                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-primary w-100 disabled">ไม่พบรายการซื้อ</button>
+                            <button type="submit" name="this_billVAT" class="btn btn-sm btn-outline-primary w-100 disabled">ไม่พบรายการ</button>
                         </div>
                     </div>
                 </div>

@@ -75,7 +75,7 @@
                             <select name="selectMonth" class="form-select" id="selectMonth">
                             <?php
                             
-                            $stmt = $conn->query("SELECT DISTINCT report_month ,report_month2 FROM bill_head WHERE report = 'Y'");
+                            $stmt = $conn->query("SELECT DISTINCT report_month ,report_month2 FROM bill_head WHERE report = 'Y' ORDER BY report_month2 DESC");
                             $stmt->execute();
                             $monthSelect = $stmt->fetchAll();
                             

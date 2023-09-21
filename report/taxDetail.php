@@ -30,8 +30,9 @@
             <div class="text-center" >
            
             <table align="center">
+            
             <tr>
-                <td style=" padding-bottom: 7px;" align="center"><h1>รายงานภาษีซื้อ</h1></td>
+                <th style=" padding-bottom: 7px;" align="center"><h1>รายงานภาษีซื้อ</h1></th>
                 </tr><tr>
                 <td style="font-size: 14pt; padding-bottom: 7px;" align="center">เดือนภาษี........'. $_SESSION['monthTax'].'........ปี.......'.$_SESSION['yearTax'].'........</td>
                 </tr>
@@ -40,7 +41,7 @@
                 </tr>
             </table>
             </div>
-
+            
 
 <div class="text-end" style="border-collapse: collapse; font-size: 11pt; align = right; padding-bottom: 5px;">
 
@@ -98,6 +99,16 @@
 
         <table id="bg-table" width="100%" style="border-collapse: collapse; font-size: 8pt; ">
             <thead>
+                <tr>
+                <th colspan="9" style=" padding-bottom: 7px;" align="center"><h1>รายงานภาษีซื้อ</h1></th>
+                </tr><tr>
+                <td colspan="9" style="font-size: 14pt; padding-bottom: 7px;" align="center">เดือนภาษี........'. $_SESSION['monthTax'].'........ปี.......'.$_SESSION['yearTax'].'........</td>
+                </tr>
+                <tr>
+                <td colspan="9" style="font-size: 14pt; padding-bottom: 7px;" align="center">ชื่อผู้ประกอบการ........บริษัท สิทธิชัยเอนจิเนียริ่ง จำกัด........</td>
+                </tr>
+
+                
                 <tr style="border:1px solid; border-top: 3px double solid">
                     <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center; " width="8%">ลำดับที่</th>
                     <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">ใบกำกับภาษี</th>

@@ -268,7 +268,7 @@
                                         </div>
                                         <div class="mb-0">
                                             <label for="editTaxNO" class="col-form-label">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
-                                            <input type="text" class="form-control" name="editTaxNO" id="editTaxNO" minlength="13" maxlength="13" value="<?php echo $fetch_bill['tax_no']; ?>" required>
+                                            <input autocomplete="off" type="text" class="form-control" name="editTaxNO" id="editTaxNO" minlength="13" maxlength="13" value="<?php echo $fetch_bill['tax_no']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editType" class="col-form-label">ประเภท :</label>
@@ -294,15 +294,15 @@
                                         </div>
                                         <div class="mb-0">
                                             <label for="editExpense" class="col-form-label">ค่าสินค้าและค่าขนส่ง :</label>
-                                            <input type="number" class="form-control" name="editExpense" id="editExpense" value="<?php echo $fetch_bill['sum']; ?>" required>
+                                            <input autocomplete="off" type="number" class="form-control" name="editExpense" id="editExpense" value="<?php echo $fetch_bill['sum']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editVAT" class="col-form-label">ภาษีมูลค่าเพิ่ม :</label>
-                                            <input type="number" class="form-control" name="editVAT" id="editVAT" value="<?php echo $fetch_bill['vat']; ?>" required>
+                                            <input autocomplete="off" type="number" class="form-control" name="editVAT" id="editVAT" value="<?php echo $fetch_bill['vat']; ?>" required>
                                         </div>
                                         <div class="mb-2">
                                             <label for="editExpenseTotal" class="col-form-label">จำนวนเงินทั้งสิ้น :</label>
-                                            <input type="number" class="form-control" name="editExpenseTotal" id="editExpenseTotal" value="<?php echo $fetch_bill['total']; ?>" required>
+                                            <input autocomplete="off" type="number" class="form-control" name="editExpenseTotal" id="editExpenseTotal" value="<?php echo $fetch_bill['total']; ?>" required>
                                         </div>
 
                                         <div class="modal-footer">
@@ -353,27 +353,27 @@
                     <form action="../db/db_siteManagement.php" method="POST">
                         <div class="mb-0">
                             <label for="siteName" class="col-form-label">ชื่อไซต์งาน :</label>
-                            <input type="text" class="form-control" name="siteName" id="siteName" placeholder="กรุณากรอก..." required>
+                            <input autocomplete="off" type="text" class="form-control" name="siteName" id="siteName" placeholder="กรุณากรอก..." required>
                         </div>
                         <div class="mb-0">
                             <label for="siteAbbre" class="col-form-label">อักษรย่อไซต์งาน :</label>
-                            <input type="text" class="form-control" name="siteAbbre" id="siteAbbre" placeholder="กรุณากรอก..." required>
+                            <input autocomplete="off" type="text" class="form-control" name="siteAbbre" id="siteAbbre" placeholder="กรุณากรอก..." required>
                         </div>
                         <div class="mb-0">
                             <label for="startDate" class="col-form-label">วันที่เริ่ม :</label>
-                            <input type="date" class="form-control" name="startDate" id="startDate" required>
+                            <input autocomplete="off" type="text" class="form-control" name="startDate" id="startDate" required>
                         </div>
                         <div class="mb-0">
                             <label for="finishDate" class="col-form-label">วันที่สิ้นสุด :</label>
-                            <input type="date" class="form-control" name="finishDate" id="finishDate" required>
+                            <input autocomplete="off" type="text" class="form-control" name="finishDate" id="finishDate" required>
                         </div>
                         <div class="mb-0">
                             <label for="addInstallment" class="col-form-label">จำนวนงวด :</label>
-                            <input type="number" class="form-control" name="addInstallment" id="addInstallment" placeholder="กรุณากรอก..." required>
+                            <input autocomplete="off" type="number" class="form-control" name="addInstallment" id="addInstallment" placeholder="กรุณากรอก..." required>
                         </div>
                         <div class="mb-2">
                             <label for="addTotal" class="col-form-label">จำนวนเงินทั้งสิ้น :</label>
-                            <input type="number" class="form-control" name="addTotal" id="addTotal" step="any" placeholder="กรุณากรอก..." required>
+                            <input autocomplete="off" type="number" class="form-control" name="addTotal" id="addTotal" step="any" placeholder="กรุณากรอก..." required>
                         </div>
                         <div class="text-end mt-3">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

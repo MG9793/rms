@@ -38,7 +38,7 @@ session_start();
 <center>
                             <section class="mb-2 " style="width:70% ">
                             <fieldset class="p-3 shadow-sm mt-3"> 
-                            <legend class="fw-bold text-dark text-center  p-1"> รายการที่เลือก </legend>                          
+                            <legend class="fw-bold text-dark text-center  p-1"> ยอดรวมภาษีซื้อ </legend>                          
                 
 
                 <?php
@@ -51,9 +51,14 @@ session_start();
                         echo "</div>";
                     }
 
+                    $thisMonth_last = $conn->query("SELECT MAX(report_month2) as Month_last FROM bill_head WHERE report = 'Y' AND vat <> 0 LIMIT 1");
+                    $thisMonth_last->execute();
+                    $Month_last = $thisMonth_last->fetch(PDO::FETCH_ASSOC);
+                    $MonthLast= $Month_last['Month_last'];
+
                     // query ตาราง
                     // $thisMonth = $_SESSION['thisMonth'];
-                    $stmt = $conn->query("SELECT * FROM bill_head WHERE report = 'Y' AND vat <> 0 ORDER BY buy_date ASC");
+                    $stmt = $conn->query("SELECT * FROM bill_head WHERE report = 'Y' AND vat <> 0 AND report_month2 = $MonthLast ORDER BY buy_date ASC");
                     $tax = $stmt->fetchAll();
 
                     // query รวมยอดซื้อทั้งหมด ที่ยังไม่ออกรายงาน
@@ -61,38 +66,83 @@ session_start();
                     $query_sumBuy = $sumBuy->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอด VAT ทั้งหมด ที่ยังไม่ออกรายงาน
-                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE report = 'N' AND vat <> 0");
+                    $sumVAT = $conn->query("SELECT SUM(vat) AS sumvat FROM bill_head WHERE report = 'N' AND vat <> 0 ");
                     $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอดซื้อที่ออกรายงานแล้ว
-                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report = 'Y' AND vat <> 0");
+                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report = 'Y' AND vat <> 0 AND report_month2 = $MonthLast");
                     $query_sumBuy_reported = $sumBuy_reported->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอด VAT ที่ออกรายงานแล้ว
-                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report = 'Y' AND vat <> 0");
+                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report = 'Y' AND vat <> 0 AND report_month2 = $MonthLast");
                     $query_sumVAT_reported = $sumVAT_reported->fetch(PDO::FETCH_ASSOC);
                 ?>
 
                 <form action="../db/db_filterTaxSummary.php" method="POST">
-                    <div class="row mt-3">
-                        <div class="col-md-3 text-center">
-                            <label for="selectedPrice" class="form-label fw-bold">รวมยอดซื้อที่ยังไม่ออกรายงาน :</label>
-                            <h4 class="text-primary fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
-                            <!-- <input type="number" class="form-control text-primary" name="selectedPrice" id="selectedPrice" value="<?php //echo $query_sumBuy['sumbuy']; ?>" required readonly min="0" step="any"> -->
+
+                <div class="row mb-2">
+                    <div class="col-md-2 p-3 "></div>
+                    <div class="col-md-2 p-3">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดซื้อ (ไม่ได้ที่เลือก) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
+                                     <h4 class="text-black fw-bold" hidden id="hiddenPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
+                                </div>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <label for="selectedVAT" class="form-label fw-bold">รวมยอด VAT ที่ยังไม่ออกรายงาน :</label>
-                            <h4 class="text-primary fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
-                            <!-- <input type="number" class="form-control text-primary" name="selectedVAT" id="selectedVAT" required readonly value="<?php //echo $query_sumVAT['sumvat']; ?>" min="0" step="any"> -->
+                        
+                    </div>
+                </div>
+
+                <div class="col-md-2 p-3 ">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-danger">ยอดVAT (ไม่ได้ที่เลือก) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
+                            <h4 class="text-black fw-bold" hidden id="hiddenVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
+                                </div>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <label for="reportedPrice" class="form-label fw-bold">รวมยอดซื้อ (ออกรายงานแล้ว) :</label>
-                            <h4 class="text-danger fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported'], 2); ?></h4>
+                        
+                    </div>
+
+                    
+                </div>
+
+                <div class="col-md-2 p-3">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดซื้อ (ที่เลือก) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported'], 2); ?></h4>
+                                <h4 class="text-black fw-bold" hidden id="hiddenReportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported'], 2); ?></h4>
+                                </div>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <label for="reportedVAT" class="form-label fw-bold">รวมยอด VAT (ออกรายงานแล้ว) :</label>
-                            <h4 class="text-danger fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported'], 2); ?></h4>
+                        
+                    </div>
+
+                    
+                </div>
+
+                <div class="col-md-2 p-3">
+                    <div class="card">
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดVAT (ที่เลือก) :</div>
+                            <div class="card-body">
+                                <div class="d-flex flex-row justify-content-between">
+                                <h4 class="text-black fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported'], 2); ?></h4>
+                                <h4 class="text-black fw-bold" hidden id="hiddenReportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported'], 2); ?></h4>
+                                </div>
                         </div>
+                        
+                    </div>
+
+                    
+                </div>
+                </div>
+
+
+                   
                         <!-- <div class="col-md-2">
                             <label for="selectTime" class="form-label fw-bold">เดือน/ปี ที่ออกรายงานภาษีซื้อ :</label>
                             <input type="month" class="form-control" name="selectTime" id="selectTime" required onchange="dateThaiFormat()">
