@@ -80,7 +80,7 @@
 
                         <tr style="border:1px solid; border-top: 3px double solid">
                             <th style="border-right:1px solid; font-size: 12pt; padding: 4px; width: 20%; text-align:center;" width="8%">ลำดับที่</th>
-                            <th style="border-right:1px solid; font-size: 12pt; padding: 4px; width: 70%;">หน่วยงาน</th>
+                            <th colspan=2 style="border-right:1px solid; font-size: 12pt; padding: 4px; width: 70%;">หน่วยงาน</th>
                             <th style="border-right:1px solid; font-size: 12pt; padding: 4px; width: 30%; text-align:center;">มูลค่าสินค้า<br>หรือบริการ</th>
                             <th style="border-right:1px solid; font-size: 12pt; padding: 4px; width: 30%; text-align:center;">จำนวนแผ่น</th>
                         </tr>
@@ -108,7 +108,8 @@
 
             $content .=   '<tr style="border:1px solid #000;">
                 <td style="border-right:1px solid #000; font-size: 12pt; padding:3px;text-align:center;"  >'.$i.'</td>
-				<td style="border-right:1px solid #000; font-size: 12pt; padding:3px;text-align:left;"  >'.$row['site_name']."".$row['site_abbre'].'</td>
+				<td style="font-size: 12pt; padding:3px;text-align:left;"  >'.$row['site_name'].'</td>
+                <td style="border-right:1px solid #000; font-size: 12pt; padding:3px;text-align:left;"  >'.$row['site_abbre'].'</td>
                 <td style="border-right:1px solid #000; font-size: 12pt; padding:3px;text-align:right;"  >'.number_format($row['sumTotal'], 2).'</td>
                 <td style="border-right:1px solid #000; font-size: 12pt; padding:3px;text-align:center;"  >1</td>
 			</tr>

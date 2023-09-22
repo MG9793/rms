@@ -10,13 +10,15 @@
         $paidDate = $_POST['paidDate'];
         $installmentNO = $_POST['installmentNO'];
         $amount = $_POST['Amount'];
+        $paidMonth = substr($_POST['paidDate'],3,2);
 
-        $stmt = $conn->prepare("INSERT INTO income(site_name, installment_no, paid_date, amount)
-                                VALUES(:site_name, :installment_no, :paid_date, :amount)");
+        $stmt = $conn->prepare("INSERT INTO income(site_name, installment_no, paid_date, paid_month, amount)
+                                VALUES(:site_name, :installment_no, :paid_date, :paid_month, :amount)");
 
         $stmt->bindParam(":site_name", $site);
         $stmt->bindParam(":installment_no", $installmentNO);
         $stmt->bindParam(":paid_date", $paidDate);
+        $stmt->bindParam(":paid_month", $paidMonth);
         $stmt->bindParam(":amount", $amount);
         $stmt->execute();
         $_SESSION['siteName_incomeHead'] = $site;

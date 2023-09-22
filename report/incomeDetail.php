@@ -16,9 +16,13 @@
 		die("Connection failed: " . mysqli_connect_error());
 	}
 
-	$sql = "SELECT site_name , total  FROM site_info";
-	
+	$sql = "SELECT site_info.site_name, site_info.total, SUM(income.amount) as sumAmount,income.paid_month
+    FROM income 
+    LEFT JOIN site_info ON site_info.site_name=income.site_name
+      GROUP BY  income.site_name";
+
 	$result = mysqli_query($conn, $sql);
+
 	$content = "";
     $i=1;
 	if (mysqli_num_rows($result) > 0) {
@@ -27,7 +31,7 @@
             <td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$i.'</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['site_name'].'</td>
 				<td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.number_format(($row['total']),2).'</td>
-				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+				<td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.$row['sumAmount'].'</td>
                 <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
                 <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
                 <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
@@ -45,6 +49,7 @@
       
       ';
       $sumTotal=$row['total']+$sumTotal;
+      $sumTotalAmount=$row['sumAmount']+$sumTotal;
       $i++;
 		} 
         
@@ -52,7 +57,7 @@
     <td style="border-right:1px solid #000;padding:3px;text-align:center;" ></td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;"   >รวม</td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;" >'.number_format(($sumTotal),2).'</td>
-    <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
+    <td style="border-right:1px solid #000;padding:3px;text-align:center;"  >'.number_format(($sumTotalAmount),2).'</td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
     <td style="border-right:1px solid #000;padding:3px;text-align:center;"  ></td>
