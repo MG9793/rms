@@ -175,7 +175,7 @@
                 <?php
                     $reportMonth = $_SESSION['searchTax'];
 
-                    $sql = $conn->query("SELECT * FROM bill_head where report_month2 = '$reportMonth'");
+                    $sql = $conn->query("SELECT * FROM bill_head where report_month = '$reportMonth'");
                     $result = $sql->fetchAll();
                     
                     $i=1;
@@ -240,7 +240,7 @@
 
     <script>
         function ExcelReport() {
-            var tax_report = "<?php echo 'รายงานภาษีซื้อ'; ?>";
+            var tax_report = "<?php echo 'TaxReport ' . $yearTax . '-' . $monthTax; ?>";
             var sheet_name = tax_report;
             var elt = document.getElementById('myTable');
 

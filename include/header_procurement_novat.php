@@ -87,11 +87,9 @@
                         <a class="nav-link" href="../page/incomeRecord.php">บันทึกรายรับ</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link" href="../page/expense.php"> บันทึกรายจ่าย</a>
+                    <a class="nav-link" href="../page/expense_novat.php"> บันทึกรายจ่าย</a>
                     </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="../page/chooseBillnoVat.php"> เลือกบิลNOVAT</a>
-                    </li>
+                    
                    
              
                     
@@ -99,8 +97,7 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> รายงาน</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item text-black" href="../report/taxReport.php"> ภาษีซื้อ</a></li>
-                        <li><a class="dropdown-item text-black" href="../report/taxSummaryReport.php"> สรุปภาษีซื้อ</a></li>
+                        <li><a class="dropdown-item text-black" href="../report/SummaryNoVatReport.php"> สรุปไม่มีภาษีซื้อ</a></li>
                             <li><a class="dropdown-item text-black" href="../report/incomeReport.php"> สรุปรายรับ</a></li>
 
                         </ul>

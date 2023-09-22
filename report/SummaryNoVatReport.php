@@ -64,7 +64,7 @@
     <div class="card">       
         <div div class="card-body">
             <div class="headReport">
-                  <h5 class="fw-bold p-2">TAX003 | รายงานภาษีซื้อ</h5>
+                  <h5 class="fw-bold p-2">SMR002 | สรุปรายงานไม่มีภาษีซื้อ</h5>
             </div>
 
             <div class="text-center">
@@ -75,7 +75,7 @@
                             <select name="selectMonth" class="form-select" id="selectMonth">
                             <?php
                             
-                            $stmt = $conn->query("SELECT DISTINCT report_month ,report_month2 FROM bill_head WHERE report = 'Y' ORDER BY report_month2 DESC");
+                            $stmt = $conn->query("SELECT DISTINCT report_month ,report_month2 FROM bill_head WHERE report = 'Y' AND vat = 0 ORDER BY report_month2 DESC");
                             $stmt->execute();
                             $monthSelect = $stmt->fetchAll();
                             
@@ -130,7 +130,6 @@
                 
                         $_SESSION['searchTax'] = substr($_POST['selectMonth'],-6);
               
-
                     
                         ?>
                         
@@ -146,7 +145,7 @@
                     </tr>
                 </tbody>
             </table>
-            <iframe src="../report/taxDetail.php" ></iframe>
+            <iframe src="../report/SummaryNoVatDetail.php" ></iframe>
 
 
 
@@ -175,7 +174,7 @@
                 <?php
                     $reportMonth = $_SESSION['searchTax'];
 
-                    $sql = $conn->query("SELECT * FROM bill_head where report_month2 = '$reportMonth'");
+                    $sql = $conn->query("SELECT * FROM bill_head where report_month2 = '$reportMonth' AND vat = 0");
                     $result = $sql->fetchAll();
                     
                     $i=1;
@@ -240,7 +239,7 @@
 
     <script>
         function ExcelReport() {
-            var tax_report = "<?php echo 'รายงานภาษีซื้อ'; ?>";
+            var tax_report = "<?php echo 'สรุปรายงานไม่มีภาษีซื้อ'; ?>";
             var sheet_name = tax_report;
             var elt = document.getElementById('myTable');
 

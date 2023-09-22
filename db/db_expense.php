@@ -41,6 +41,77 @@
         $stmt->execute();
         header("location: ../page/expense.php");
 
+    }// เพิ่มข้อมูล bill_head
+    else if (isset($_POST['add_billHead_novat'])) {
+
+            $y = substr($_POST['buyDate'],-4);
+            $month = substr($_POST['buyDate'],3,2);
+            $mYReport = $y."".$month;
+            
+            if($month=='01'){
+                $monthTH = "มกราคม"." ".$y;
+            }else if($month=='02'){
+                $monthTH = "กุมภาพันธ์"." ".$y;
+            }else if($month =='03'){
+                $monthTH = "มีนาคม"." ".$y;
+            }else if($month=='04'){
+                $monthTH = "เมษายน"." ".$y;
+            }else if($month=='05'){
+                $monthTH = "พฤษภาคม"." ".$y;
+            }else if($month=='06'){
+                $monthTH = "มิถุนายน"." ".$y;
+            }else if($month=='07'){
+                $monthTH = "กรกฎาคม"." ".$y;
+            }else if($month=='08'){
+                $monthTH = "สิงหาคม"." ".$y;
+            }else if($month=='09'){
+                $monthTH = "กันยายน"." ".$y;
+            }else if($month=='10'){
+                $monthTH = "ตุลาคม"." ".$y;
+            }else if($month=='11'){
+                $monthTH = "พฤศจิกายน"." ".$y;
+            }else if($month=='12'){
+                $monthTH = "ธันวาคม"." ".$y;
+            }
+
+        $siteName = $_POST['siteName'];
+        $receiptNo = $_POST['receiptNo'];
+        $buyDate = $_POST['buyDate'];
+        $sellerName = $_POST['sales'];
+        $taxNO = $_POST['taxNO'];
+        $type = $_POST['type'];
+        $expenseSUM = $_POST['expenseSUM'];
+        $expenseVAT = $_POST['expenseVAT'];
+        $expenseTotal = $_POST['expenseTotal'];
+           // query sales_branch
+           $stl = $conn->prepare("SELECT sales_branch FROM sales_info WHERE sales_name = '$sellerName'");
+           $stl->execute();
+           $sales = $stl->fetch(PDO::FETCH_OBJ);
+           $salesBranch = $sales->sales_branch;
+           $report = "Y";
+           $report_month = $monthTH;
+           $report_month2= $y."".$month;
+        $_SESSION['site'] = $siteName;
+        $stmt = $conn->prepare("INSERT INTO bill_head(site_name , receipt_no, buy_date, sales_name, tax_no, type, sum , vat , total , sales_branch , report , report_month, report_month2)
+                                VALUES(:site_name ,:receipt_no, :buy_date, :sales_name, :tax_no, :type, :sum, :vat, :total , :sales_branch, :report, :report_month, :report_month2)");
+        
+        $stmt->bindParam(":site_name", $siteName);
+        $stmt->bindParam(":receipt_no", $receiptNo);
+        $stmt->bindParam(":buy_date", $buyDate);
+        $stmt->bindParam(":sales_name", $sellerName);
+        $stmt->bindParam(":tax_no", $taxNO);
+        $stmt->bindParam(":type", $type);
+        $stmt->bindParam(":sum", $expenseSUM);
+        $stmt->bindParam(":vat", $expenseVAT);
+        $stmt->bindParam(":total", $expenseTotal);
+        $stmt->bindParam(":sales_branch", $salesBranch);
+        $stmt->bindParam(":report", $report);
+        $stmt->bindParam(":report_month", $report_month);
+        $stmt->bindParam(":report_month2", $report_month2);
+
+        $stmt->execute();
+        header("location: ../page/expense_novat.php");
+
     }
 
      // แก้ไขข้อมูล search bill_head
@@ -64,7 +135,50 @@
         header("location: ../page/expenseLine.php");
          }
      
- 
+         
+          // แก้ไขข้อมูล bill_head
+    else if (isset($_POST['edit_billHead_novat'])) {
+
+        $id = $_POST['id'];
+        $siteName = $_POST['editSiteName'];
+        $receiptNo = $_POST['editReceiptNo'];
+        $buyDate = $_POST['editBuyDate'];
+        $salesName = $_POST['editSalesName'];
+        $taxNO = $_POST['editTaxNO'];
+        $type = $_POST['editType'];
+        $expense = $_POST['editExpense'];
+        $vat = $_POST['editVAT'];
+        $editExpenseTotal = $_POST['editExpenseTotal'];
+
+        $stmt = $conn->prepare("UPDATE bill_head
+                                SET site_name = :site_name,
+                                    receipt_no = :receipt_no,
+                                    buy_date = :buy_date,
+                                    sales_name = :sales_name,
+                                    tax_no = :tax_no,
+                                    type = :type,
+                                    sum = :sum,
+                                    vat = :vat,
+                                    total = :total
+                                WHERE id = :id");
+
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":site_name", $siteName);
+        $stmt->bindParam(":receipt_no", $receiptNo);
+        $stmt->bindParam(":buy_date", $buyDate);
+        $stmt->bindParam(":sales_name", $salesName);
+        $stmt->bindParam(":tax_no", $taxNO);
+        $stmt->bindParam(":type", $type);
+        $stmt->bindParam(":sum", $expense);
+        $stmt->bindParam(":vat", $vat);
+        $stmt->bindParam(":total", $editExpenseTotal);
+
+        $stmt->execute();
+
+        $_SESSION['editSuccess'] = '<i class="fa-solid fa-circle-check"></i> Success! แก้ไขรายการสำเร็จ';
+        header("location: ../page/expense_novat.php");
+    }
+
 
 
 

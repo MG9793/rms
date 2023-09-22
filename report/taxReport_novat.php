@@ -177,6 +177,7 @@
     //$mpdf->WriteHTML($content);
 
     $mpdf->WriteHTML($end);
+
     $mpdf->Output();
 ?>
 

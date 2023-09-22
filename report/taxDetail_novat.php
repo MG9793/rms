@@ -31,7 +31,7 @@
                 <table id="bg-table" width="100%" style="border-collapse: collapse; font-size: 8pt; ">
                     <thead>
                         <tr>
-                            <th colspan="9" style=" padding-bottom: 7px;" align="center"><h1 style="font-size: 30pt;">รายงานภาษีซื้อ</h1></th>
+                            <th colspan="9" style=" padding-bottom: 7px;" align="center"><h1 style="font-size: 30pt;">รายงานภาษีซื้อ (NO VAT)</h1></th>
                         </tr>
                         <tr>
                             <td colspan="9" style="font-size: 19.5pt; padding-bottom: 7px;" align="center">เดือนภาษี........'. $_SESSION['monthTax'].'........ปี.......'.$_SESSION['yearTax'].'........</td>
@@ -113,7 +113,7 @@
 
     ';
     
-    $sql = "SELECT *  FROM bill_head where report_month2 = $reportMonth";
+    $sql = "SELECT *  FROM bill_head where report_month2 = $reportMonth AND vat = 0";
     $result = mysqli_query($conn, $sql);
     $content = "";
     $i=1;
@@ -177,6 +177,7 @@
     //$mpdf->WriteHTML($content);
 
     $mpdf->WriteHTML($end);
+
     $mpdf->Output();
 ?>
 
