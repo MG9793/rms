@@ -31,7 +31,7 @@
                     $siteAbbre = $site['site_abbre'];
 
                     // ยอดรับ
-                    $stmt_income = $conn->query("SELECT SUM(amount) AS incomeAmount FROM income WHERE site_name = '$siteName'");
+                    $stmt_income = $conn->query("SELECT SUM(beforeVat) AS incomeAmount FROM income WHERE site_name = '$siteName'");
                     $amount = $stmt_income->fetch(PDO::FETCH_ASSOC);
                     // แยกหลักทศนิยม ยอดรับ
                     if (isset($amount['incomeAmount'])) {
@@ -45,7 +45,7 @@
 
 
                     // ยอดจ่าย
-                    $stmt_expense = $conn->query("SELECT SUM(total) AS expenseAmount FROM bill_head WHERE site_name = '$siteName'");
+                    $stmt_expense = $conn->query("SELECT SUM(sum) AS expenseAmount FROM bill_head WHERE site_name = '$siteName'");
                     $expense = $stmt_expense->fetch(PDO::FETCH_ASSOC);
                     // แยกหลักทศนิยม ยอดจ่าย
                     if (isset($expense['expenseAmount'])) {

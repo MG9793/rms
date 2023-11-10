@@ -116,7 +116,7 @@
                         <!-- <p><button type="button" class="button button4" data-bs-toggle="modal" data-bs-target="#addSiteModal"><i class="fa-solid fa-plus"></i> เพิ่มไซต์งาน</button></p> -->
                     </div>
                     <div class="col-md-4">
-                        <label autocomplete="off" class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
+                        <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
                         <input type="text" class="form-control" placeholder="กรุณากรอกเลขที่ใบเสร็จ..." name="receiptNo" id="receiptNo" required>
                     </div>
                     <div class="col-md-4">
@@ -155,7 +155,7 @@
                         <label class="form-label fw-bold" for="calVat">คำนวนภาษี :</label>
                         <select name="calVat" id="calVat" class="form-control" onChange="changetextbox();" required>
                             
-                            <option value="noVAT">No VAT</option>
+                            <option value="VAT">VAT</option>
                         </select>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button type="submit" class="btn btn-success w-100" name="add_billHead_novat">บันทึก</button>
+                        <button type="submit" class="btn btn-success w-100" name="add_billHead">บันทึก</button>
                     </div>
                 </div>
             </form>
@@ -207,11 +207,11 @@
                  
                         if($site!="") { 
                             $site=$_SESSION['site'];
-                            $stmt = $conn->query("SELECT * FROM bill_head WHERE site_name = '$site' AND vat = 0 ORDER BY id DESC");
+                            $stmt = $conn->query("SELECT * FROM bill_head WHERE site_name = '$site' ORDER BY id DESC");
                         $stmt->execute();
                         $bill = $stmt->fetchAll();
                         }else{
-                        $stmt = $conn->query("SELECT * FROM bill_head WHERE vat = 0 ORDER BY id DESC");
+                        $stmt = $conn->query("SELECT * FROM bill_head ORDER BY id DESC");
                         $stmt->execute();
                         $bill = $stmt->fetchAll();
                     }
@@ -307,7 +307,7 @@
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-dark w-25" name="edit_billHead_novat"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                                            <button type="submit" class="btn btn-dark w-25" name="edit_billHead"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -377,7 +377,7 @@
                         </div>
                         <div class="text-end mt-3">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-warning" name="add_QuickSite_novat"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            <button type="submit" class="btn btn-warning" name="add_QuickSite"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </form>
                 </div>
@@ -410,7 +410,7 @@
                         </div>
                         <div class="text-end mt-3">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-warning" name="add_QuickSeller_novat"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                            <button type="submit" class="btn btn-warning" name="add_QuickSeller"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </form>
                 </div>
@@ -499,7 +499,7 @@
             // document.getElementById("expenseSUM").value = (parseFloat(price) - vat).toFixed(2);
 
             var price = document.getElementById("expenseSUM").value;
-            var vat = 0;
+            var vat = price * 0.07;
             document.getElementById("expenseVAT").value = vat.toFixed(2);
             document.getElementById("expenseTotal").value = (parseFloat(price) + vat).toFixed(2);
         }

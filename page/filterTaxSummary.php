@@ -104,18 +104,19 @@ session_start();
                     $query_sumVAT = $sumVAT->fetch(PDO::FETCH_ASSOC);
 
                     // query รวมยอดซื้อที่ออกรายงานแล้ว
-                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report_month2 = $MonthLast AND vat <> 0 AND report = 'Y'");
+                    $sumBuy_reported = $conn->query("SELECT SUM(sum) AS sumbuy_reported FROM bill_head WHERE report_month2 = '$MonthLast' AND vat <> 0 AND report = 'Y'");
                     $query_sumBuy_reported = $sumBuy_reported->fetch(PDO::FETCH_ASSOC);
 
                     // query ยอด VAT ที่ออกรายงานแล้ว
-                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report_month2 = $MonthLast AND vat <> 0 AND report = 'Y'");
+                    $sumVAT_reported = $conn->query("SELECT SUM(vat) AS sumvat_reported FROM bill_head WHERE report_month2 = '$MonthLast' AND vat <> 0 AND report = 'Y'");
                     $query_sumVAT_reported = $sumVAT_reported->fetch(PDO::FETCH_ASSOC);
 
                     $curYear1 = date("Y")+543;
                     $curYear2 = date("Y")+543-1;
                     $curYear3 = date("Y")+543-2;
                 ?>
-                <form action="../db/db_filterTaxSummary.php" method="POST">
+                 <form action="../db/db_filterTaxSummary.php" method="POST"> 
+                <!-- <form action="" method="POST">-->
                 <div class="row mb-2">
                     
                    
@@ -143,6 +144,7 @@ session_start();
                             echo '<option value="'.$row_month["value"].$row_month["month_name"].'">'.$row_month["month_name"].'</option>';
                         }
                     }
+                    
                             ?>
                 </select>
                 </div>
@@ -161,6 +163,8 @@ session_start();
                         echo '<option value="' .$curYear2. '">' .$curYear2. '</option>'; 
                         echo '<option value="' .$curYear3. '">' .$curYear3. '</option>'; 
                     }
+
+                    
                         ?>
                 </select>
 
@@ -176,10 +180,10 @@ session_start();
                     <div class="col-md-2 p-3 "></div>
                     <div class="col-md-2 p-3">
                     <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-warning">ยอดรวมรายการซื้อ(ที่เลือก) :</div>
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-warning">ยอดซื้อ(ที่เลือก) :</div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
-                                <h4 class="text-black fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h4>
+                                <h5 class="text-black fw-bold" id="selectedPrice"><?php echo number_format($query_sumBuy['sumbuy'], 2); ?></h5>
                                      <h4 class="text-black fw-bold" hidden id="hiddenPrice"><?php echo $query_sumBuy['sumbuy']; ?></h4>
                                 </div>
                         </div>
@@ -192,7 +196,7 @@ session_start();
                         <div class="fw-bold text-center border p-2 text-light rounded bg-warning">ยอดรวม VAT(ที่เลือก) :</div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
-                                <h4 class="text-black fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h4>
+                                <h5 class="text-black fw-bold" id="selectedVAT"><?php echo number_format($query_sumVAT['sumvat'], 2); ?></h5>
                             <h4 class="text-black fw-bold" hidden id="hiddenVAT"><?php echo $query_sumVAT['sumvat']; ?></h4>
                                 </div>
                         </div>
@@ -207,7 +211,7 @@ session_start();
                         <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ(สะสม) :</div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
-                                <h4 class="text-black fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported']+$query_sumBuy['sumbuy'], 2); ?></h4>
+                                <h5 class="text-black fw-bold" id="reportedPrice"><?php echo number_format($query_sumBuy_reported['sumbuy_reported']+$query_sumBuy['sumbuy'], 2); ?></h5>
                                 <h4 class="text-black fw-bold" hidden id="hiddenReportedPrice"><?php 
                                 if($Month_last['Month_last']==""){
                                     echo '0.00';
@@ -226,7 +230,7 @@ session_start();
                         <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวม VAT(สะสม) :</div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
-                                <h4 class="text-black fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported']+$query_sumVAT['sumvat'], 2); ?></h4>
+                                <h5 class="text-black fw-bold" id="reportedVAT"><?php echo number_format($query_sumVAT_reported['sumvat_reported']+$query_sumVAT['sumvat'], 2); ?></h5>
                                 <h4 class="text-black fw-bold" hidden id="hiddenReportedVAT"><?php 
                                 if($Month_last['Month_last']==""){
                                     echo '0.00';
@@ -295,6 +299,7 @@ session_start();
                 </form>
             </div>
         </div>
+       
     </section>
 
     <!-- ปรับ format datetime -->

@@ -88,27 +88,27 @@
                                 <td colspan="9" style="padding-top: 8px;"></td>
                             </tr>
                         </table>
+                        </thead>
 
 
+                        <thead>
+                            <tr style="border:1px solid; border-top: 3px double solid">
+                                <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center; " width="8%">ลำดับที่</th>
+                                <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">ใบกำกับภาษี</th>
+                                <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="25%">ชื่อผู้ขายสินค้า/ผู้ให้บริการ</th>
+                                <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">เลขประจำตัวผู้เสียภาษี</th>
+                                <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">สถานประกอบการ</th>
+                                <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">มูลค่าสินค้าหรือบริการ</th>
+                                <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">จำนวนเงินภาษีมูลค่าเพิ่ม</th>
+                            </tr>
 
-
-                        <tr style="border:1px solid; border-top: 3px double solid">
-                            <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center; " width="8%">ลำดับที่</th>
-                            <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">ใบกำกับภาษี</th>
-                            <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="25%">ชื่อผู้ขายสินค้า/ผู้ให้บริการ</th>
-                            <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">เลขประจำตัวผู้เสียภาษี</th>
-                            <th colspan="2" style="border-right:1px solid; padding: 4px; text-align:center;">สถานประกอบการ</th>
-                            <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">มูลค่าสินค้าหรือบริการ</th>
-                            <th rowspan="2" style="border-right:1px solid; padding: 4px; text-align:center;" width="20%">จำนวนเงินภาษีมูลค่าเพิ่ม</th>
-                        </tr>
-
-                        <tr style="border:1px solid; ">      
-                            <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">วัน เดือน ปี</th>
-                            <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">เล่มที่/เลขที่</th>
-                            <th style="border-right:1px solid; padding:4px; text-align:center;" width="12%">สำนักงานใหญ่</th>
-                            <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">สาขาที่</th>
-                        </tr>
-                    </thead>
+                            <tr style="border:1px solid; ">      
+                                <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">วัน เดือน ปี</th>
+                                <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">เล่มที่/เลขที่</th>
+                                <th style="border-right:1px solid; padding:4px; text-align:center;" width="12%">สำนักงานใหญ่</th>
+                                <th style="border-right:1px solid; padding:4px; text-align:center;" width="11%">สาขาที่</th>
+                            </tr>
+                        </thead>
 
 
     ';

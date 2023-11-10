@@ -120,7 +120,7 @@
         <form action="../db/db_income.php" method="POST">
                
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label fw-bold" >ไซต์งาน : <a href="" class="quickAdd" data-bs-toggle="modal" data-bs-target="#addSiteModal"> + เพิ่มไซต์งาน</a></label>
                     <select name="siteName" class="form-select" id="siteName">
                     <?php if($_SESSION['siteName_incomeHead']=="") { ?>
@@ -148,13 +148,21 @@
                     
                 </div>
                             
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <label class="form-label fw-bold" for="installmentNO">งวดที่ :</label>
-                    <input type="number" class="form-control" name="installmentNO" id="installmentNO" required>
+                    <input autocomplete="off" type="number" class="form-control" name="installmentNO" id="installmentNO" required>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-bold" for="Amount">จำนวนเงิน :</label>
-                    <input type="number" class="form-control" name="Amount" id="Amount" step="any" OnChange="JavaScript:chkNum(this)" required>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold" for="Amount">มูลค่ารวมก่อนเสียภาษี :</label>
+                    <input autocomplete="off" type="number" class="form-control" name="BeforeVat" id="BeforeVat" step="any" oninput="calculateVAT()" OnChange="JavaScript:chkNum(this)" required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold" for="Amount">ภาษีมูลค่าเพิ่ม :</label>
+                    <input autocomplete="off" type="number" class="form-control" name="Vat" id="Vat" step="any"  style="background-color: #e9ecef;" required min='0' value='0' step='any' required>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold" for="Amount">รวมทั้งสิ้น :</label>
+                    <input autocomplete="off" type="number" class="form-control" name="Amount" id="Amount" step="any"  style="background-color: #e9ecef;" required min='0' value='0' step='any' required>
                 </div>
             </div>
     
@@ -179,7 +187,8 @@
                         <th scope="col" style="text-align:center;">ไซต์งาน</th>
                         <th scope="col" style="text-align:center;">งวดที่</th>
                         <th scope="col" style="text-align:center;">วันที่</th>
-                        <th scope="col" style="text-align:center;">จำนวนเงิน</th>
+                        <th scope="col" style="text-align:center;">มูลค่ารวมก่อนเสียภาษี</th>
+                        <th scope="col" style="text-align:center;">รวมทั้งสิ้น</th>
                         <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
                     </tr>
                 </thead>
@@ -205,6 +214,7 @@
                         <td><?php echo $fetch_incomeHead['site_name']; ?></td>
                         <td><?php echo $fetch_incomeHead['installment_no']; ?></td>
                         <td><?php echo $fetch_incomeHead['paid_date']; ?></td>
+                        <td><?php echo number_format(($fetch_incomeHead['beforeVat']),2); ?></td>
                         <td><?php echo number_format(($fetch_incomeHead['amount']),2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -241,7 +251,15 @@
                                             <input type="number" class="form-control" name="editInstallmentNO" id="editInstallmentNO" value="<?php echo $fetch_incomeHead['installment_no']; ?>" required>
                                         </div>
                                         <div class="mb-2">
-                                            <label for="editAmount" class="col-form-label">จำนวนเงิน :</label>
+                                            <label for="editBeforeVat" class="col-form-label">มูลค่ารวมก่อนเสียภาษี :</label>
+                                            <input type="text" class="form-control" name="editBeforeVat" id="editBeforeVat" step="any" value="<?php echo $fetch_incomeHead['beforeVat']; ?>" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="editVat" class="col-form-label">ภาษีมูลค่าเพิ่ม :</label>
+                                            <input type="text" class="form-control" name="editVat" id="editVat" step="any" value="<?php echo $fetch_incomeHead['vat']; ?>" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label for="editAmount" class="col-form-label">รวมทั้งสิ้น :</label>
                                             <input type="text" class="form-control" name="editAmount" id="editAmount" step="any" value="<?php echo $fetch_incomeHead['amount']; ?>" required>
                                         </div>
                                             
@@ -302,11 +320,11 @@
                     </div>
                     <div class="mb-0">
                         <label for="startDate" class="col-form-label">วันที่เริ่ม :</label>
-                        <input type="date" class="form-control" name="startDate" id="startDate" required>
+                        <input type="text" class="form-control" name="startDate" id="startDate" required>
                     </div>
                     <div class="mb-0">
                         <label for="finishDate" class="col-form-label">วันที่สิ้นสุด :</label>
-                        <input type="date" class="form-control" name="finishDate" id="finishDate" required>
+                        <input type="text" class="form-control" name="finishDate" id="finishDate" required>
                     </div>
                     <div class="mb-0">
                         <label for="addInstallment" class="col-form-label">จำนวนงวด :</label>
@@ -333,7 +351,19 @@
         search: true
     });
 </script>
+<script>
+        function calculateVAT() {
+            // var price = document.getElementById("expenseTotal").value;
+            // var vat = price * $vatC;
+            // document.getElementById("expenseVAT").value = vat.toFixed(2);
+            // document.getElementById("expenseSUM").value = (parseFloat(price) - vat).toFixed(2);
 
+            var price = document.getElementById("BeforeVat").value;
+            var vat = price * 0.07;
+            document.getElementById("Vat").value = vat.toFixed(2);
+            document.getElementById("Amount").value = (parseFloat(price) + vat).toFixed(2);
+        }
+    </script>
 
 
 </body>

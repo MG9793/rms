@@ -94,7 +94,7 @@
    SELECT site_info.site_name, bill_head.site_name, site_info.site_abbre,bill_head.report_month2,bill_head.sum,SUM(sum) as sumTotal
     FROM bill_head 
     LEFT JOIN site_info ON site_info.site_name=bill_head.site_name
-    where bill_head.report_month2 = 256609 AND vat = 0
+    where bill_head.report_month2 = $reportMonth AND vat = 0
     GROUP BY  bill_head.site_name
    ";
    $result = mysqli_query($conn, $sql);

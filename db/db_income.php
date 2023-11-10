@@ -9,16 +9,20 @@
         $site = $_POST['siteName'];
         $paidDate = $_POST['paidDate'];
         $installmentNO = $_POST['installmentNO'];
+        $beforeVat = $_POST['BeforeVat'];
+        $vat = $_POST['Vat'];
         $amount = $_POST['Amount'];
         $paidMonth = substr($_POST['paidDate'],3,2);
 
-        $stmt = $conn->prepare("INSERT INTO income(site_name, installment_no, paid_date, paid_month, amount)
-                                VALUES(:site_name, :installment_no, :paid_date, :paid_month, :amount)");
+        $stmt = $conn->prepare("INSERT INTO income(site_name, installment_no, paid_date, paid_month,beforeVat, vat , amount)
+                                VALUES(:site_name, :installment_no, :paid_date, :paid_month, :beforeVat, :vat, :amount)");
 
         $stmt->bindParam(":site_name", $site);
         $stmt->bindParam(":installment_no", $installmentNO);
         $stmt->bindParam(":paid_date", $paidDate);
         $stmt->bindParam(":paid_month", $paidMonth);
+        $stmt->bindParam(":beforeVat", $beforeVat);
+        $stmt->bindParam(":vat", $vat);
         $stmt->bindParam(":amount", $amount);
         $stmt->execute();
         $_SESSION['siteName_incomeHead'] = $site;
@@ -33,16 +37,20 @@
         $site = $_POST['editSiteName'];
         $installmentNO = $_POST['editInstallmentNO'];
         $paidDate = $_POST['editPaidtDate'];
+        $beforeVat = $_POST['editBeforeVat'];
+        $vat = $_POST['editVAT'];
         $amount = $_POST['editAmount'];
 
         $stmt = $conn->prepare("UPDATE income
-                                SET site_name = :site_name, installment_no = :installment_no, paid_date = :paid_date, amount = :amount
+                                SET site_name = :site_name, installment_no = :installment_no, paid_date = :paid_date, beforeVat = :beforeVat, vat = :vat, amount = :amount
                                 WHERE id = :id");
 
         $stmt->bindParam(":id", $id);
         $stmt->bindParam(":site_name", $site);
         $stmt->bindParam(":installment_no", $installmentNO);
         $stmt->bindParam(":paid_date", $paidDate);
+        $stmt->bindParam(":beforeVat", $beforeVat);
+        $stmt->bindParam(":vat", $vat);
         $stmt->bindParam(":amount", $amount);
         $stmt->execute();
 

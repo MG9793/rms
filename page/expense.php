@@ -89,7 +89,6 @@
             ?>
 
             <form action="../db/db_expense.php" method="POST">
-
                 <div class="row mb-2">
                     <div class="col-md-4">
                         <label class="form-label fw-bold" for="siteName">ไซต์งาน : <a href="" class="quickAdd" data-bs-toggle="modal" data-bs-target="#addSiteModal"> + เพิ่มไซต์งาน</a></label>
@@ -116,8 +115,8 @@
                         <!-- <p><button type="button" class="button button4" data-bs-toggle="modal" data-bs-target="#addSiteModal"><i class="fa-solid fa-plus"></i> เพิ่มไซต์งาน</button></p> -->
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold" for="receiptNo">เลขที่ใบเสร็จ :</label>
-                        <input type="text" class="form-control" placeholder="กรุณากรอกเลขที่ใบเสร็จ..." name="receiptNo" id="receiptNo" required>
+                        <label class="form-label fw-bold" for="receiptNo">เลขที่ใบกำกับภาษี :</label>
+                        <input autocomplete="off" type="text" class="form-control" placeholder="กรุณากรอกเลขที่ใบกำกับภาษี..." name="receiptNo" id="receiptNo" required>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold" for="buyDate">วันที่ซื้อ :</label>
@@ -146,7 +145,6 @@
                     <div class="col-md-2">
                         <label class="form-label fw-bold" for="type">ประเภท :</label>
                         <select name="type" id="type" class="form-control" required>
-                            
                             <option value="ค่าวัสดุ" >ค่าวัสดุ</option>
                             <option value="ค่าแรง" >ค่าแรง</option>
                         </select>
@@ -154,7 +152,6 @@
                     <div class="col-md-2">
                         <label class="form-label fw-bold" for="calVat">คำนวนภาษี :</label>
                         <select name="calVat" id="calVat" class="form-control" onChange="changetextbox();" required>
-                            
                             <option value="VAT">VAT</option>
                         </select>
                     </div>
@@ -162,15 +159,15 @@
 
                 <div class="row mb-3"> 
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">ค่าสินค้าและค่าขนส่ง :</label>
-                        <input autocomplete="off" type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()" OnChange="JavaScript:chkNum(this)" >
+                        <label class="form-label fw-bold">มูลค่ารวมก่อนเสียภาษี :</label>
+                        <input autocomplete="off" type="number" class="form-control" name="expenseSUM" id="expenseSUM" list="expenseSUM" oninput="calculateVAT()" OnChange="JavaScript:chkNum(this)" step='any'>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label fw-bold">ภาษีมูลค่าเพิ่ม :</label>
                         <input autocomplete="off" type="number" class="form-control" name="expenseVAT" id="expenseVAT" list="expenseVAT" style="background-color: #e9ecef;" min='0' value='0' step='any'>
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">จำนวนเงินทั้งสิ้น :</label>
+                        <label class="form-label fw-bold">รวมทั้งสิ้น :</label>
                         <input autocomplete="off" type="number" class="form-control" name="expenseTotal" id="expenseTotal" list="expenseTotal" style="background-color: #e9ecef;" required min='0' value='0' step='any'>
                     </div>
                 </div>
@@ -192,12 +189,14 @@
                     <tr >
                         <th scope="col" style="text-align:center;">#</th>
                         <th scope="col" style="text-align:center;">ไซต์งาน</th>
-                        <th scope="col" style="text-align:center;">เลขที่ใบเสร็จ</th>
+                        <th scope="col" style="text-align:center;">เลขที่ใบกำกับภาษี</th>
                         <th scope="col" style="text-align:center;">วันที่ซื้อ</th>
                         <th scope="col" style="text-align:center;">ชื่อผู้ขาย</th>
                         <th scope="col" style="text-align:center;">เลขประจำตัวผู้เสียภาษี</th>
                         <th scope="col" style="text-align:center;">ประเภท</th>
-                        <th scope="col" style="text-align:center;">จำนวนเงินทั้งสิ้น</th>
+                        <th scope="col" style="text-align:center;">มูลค่ารวมก่อนเสียภาษี</th>
+                    <!--    <th scope="col" style="text-align:center;">ภาษีมูลค่าเพิ่ม</th> -->
+                        <th scope="col" style="text-align:center;">รวมทั้งสิ้น</th>
                         <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
                     </tr>
                 </thead>
@@ -229,6 +228,8 @@
                         <td><?php echo $fetch_bill['sales_name']; ?></td>
                         <td><?php echo $fetch_bill['tax_no']; ?></td>
                         <td><?php echo $fetch_bill['type']; ?></td>
+                        <td><?php echo number_format(($fetch_bill['sum']),2); ?></td>
+                    <!--     <td><?php echo number_format(($fetch_bill['vat']),2); ?></td>  -->
                         <td><?php echo number_format(($fetch_bill['total']),2); ?></td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
@@ -256,12 +257,13 @@
                                             <input type="text" class="form-control" name="editSiteName" id="editSiteName" list="edit_SiteName" value="<?php echo $fetch_bill['site_name']; ?>" required>
                                         </div>
                                         <div class="mb-0">
-                                            <label for="editReceiptNo" class="col-form-label">เลขที่ใบเสร็จ :</label>
+                                            <label for="editReceiptNo" class="col-form-label">เลขที่ใบกำกับภาษี :</label>
                                             <input type="text" class="form-control" name="editReceiptNo" id="editReceiptNo" value="<?php echo $fetch_bill['receipt_no']; ?>" required>
                                         </div>
                                         <div class="mb-0">
                                             <label for="editBuyDate" class="col-form-label">วันที่ซื้อ :</label>
-                                            <input autocomplete="off" type="text" class="form-control editBuyDate" name="editBuyDate" value="<?php echo $fetch_bill['buy_date']; ?>" required>                                        </div>
+                                            <input autocomplete="off" type="text" class="form-control editBuyDate" name="editBuyDate" value="<?php echo $fetch_bill['buy_date']; ?>" required>
+                                        </div>
                                         <div class="mb-0">
                                             <label for="editSalesName" class="col-form-label">ชื่อผู้ขาย :</label>
                                             <input type="text" class="form-control" name="editSalesName" id="editSalesName" list="edit_SalesName" value="<?php echo $fetch_bill['sales_name']; ?>" required>
@@ -287,9 +289,6 @@
                                             }
 
                                             ?>
-
-                                           
-                                            
                                             </select>
                                         </div>
                                         <div class="mb-0">
@@ -305,7 +304,7 @@
                                             <input autocomplete="off" type="number" class="form-control" name="editExpenseTotal" id="editExpenseTotal" value="<?php echo $fetch_bill['total']; ?>" required>
                                         </div>
 
-                                        <div class="modal-footer">
+                                        <div class="text-end mt-3">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-dark w-25" name="edit_billHead"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                                         </div>
@@ -371,7 +370,7 @@
                             <label for="addInstallment" class="col-form-label">จำนวนงวด :</label>
                             <input autocomplete="off" type="number" class="form-control" name="addInstallment" id="addInstallment" placeholder="กรุณากรอก..." required>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label for="addTotal" class="col-form-label">จำนวนเงินทั้งสิ้น :</label>
                             <input autocomplete="off" type="number" class="form-control" name="addTotal" id="addTotal" step="any" placeholder="กรุณากรอก..." required>
                         </div>
@@ -404,7 +403,7 @@
                             <label for="addSalesBranch" class="col-form-label">ชื่อสาขา (กรอกเฉพาะกรณีไม่ใช่สำนักงานใหญ่) :</label>
                             <input type="text" class="form-control" name="addSalesBranch" id="addSalesBranch" placeholder="สาขา...">
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-0">
                             <label for="addtaxNo" class="col-form-label">เลขประจำตัวผู้เสียภาษี (13 หลัก) :</label>
                             <input type="text" class="form-control" name="addtaxNo" id="addtaxNo" placeholder="กรุณากรอก..." minlength="13" maxlength="13" required>
                         </div>

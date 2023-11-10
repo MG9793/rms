@@ -2,7 +2,7 @@
 
     $servername = "localhost:3307";
     $username = "root";
-    $password = "sodsaisoft@2023";
+    $password = "";
     $dbname = "rms";
 
     try {
