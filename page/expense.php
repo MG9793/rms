@@ -195,8 +195,8 @@
                         <th scope="col" style="text-align:center;">เลขประจำตัวผู้เสียภาษี</th>
                         <th scope="col" style="text-align:center;">ประเภท</th>
                         <th scope="col" style="text-align:center;">มูลค่ารวมก่อนเสียภาษี</th>
-                    <!--    <th scope="col" style="text-align:center;">ภาษีมูลค่าเพิ่ม</th> -->
-                        <th scope="col" style="text-align:center;">รวมทั้งสิ้น</th>
+                        <th scope="col" style="text-align:center;">ภาษีมูลค่าเพิ่ม</th> -->
+                        
                         <th scope="col" style="text-align:center;">แก้ไข/ลบ</th>
                     </tr>
                 </thead>
@@ -229,8 +229,8 @@
                         <td><?php echo $fetch_bill['tax_no']; ?></td>
                         <td><?php echo $fetch_bill['type']; ?></td>
                         <td><?php echo number_format(($fetch_bill['sum']),2); ?></td>
-                    <!--     <td><?php echo number_format(($fetch_bill['vat']),2); ?></td>  -->
-                        <td><?php echo number_format(($fetch_bill['total']),2); ?></td>
+                         <td><?php echo number_format(($fetch_bill['vat']),2); ?></td>  
+                  
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic outlined example">
                                 <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#modalEditBill<?php echo $fetch_bill['id']; ?>"><i class="fas fa-edit"></i></button>

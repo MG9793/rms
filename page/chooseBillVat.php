@@ -106,7 +106,7 @@ session_start();
                 <div class="col-xl-6 col-md-12 mb-3">
                     <form action="../db/db_filterTaxSummary.php" method="POST">
                     <div class="card">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ</div>
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ (ที่เลือก)</div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
                                     <h5 ><i class="fa-solid fa-sack-dollar"></i>  ยอดซื้อ</h5>
@@ -127,7 +127,7 @@ session_start();
 
                 <div class="col-xl-6 col-md-12 mb-3">
                     <div class="card" style="background-color: #f9f4f5">
-                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ</div>
+                        <div class="fw-bold text-center border p-2 text-light rounded bg-primary">ยอดรวมภาษีซื้อ (ที่เลือก)</div>
                             <div class="card-body">
                                 <div class="d-flex flex-row justify-content-between">
                                     <h5><i class="fa-solid fa-sack-dollar text-success"></i> ยอดซื้อ</h5>
